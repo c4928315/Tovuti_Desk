@@ -5,7 +5,7 @@ import Button from "../../Button/button";
 import "./reminders.css";
 
 function Reminders() {
-  const { data } = useFetch("https://intra-deco.onrender.com/incidents");
+  const { data } = useFetch("https://intra-deco.onrender.com/reminders");
 
   const handleClick = () => {
     alert('Button clicked!');
