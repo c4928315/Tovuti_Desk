@@ -7,7 +7,7 @@ import Table1 from "../Tables/Table1/table1";
 import { Link } from "react-router-dom";
 
 function WorkOrder() {
-  const { data } = useFetch("http://localhost:3001/incidents");
+  const { data } = useFetch("https://intra-deco.onrender.com/incidents");
   const columns = ["Reference", "Location", "Vendor", "Date Created", "Status"];
   const dropdownComponents = {
     dropdownComp1: (
