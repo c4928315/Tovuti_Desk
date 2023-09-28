@@ -1,0 +1,91 @@
+.navigation{
+    background-color: var(--main-color);
+    margin-bottom: 0;
+}
+
+.mainNav{
+    background-color: var(--main-color) !important;
+    padding: 20px 0!important;
+}
+
+.container-fluid{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.navLinksContainer{
+    display: flex;
+    gap: 25px;
+}
+
+.navLinks, .navbar-brand{
+    color: var(--angel) !important;
+}
+
+.navLinks{
+    font-size: 15px !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.4px !important;
+}
+
+.navbar-brand{
+    flex-grow: 1;
+    font-weight: 700;
+}
+
+
+
+.mainNavRight{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.searchNAlert{
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.divider{
+    width: 1px;
+    height: 28px;
+    background-color: var(--angel);
+}
+
+.userName{
+    text-transform: capitalize;
+    font-size: 15px;
+    margin: 0;
+    height: fit-content;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.userNameNPic{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgContainer{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--green); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+}
+
+.userNameNPic img{
+    margin: 1px;
+    width: 30px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+
+}

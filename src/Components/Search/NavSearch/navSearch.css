@@ -1,0 +1,15 @@
+.navSearch{
+    width: 165px;
+    border: 1px solid var(--fallen-angel);
+    border-radius: var(--border-radius-small);
+    padding: 0 3px;
+}
+
+.navSearchArea{
+    width: 140px;
+    padding-left: 10px;
+    border: none;
+    outline: none;
+    height: 30px;
+    color: var(--not-black);
+}

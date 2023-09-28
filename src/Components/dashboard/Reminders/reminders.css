@@ -1,0 +1,95 @@
+*{
+    margin: 0;
+}
+
+.viewAll{
+    text-decoration: none;
+    color: var(--orange);
+}
+
+.singleReminder .New, .singleReminder .Complete, .singleReminder .Ongoing {
+    list-style-type: circle;
+}
+
+.New::marker {
+    color: var(--red);
+}
+
+.Complete::marker {
+    color: var(--green);
+}
+
+.Ongoing::marker {
+    color: var(--orange);
+}
+
+.checkStatus .New{
+    color: var(--red);
+    margin: 0;
+    text-align: center;
+}
+
+.checkStatus .Complete, .describeComplete .Complete{
+    color: var(--green);
+    margin: 0;
+}
+
+
+.checkStatus .Ongoing{
+    color: var(--orange);
+    margin: 0;
+}
+
+.reminderHeaderNStatus li{
+    width: fit-content;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.paragraph1{
+    font-size: 12px;
+    color: var(--fallen-angel);
+    margin: 0;
+    width: fit-content;
+}
+
+.singleReminder{
+    width: fit-content;
+    margin: 0;
+}
+
+.paragraph2{
+    font-size: 10px;
+    color: var(--not-black);
+    margin: 0;
+    width: 300px;
+}
+
+.reminderToday{
+    margin-bottom: 10px;
+}
+
+.reminderHeaderNStatus{
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    justify-content: center;
+    gap: 20px;
+}
+
+.checkStatus{
+    font-size: 12px;
+}
+
+.reminderLocationNDescribe{
+    margin-left: 14px;
+}
+
+.reminderButtons{
+    margin: 0;
+    margin-left: 14px;
+    display: flex;
+    gap: 20px;
+}
+
+

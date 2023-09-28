@@ -1,0 +1,50 @@
+a{
+    text-decoration: none;
+}
+.cardItemsContainer{
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.cardItems li{
+    font-size: 15px;
+}
+
+.itemBottom{
+    margin: 20px 0 40px 0;
+}
+
+.newList::marker{
+    color: var(--red);
+    font-size: 20px;
+}
+
+.completeList::marker{
+    color: var(--green);
+    font-size: 20px;
+}
+
+.completeList{
+    position: absolute;
+    top: -2px;
+    right: 32px;
+}
+
+.newList {
+    position: absolute;
+    top: -2px;
+    right: 25px;
+}
+
+.itemTop{
+    color: black;
+}
+
+.Complete, .New{
+    position: relative;
+    font-size: 12px;
+    color: black;
+}

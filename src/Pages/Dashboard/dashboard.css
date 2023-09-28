@@ -1,0 +1,30 @@
+.mainDash{
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.topMainDash {
+    height: 25vh;
+    width: 100%;
+    background-color: var(--main-color);
+  
+}
+
+.bottomMainDash {
+    height: 66vh;
+    width: 100%;
+    background-color: var(--main-bgcolor);
+}
+
+.gridPosition{
+    position: absolute;
+    width: 100%;
+    top: 3%;
+}
+
+.dashboardHr{
+    color: var(--angel);
+    width: 89%;
+    margin: 0 auto;
+}

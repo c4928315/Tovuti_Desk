@@ -1,0 +1,102 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--main-bgcolor);
+}
+
+:root {
+  /*COLORS*/
+
+  --main-color: #584539;
+  --main-color-light: rgba(88, 69, 57, 0.6);
+  --see-through: transparent;
+  --angel: white;
+  --main-bgcolor: #dddcdc;
+  --fallen-angel: rgb(212, 212, 212);
+  --not-black: #4d4d4d;
+  --not-not-black: rgb(77, 77, 77, 0.6);
+  --orange: #F2994A;
+  --maroon: rgb(128, 0, 0, 0.7);
+  --medium: rgb(242, 153, 74, 0.5);
+  --low: rgb(0, 128, 0, 0.6);
+  --orange-not-heavy: #efdbca;
+  --orange-light: rgba(242, 153, 74, 0.5);
+  --red: #EB5757;
+  --green: #219653;
+
+  /*SHAPE & POSITIONING*/
+
+  --border-radius: 8px;
+  --border-radius-small: 5px;
+}
+
+.containers{
+  padding: 10px 40px;
+}
+
+.holders{
+  padding: 20px 25px;
+}
+
+.angels{
+  color: var(--angel);
+}
+
+.iconFallenAngels{
+  color: var(--fallen-angel);
+}
+
+.gridTitle{
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: var(--not-black);
+}
+
+.gridTitleBlack{
+  font-size: 17px;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: black;
+}
+
+button{
+  text-align: center;
+}
+
+.btnSmall {
+  width: 70px;
+  height: 25px;
+  border-radius: var(--border-radius);
+  outline: none;
+  border: none;
+  font-size: 12px;
+}
+
+.btnBig{
+  width: 100px;
+  height: 35px;
+  border-radius: var(--border-radius);
+  outline: none;
+  border: none;
+  font-size: 12px;
+}
+
+.btnOrangeFull{
+  background-color: var(--orange);
+  color: var(--angel);
+}
+
+.btnOutline{
+  background-color: var(--see-through);
+  color: var(--not-black);
+  border: 1px solid var(--fallen-angel);
+}
+
+.App .row{
+  background-color: beige;
+}

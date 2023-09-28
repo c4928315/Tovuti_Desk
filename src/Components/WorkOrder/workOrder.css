@@ -1,0 +1,93 @@
+.commonPage{
+    width: 100%;
+    height: 100vh;
+}
+
+.workOrderPosition{
+    width: 95%;
+    margin: 0 auto;
+}
+
+.commonPageTop{
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.pageTitle{
+    font-weight: 300;
+    font-size: 20px;
+    color: var(--not-black);
+    text-transform: capitalize;
+}
+
+.actionBtn{
+    height: 30px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.action-dropdown-item{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.dropdown-menu li a{
+    font-size: 14px;
+}
+
+.commonPageMiddle{
+    display: flex;
+    border-radius: var(--border-radius-small);
+    padding-left: 30px;
+    gap: 5px;
+    background-color: var(--angel);
+    align-items: center;
+    height: 30px;
+}
+
+.commonPageMiddle a{
+    color: var(--not-black);
+    text-transform: capitalize;
+    font-size: 13px;
+}
+
+.dividerCommonPage{
+    background-color: var(--not-black);
+    height: 15px;
+    width: 1px;
+}
+
+
+.commonPageBottom{
+    background-color: var(--angel);
+    margin-top: 20px;
+    border-radius: var(--border-radius-small);
+}
+
+
+.commonPageTab .nav-link{
+    background-color: var(--main-bgcolor) !important;
+    cursor: pointer;
+    color: black !important;
+    height: 40px !important;
+    text-align: center !important;
+    font-size: 14px !important;
+}
+
+
+.commonPageTab .active{
+    background-color: var(--main-color) !important;
+    color: var(--angel) !important;
+}
+
+.commonPageBottom #myTab{
+    padding: 20px !important;
+    display: flex !important;
+    gap: 2px !important;
+}
+

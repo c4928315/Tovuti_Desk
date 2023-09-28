@@ -1,0 +1,192 @@
+.formsUlTab {
+  flex-direction: column !important;
+  width: 20%;
+}
+
+.formsListTab {
+  width: fit-content !important;
+  height: fit-content;
+  text-align: center;
+  display: flex;
+  gap: 1px;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.formsListTab button {
+  font-size: 14px;
+  border: none !important;
+  color: var(--not-black);
+}
+
+.formsListTab button:hover {
+  color: var(--orange);
+}
+
+.formsListTab .active {
+  color: var(--orange) !important;
+}
+
+.formsCommonPageBottom {
+  display: flex;
+  gap: 120px;
+}
+
+.workOrderTitle {
+  padding: 20px 0px 0px 30px;
+  width: fit-content;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.workOrderEntry {
+  width: fit-content;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--not-black);
+  padding-bottom: 5px;
+}
+
+.form-group,
+.selectContainer,
+.form-group-textarea {
+  position: relative;
+  width: 280px;
+  margin-bottom: 30px;
+}
+.form-group input,
+.form-group select {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+  padding: 1rem 0.5rem;
+  outline: none;
+  color: var(--not-black);
+  height: 35px !important;
+  background-color: var(--main-bgcolor);
+  border-radius: var(--border-radius-small);
+}
+
+.form-group-textarea textarea {
+  border: none;
+  background-color: var(--main-bgcolor);
+  width: 100%;
+  font-size: 14px;
+  padding: 1rem 0.5rem;
+  outline: none;
+  color: var(--not-black);
+  border-radius: var(--border-radius-small);
+}
+
+.form-group label,
+.form-group-textarea label ,
+.form-group-textarea label,
+.selectContainer label,
+.uploadH3{
+  text-transform: capitalize;
+  padding: 0 4px;
+  color: var(--not-black);
+  font-size: 13px;
+  font-weight: 400;
+  pointer-events: none;
+  margin-bottom: 10px;
+}
+
+.lableContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.lableLink{
+    font-size: 11px;
+    color: var(--orange);
+    text-decoration: underline;
+}
+
+.formFlex {
+  display: flex;
+  gap: 100px;
+}
+
+.radioInput {
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+
+.radioInput label {
+  width: fit-content;
+  min-width: 50px;
+  margin: 0 10px;
+  padding: 4px;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-bgcolor);
+  border-radius: var(--border-radius-small);
+}
+
+.formRightPosition {
+  margin-left: 28px;
+}
+
+.workOrderBtnCintainer {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  margin-bottom: 30px;
+}
+
+.myTabContent{
+    width: 80% !important;
+}
+
+#contact-tab-pane{
+    width: 600px !important;
+}
+
+.bulletPoint{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid var(--not-not-black);
+    position: relative;
+}
+
+.attachFile{
+    width: 400px !important;
+    margin-bottom: 30px;
+    border-left: none;
+}
+
+.attachFileLabel{
+    height: 38px;
+    width: fit-content;
+    padding: 0;
+    border-right: none;
+}
+
+#onclick{
+    border: 2px solid var(--orange);
+    background-color: var(--orange);
+}
+
+.checkOnclick{
+    position: absolute;
+    left: -1px;
+    bottom: 0;
+    opacity: 0;
+}
+
+#checkOnclickOpacity{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+    color: white;
+}

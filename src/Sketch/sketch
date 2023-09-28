@@ -1,0 +1,68 @@
+
+/* BOOTSTRAP GRID SYSTEM */
+
+<div className="containers">
+      <div className="container-fluid grid-custom-bg">
+        <div className="row ml-2 mr-2">
+          <div className="col-sm-12 col-md-6 col-lg-3 grid-custom-bg mb-2 column">
+            <Card
+              data={data}
+              text="Assets"
+              dropdownText="Period"
+              dropdownClassName="gridStatusSelect"
+              itemProperty="status"
+              dropdownComp={
+                <Dropdown text="Period" gridStatusSelect="gridStatusSelect" />
+              }
+            />
+          </div>
+          <div className="col-sm-12 col-md-6 col-lg-3 grid-custom-bg mb-2 column">
+            <Card
+              data={data}
+              text="Incidents"
+              dropdownText="Period"
+              dropdownClassName="gridStatusSelect"
+              itemProperty="status"
+              dropdownComp={
+                <Dropdown text="Period" gridStatusSelect="gridStatusSelect" />
+              }
+            />
+          </div>
+          <div className="col-sm-12 col-md-6 col-lg-3 grid-custom-bg mb-2 column">
+            <Chart
+              data={data}
+              text="Cost Stats"
+              dropdownText="Period"
+              dropdownClassName="gridStatusSelect"
+              itemProperty="status"
+              dropdownComp={
+                <Dropdown gridStatusSelect="gridStatusSelectChart" />
+              }
+            />
+          </div>
+          <div className="col-sm-12 col-md-6 col-lg-2 grid-custom-bg mb-2 ">
+              <p>hello</p>
+          </div>
+        </div>
+        <div className="row ">
+          <div className="col-sm-12 col-md-12 col-lg-7 grid-custom-bg column">
+            <Incident
+              dropdownComp1={
+                <Dropdown text="Category" gridStatusSelect="gridStatusSelect" />
+              }
+              dropdownComp2={
+                <Dropdown text="Status" gridStatusSelect="gridStatusSelect" />
+              }
+              dropdownComp3={
+                <Dropdown text="Location" gridStatusSelect="gridStatusSelect" />
+              }
+            />
+          </div>
+          <div className="col-sm-12 col-md-12 col-lg-4 grid-custom-bg">
+            <Reminders />
+          </div>
+        </div>
+      </div>
+    </div>
+
+/* BOOTSTRAP GRID SYSTEM */

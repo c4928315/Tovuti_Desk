@@ -1,0 +1,148 @@
+.item1 {
+  grid-area: assets;
+}
+.item2 {
+  grid-area: incidents;
+}
+.item3 {
+  grid-area: contractors;
+}
+.item4 {
+  grid-area: INCIDENTS;
+}
+.item5 {
+  grid-area: reminders;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "assets incidents contractors"
+    "INCIDENTS INCIDENTS reminders ";
+  grid-template-columns: repeat(3, 1fr); /* Define 3 equal-width columns */
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+  background-color: var(--see-through);
+}
+
+.grid-container > div {
+  background-color: var(--angel);
+  border-radius: var(--border-radius);
+}
+
+.item1,
+.item2,
+.item3 {
+  grid-row: span 18;
+  padding: 25px;
+}
+
+.item4,
+.item5 {
+  grid-row: span 37;
+}
+
+
+
+.grid-select {
+  width: fit-content !important;
+  height: fit-content !important;
+  padding: 0 8px !important;
+  border: none !important;
+  background-color: var(--see-through);
+}
+
+.grid-select:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.itemBottom,
+.itemTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+
+.gridStatusSelect {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--fallen-angel);
+  width: fit-content;
+  height: 25px;
+  padding: 0 10px;
+  border-radius: var(--border-radius-small);
+}
+
+.gridStatusSelectChart{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: 25px;
+  padding: 0 10px;
+  border: none;
+}
+
+.gridStatusSelect select, .gridStatusSelectChart select {
+  font-size: 12px !important;
+  width: 85px !important;
+}
+
+.gridData {
+  font-size: 25px;
+  font-weight: 700;
+  margin: 0;
+  color: black;
+  text-decoration: none;
+}
+
+.gridStatusSelect p {
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: 13px;
+  color: black;
+}
+
+.items123{
+  cursor: pointer;
+  transition: transform 0.5s ease-in-out ;
+}
+
+
+.items123:hover{
+  transform: translateY(-10px);
+  background-color: var(--orange-not-heavy);
+}
+
+.greetings h3{
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+/* .grid-custom-bg{
+  background-color: transparent !important;
+}
+
+.grid-custom-bg-transparent{
+  background-color: var(--see-through);
+}
+
+.column{
+  margin-right: 5px;
+}
+
+.columnBorder{
+  border-right: 200px solid white;
+} */
