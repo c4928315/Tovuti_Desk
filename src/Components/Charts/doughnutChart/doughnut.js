@@ -12,8 +12,8 @@ function DoughnutChart() {
       {
         lable: "Poll",
         data: [100, 20],
-        backgroundColor: ["#FF9F40", "#3751FF"],
-        borderColor: ["#FF9F40", "#3751FF"],
+        backgroundColor: ["#AC3E31", "#488A99"],
+        borderColor: ["#AC3E31", "#488A99"],
         display: "flex",
       },
     ],
@@ -39,7 +39,7 @@ function DoughnutChart() {
       },
     },
     maintainAspectRatio: false, // Add this line to disable aspect ratio maintenance
-    cutout: "70%",
+    cutout: "80%"
   };
 
   return (

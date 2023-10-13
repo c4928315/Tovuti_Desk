@@ -3,8 +3,19 @@ import PropTypes from "prop-types";
 import "./chart.css";
 import DoughnutChart from "../../Charts/doughnutChart/doughnut";
 
-function Chart({ data, text, dropdownComp}) {
-  return (
+function Chart({ data, text, dropdownComp, isLoading }) {
+  return isLoading ? (
+    <div class="lazyLoading">
+      <div class="sound-wave">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  ) : (
     <div className="cardContainer">
       <span className="itemTop">
         <span className="gridTitle">{text}</span>

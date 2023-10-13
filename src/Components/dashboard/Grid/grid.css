@@ -1,28 +1,40 @@
 .item1 {
   grid-area: assets;
+  padding: 25px;
 }
 .item2 {
   grid-area: incidents;
+  padding: 25px;
 }
 .item3 {
   grid-area: contractors;
+  padding: 25px;
 }
 .item4 {
   grid-area: INCIDENTS;
 }
-.item5 {
-  grid-area: reminders;
+
+.item6 {
+  grid-area: tasks;
+  padding: 25px;
+}
+.item7 {
+  grid-area: trend;
+  padding: 25px;
 }
 
 .grid-container {
   display: grid;
   grid-template-areas:
     "assets incidents contractors"
-    "INCIDENTS INCIDENTS reminders ";
+    "trend trend tasks"
+    "INCIDENTS INCIDENTS INCIDENTS";
   grid-template-columns: repeat(3, 1fr); /* Define 3 equal-width columns */
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr ;
   gap: 10px;
   background-color: var(--see-through);
+  width: 89%;
+  margin: 0 auto;
 }
 
 .grid-container > div {
@@ -30,17 +42,7 @@
   border-radius: var(--border-radius);
 }
 
-.item1,
-.item2,
-.item3 {
-  grid-row: span 18;
-  padding: 25px;
-}
 
-.item4,
-.item5 {
-  grid-row: span 37;
-}
 
 
 
@@ -101,7 +103,7 @@
   font-size: 25px;
   font-weight: 700;
   margin: 0;
-  color: black;
+  color: var(--btnBg);
   text-decoration: none;
 }
 
@@ -119,7 +121,6 @@
   transition: transform 0.5s ease-in-out ;
 }
 
-
 .items123:hover{
   transform: translateY(-10px);
   background-color: var(--orange-not-heavy);
@@ -128,8 +129,19 @@
 .greetings h3{
   font-size: 15px;
   font-weight: 400;
+  margin: 0 auto;
   margin-bottom: 30px;
+  width: 89%;
 }
+
+.item4 .gridTitleBlack{
+  margin-bottom: 20px;
+}
+
+/* .greetings h3 b {
+  text-decoration: underline;
+  text-decoration-color: var(--btnBg);
+} */
 
 /* .grid-custom-bg{
   background-color: transparent !important;

@@ -30,7 +30,7 @@ function Incident({dropdownComp1, dropdownComp2, dropdownComp3}) {
   }
 
   return (
-    <div className="holders incident">
+    <div className="incident">
       <div className="topIncident">
         <span className="itemTop">
           <span className="gridTitleBlack">Incidents</span>

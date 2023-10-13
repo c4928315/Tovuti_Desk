@@ -7,7 +7,15 @@ a{
     gap: 30px;
     justify-content: center;
     text-decoration: none;
+    
 }
+
+.gridTitle{
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: var(--main-color);
+  }
 
 .cardItems li{
     font-size: 15px;

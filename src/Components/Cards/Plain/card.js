@@ -4,18 +4,15 @@ import "./card.css";
 import customIcons from "../../../Icons/icons";
 import { Link } from "react-router-dom";
 
-
-function Card({ data, text, dropdownComp, link, itemProperty }) {
-
+function Card({ data, text, dropdownComp, link, itemProperty, isLoading }) {
   // weeds out duplicate elements ************(NOT DONE WITH THIS)************
   const filteredData = data.filter(
     (item, index, self) =>
       self.findIndex((i) => i.status === item.status) === index
   );
 
-
-
-  return (
+  console.log(isLoading)
+  return !isLoading ? (
     <Link to={link} className="cardContainer">
       <span className="itemTop">
         <span className="gridTitle">{text}</span>
@@ -27,24 +24,23 @@ function Card({ data, text, dropdownComp, link, itemProperty }) {
       </div>
       <div className="cardItemsContainer">
         {filteredData.map((item, i) => {
-
-            const classNameID = () => {
-                if(item[itemProperty] === "Closed"){
-                    return (
-                        <div className="Complete">
-                          {item[itemProperty]}
-                          <li className="completeList"></li>
-                        </div>
-                    )
-                } else if(item[itemProperty] === "Open"){
-                    return (
-                        <div className="New">
-                          {item[itemProperty]}
-                          <li className="newList"></li>
-                        </div>
-                    )
-                }
+          const classNameID = () => {
+            if (item[itemProperty] === "Closed") {
+              return (
+                <div className="Complete">
+                  {item[itemProperty]}
+                  <li className="completeList"></li>
+                </div>
+              );
+            } else if (item[itemProperty] === "Open") {
+              return (
+                <div className="New">
+                  {item[itemProperty]}
+                  <li className="newList"></li>
+                </div>
+              );
             }
+          };
 
           return (
             <div className="cardItems" key={i}>
@@ -54,6 +50,17 @@ function Card({ data, text, dropdownComp, link, itemProperty }) {
         })}
       </div>
     </Link>
+  ) : (
+    <div class="lazyLoading">
+    <div class="sound-wave">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
   );
 }
 

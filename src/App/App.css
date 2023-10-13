@@ -11,25 +11,35 @@ body {
 :root {
   /*COLORS*/
 
-  --main-color: #584539;
+  --main-color: #488A99;
   --main-color-light: rgba(88, 69, 57, 0.6);
   --see-through: transparent;
   --angel: white;
-  --main-bgcolor: #dddcdc;
-  --fallen-angel: rgb(212, 212, 212);
+  --main-bgcolor: #DADADA;
+  --fallen-angel: rgb(172, 172, 172);
   --not-black: #4d4d4d;
   --not-not-black: rgb(77, 77, 77, 0.6);
+  --black: black;
   --orange: #F2994A;
+  --red: red;
   --maroon: rgb(128, 0, 0, 0.7);
   --medium: rgb(242, 153, 74, 0.5);
   --low: rgb(0, 128, 0, 0.6);
-  --orange-not-heavy: #efdbca;
+  --orange-not-heavy: #aacfe3;
+  --search-nill: rgb(239, 219, 202, 0.4);
   --orange-light: rgba(242, 153, 74, 0.5);
-  --red: #EB5757;
+  --closed: rgba(0, 128, 0, 0.4);
+  --ongoing: rgba(255, 165, 0, 0.4);
+  --open: rgba(235, 87, 87, 0.4);
   --green: #219653;
+  --access: #488A99;
+  --btnBg: #e87e80;
+  --btnBgLight: rgba(172, 62, 49, 0.4);
+
 
   /*SHAPE & POSITIONING*/
 
+  --border-radius-big: 16px;
   --border-radius: 8px;
   --border-radius-small: 5px;
 }
@@ -47,21 +57,16 @@ body {
 }
 
 .iconFallenAngels{
-  color: var(--fallen-angel);
+  color: var(--angel);
 }
 
-.gridTitle{
-  font-size: 15px;
-  font-weight: 600;
-  text-transform: capitalize;
-  color: var(--not-black);
-}
 
 .gridTitleBlack{
   font-size: 17px;
   font-weight: 600;
   text-transform: capitalize;
-  color: black;
+  color: var(--access);
+  padding-left: 10px;
 }
 
 button{
@@ -87,7 +92,7 @@ button{
 }
 
 .btnOrangeFull{
-  background-color: var(--orange);
+  background-color: var(--btnBg);
   color: var(--angel);
 }
 
@@ -97,6 +102,92 @@ button{
   border: 1px solid var(--fallen-angel);
 }
 
+.btnTask{
+  background-color: rgba(72, 138, 153, 0.2);
+  color: #488A99;
+  border: none;
+  outline: none;
+  border-radius: 2px;
+  text-transform: capitalize;
+  font-size: 10px;
+  padding: 5px;
+}
+
 .App .row{
   background-color: beige;
+}
+
+
+
+
+
+@keyframes audio-wave {
+  0% {
+    height: 10px;
+    transform: translateY(0px);
+    background: #488A99;
+  }
+  25% {
+    height: 40px;
+    transform: translateY(-5px) scaleY(1.7);
+    background: #AC3E31;
+  }
+  50% {
+    height: 10px;
+    transform: translateY(0px) scaleY(1.7);
+    background-color: #F2994A;
+  }
+  100% {
+    height: 10px;
+    transform: translateY(0px) scaleY(1.7);
+    background: #DADADA;
+  }
+}
+
+.lazyLoading{
+  position: relative;
+  height: 100%;
+}
+
+.sound-wave{
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  gap:8px;
+  height:60px
+}
+.sound-wave span{
+  height:10px;
+  width:6px;
+  display:block;
+  border-radius:8px;
+  background:orange;
+  animation:audio-wave 2.2s infinite ease-in-out
+  
+}
+.sound-wave span:nth-child(2) {
+  left:11px;
+  background:red;
+  animation-delay:0.2s
+}
+.sound-wave span:nth-child(3){
+  left:22px;
+  animation-delay:0.4s
+}
+.sound-wave span:nth-child(4){
+  left:33px;
+  animation-delay:0.6s
+}
+.sound-wave span:nth-child(5){
+  left:44px;
+  animation-delay:0.8s
+}
+.sound-wave span:nth-child(6){
+  left:55px;
+  animation-delay:1s
 }

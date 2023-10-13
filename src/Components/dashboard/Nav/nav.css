@@ -1,91 +1,218 @@
-.navigation{
-    background-color: var(--main-color);
-    margin-bottom: 0;
+.navigation {
+  background-color: var(--main-color);
+  margin-bottom: 0;
 }
 
-.mainNav{
-    background-color: var(--main-color) !important;
-    padding: 20px 0!important;
+.mainNav {
+  background-color: var(--main-color) !important;
+  padding: 20px 0 !important;
+  width: 100% !important;
 }
 
-.container-fluid{
-    padding: 0 !important;
-    margin: 0 !important;
+.innerMainNav {
+  width: 89%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: flex;
 }
 
-.navLinksContainer{
-    display: flex;
-    gap: 25px;
+.container-fluid {
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-.navLinks, .navbar-brand{
-    color: var(--angel) !important;
+.navLinksContainer {
+  display: flex;
+  gap: 25px;
 }
 
-.navLinks{
-    font-size: 15px !important;
-    font-weight: 300 !important;
-    letter-spacing: 0.4px !important;
+.navLinks,
+.navbar-brand {
+  color: var(--angel) !important;
 }
 
-.navbar-brand{
-    flex-grow: 1;
-    font-weight: 700;
+.navLinks {
+  font-size: 15px !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.4px !important;
+  transition: all 0.3s ease-in-out !important;
 }
 
-
-
-.mainNavRight{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+.navLinks:hover {
+  color: var(--black) !important;
 }
 
-.searchNAlert{
-    display: flex;
-    gap: 10px;
-    cursor: pointer;
+.navbar-brand {
+  flex-grow: 1;
+  font-weight: 700;
 }
 
-.divider{
-    width: 1px;
-    height: 28px;
-    background-color: var(--angel);
+.mainNavRight {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
-.userName{
-    text-transform: capitalize;
-    font-size: 15px;
-    margin: 0;
-    height: fit-content;
-    font-weight: 400;
-    cursor: pointer;
+.searchNAlert {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
 }
 
-.userNameNPic{
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
+.divider {
+  width: 1px;
+  height: 28px;
+  background-color: var(--angel);
 }
 
-.imgContainer{
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 1px solid var(--green); 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.userName {
+  text-transform: capitalize;
+  font-size: 15px;
+  margin: 0;
+  height: fit-content;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.userNameNPic {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgContainer {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--angel);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userNameNPic img {
+  margin: 1px;
+  width: 30px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.navHover {
+  position: relative;
+  text-decoration: none;
+  color: #000;
+}
+
+.navHover::before {
+  content: "";
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 1px;
+  background-color: var(--angel);
+  transition: width 0.3s ease;
+}
+
+.navHover:hover::before {
+  width: 100%;
+}
+
+.companyLogoImgNav {
+  height: 60px;
+}
+
+.navLogoContainer {
+  background-color: rgba(0, 0, 0, 0.9);
+  width: 60px;
+  border-radius: var(--border-radius);
+}
+
+/* .logo{
+    position: relative;
+    width: 200px;
+  }
+
+  .logo:after {
+    content: "";
+  position: absolute;
+  display: block;
+    width: 0%;
+    height: 0%;
+    top: 0;
+    left: 0;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    width: 10px;
+    height: 10px;
+    border-color: #fff;
+  }
   
+  .logo:before {
+    content: "";
+  position: absolute;
+  display: block;
+    width: 0%;
+    height: 0%;
+    right: 0;
+    bottom: 0;
+    border-bottom: 2px solid transparent;
+    border-right: 2px solid transparent;
+    width: 10px;
+    height: 10px;
+    border-color: #fff;
+  }
+   */
+
+.notify{
+  position: absolute;
+  top: 0;
+  width: 7px;
+  height: 7px;
+  background-color: var(--red);
+  border-radius: 50%;
+  right: 3px;
+  border: 1px solid var(--main-color);
+	transform: scale(1);
+	box-shadow: 0 0 0 0 rgba(255, 82, 82, 1);
+	animation: pulse-red 2s infinite;
 }
 
-.userNameNPic img{
-    margin: 1px;
-    width: 30px;
-    height: 28px;
-    border-radius: 50%;
-    object-fit: cover;
 
+.radiowave {
+  position: relative;
+  display: inline-block;
+  z-index: 1000;
+  margin-top: 4px;
 }
+.radiowave .btn-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+}
+
+
+@keyframes pulse-red {
+	0% {
+		transform: scale(0.85);
+		box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+	}
+	
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 25px rgba(255, 82, 82, 0);
+	}
+	
+	100% {
+		transform: scale(0.85);
+		box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+	}
+}
+

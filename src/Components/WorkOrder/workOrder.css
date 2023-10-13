@@ -3,6 +3,11 @@
     height: 100vh;
 }
 
+.innerCommonPage{
+    width: 89%;
+    margin: 0 auto;
+}
+
 .workOrderPosition{
     width: 95%;
     margin: 0 auto;
@@ -15,19 +20,32 @@
 }
 
 .pageTitle{
-    font-weight: 300;
+    font-weight: 400;
     font-size: 20px;
-    color: var(--not-black);
+    color: var(--main-color);
     text-transform: capitalize;
+    text-decoration: underline;
 }
 
 .actionBtn{
     height: 30px;
     text-align: center;
     display: flex;
+    color: var(--main-color);
     justify-content: center;
     align-items: center;
     font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+.actionBtn:hover{
+    background-color: var(--main-color) !important;
+    color: var(--angel) !important;
+}
+
+.actionBtn:focus{
+    background-color: var(--main-color) !important;
+    color: var(--angel) !important;
 }
 
 .action-dropdown-item{
@@ -45,13 +63,13 @@
     border-radius: var(--border-radius-small);
     padding-left: 30px;
     gap: 5px;
-    background-color: var(--angel);
+    background-color: var(--main-color);
     align-items: center;
     height: 30px;
 }
 
 .commonPageMiddle a{
-    color: var(--not-black);
+    color: var(--angel);
     text-transform: capitalize;
     font-size: 13px;
 }
@@ -71,23 +89,46 @@
 
 
 .commonPageTab .nav-link{
-    background-color: var(--main-bgcolor) !important;
+    background-color: var(--see-through) !important;
     cursor: pointer;
-    color: black !important;
+    color: var(--not-black) !important;
     height: 40px !important;
     text-align: center !important;
     font-size: 14px !important;
+    border: none !important;
+    padding: 0px !important;
+}
+
+.commonPageTab{
+     position: relative;
 }
 
 
 .commonPageTab .active{
-    background-color: var(--main-color) !important;
-    color: var(--angel) !important;
+    color: var(--main-color) !important;
 }
 
 .commonPageBottom #myTab{
-    padding: 20px !important;
+    padding: 20px 0 0px 0px !important;
     display: flex !important;
-    gap: 2px !important;
+    gap: 10px !important;
+    width: 96%;
+    margin: 0 auto;
 }
 
+.testa{
+    width: 100%;
+}
+
+.navToggle1{
+    width: 100%;
+    background-color: var(--main-color);
+    height: 2px;
+    position: absolute;
+    bottom: -1px;
+    opacity: 0;
+}
+
+.activeNavToggle1{
+    opacity: 1;
+}

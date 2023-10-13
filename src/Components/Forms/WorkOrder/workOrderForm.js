@@ -19,8 +19,8 @@ function WorkOrderForm() {
 
 
   return (
-    <div className="commonPage container">
-      <div className="">
+    <div className="commonPage">
+      <div className="innerCommonPage">
         <div className="commonPageTop">
           <h3 className="pageTitle">work order</h3>
           <div class="dropdown actionDropdown">
@@ -52,7 +52,7 @@ function WorkOrderForm() {
           <div className="dividerCommonPage"></div>
           <Link>Add work order</Link>
         </div>
-        <div className="commonPageBottom container">
+        <div className="commonPageBottom">
           <h3 className="workOrderTitle">Add Work Order</h3>
           <div className="formsCommonPageBottom">
             <ul className="nav nav-tabs formsUlTab" id="myTab" role="tablist">

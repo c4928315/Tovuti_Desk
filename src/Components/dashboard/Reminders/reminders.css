@@ -4,11 +4,18 @@
 
 .viewAll{
     text-decoration: none;
-    color: var(--orange);
+    color: var(--btnBg);
+    font-size: 12px;
+    text-transform: capitalize;
 }
 
 .singleReminder .New, .singleReminder .Complete, .singleReminder .Ongoing {
     list-style-type: circle;
+}
+
+.checkStatus p {
+    font-size: 10px;
+    font-weight: 700;
 }
 
 .New::marker {
@@ -44,6 +51,7 @@
     width: fit-content;
     font-size: 14px;
     font-weight: 500;
+    margin-bottom: 5px;
 }
 
 .paragraph1{
@@ -54,8 +62,11 @@
 }
 
 .singleReminder{
-    width: fit-content;
+    width: 100%;
     margin: 0;
+    border-bottom: 1px solid var(--not-not-black);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .paragraph2{
@@ -63,10 +74,13 @@
     color: var(--not-black);
     margin: 0;
     width: 300px;
+    margin-bottom: 5px;
 }
 
 .reminderToday{
     margin-bottom: 10px;
+    color: black;
+    font-weight: 500;
 }
 
 .reminderHeaderNStatus{
@@ -74,7 +88,7 @@
     align-items: center;
     width: fit-content;
     justify-content: center;
-    gap: 20px;
+    gap: 8px;
 }
 
 .checkStatus{
@@ -83,13 +97,37 @@
 
 .reminderLocationNDescribe{
     margin-left: 14px;
+    margin-bottom: 5px;
 }
 
 .reminderButtons{
-    margin: 0;
-    margin-left: 14px;
+    margin: 0 14px;
     display: flex;
-    gap: 20px;
+    justify-content: space-between;
 }
 
+.singleReminder:last-child{
+    border-bottom: none;
+}
 
+.reviewBtn, .closeBtn{
+    transition: all 0.3s ease-in-out;
+}
+
+.reviewBtn:hover{
+    background-color: var(--see-through);
+    border: 1px solid var(--btnBg);
+    color: var(--btnBg);
+}
+
+.closeBtn:hover{
+    background-color: var(--see-through);
+    border: 1px solid var(--btnBg);
+    color: var(--btnBg);
+}
+
+.calender{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+}

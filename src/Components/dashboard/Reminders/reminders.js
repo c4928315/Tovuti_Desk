@@ -1,17 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useFetch from "../../../Hooks/useFetch";
+import customIcons from "../../../Icons/icons";
 import Button from "../../Button/button";
 import "./reminders.css";
 
 function Reminders() {
-  const { data } = useFetch("https://intra-deco.onrender.com/reminders");
+  const { data, isLoading } = useFetch(
+    "https://intra-deco.onrender.com/reminders"
+  );
 
   const handleClick = () => {
-    alert('Button clicked!');
+    alert("Button clicked!");
   };
 
-  return (
+  return isLoading ? (
+    <div class="lazyLoading">
+      <div class="sound-wave">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  ) : (
     <div className="holders">
       <div className="reminderTop">
         <span className="itemTop">
@@ -19,9 +33,13 @@ function Reminders() {
           <Link className="viewAll">view all</Link>
         </span>
         <div className="reminderBottom">
-          <p className="paragraph1 reminderToday">Today</p>
+          <div className="calender">
+            <p className="paragraph1 reminderToday">Today</p>
+            <customIcons.calender size={18} style={{cursor: "pointer"}}/>
+          </div>
+          
 
-          <div>
+          <div className="allreminders">
             {data.map((item, i) => {
               const getStatusClassName = (status) => {
                 switch (status) {
@@ -46,7 +64,7 @@ function Reminders() {
                   );
                 } else {
                   return (
-                    <p className="describeComplete paragraph1">
+                    <p className="describeComplete paragraph1 ">
                       {item.description}
                     </p>
                   );
@@ -68,10 +86,17 @@ function Reminders() {
                     </div>
                   </div>
                   <div className="reminderButtons">
-                  <Button onClick={handleClick} text="Review" className="btnOutline btnSmall" />
-                  <Button onClick={handleClick} text="Close" className="btnOrangeFull btnSmall" />
+                    <Button
+                      onClick={handleClick}
+                      text="Review"
+                      className="btnOutline btnSmall reviewBtn"
+                    />
+                    <Button
+                      onClick={handleClick}
+                      text="Close"
+                      className="btnOrangeFull btnSmall closeBtn"
+                    />
                   </div>
-                  <hr />
                 </div>
               );
             })}

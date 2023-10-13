@@ -35,13 +35,17 @@
 
 .table{
     margin: 0 5px;
-
 }
 
-tr:hover{
-    cursor: pointer;
-    background-color: var(--orange) !important;
+
+.tH, .action{
+    color: var(--main-color) !important;
+    font-weight: 400;
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    text-transform: capitalize;
 }
+
 
 .incidentTd li{
     font-size: 14px;
@@ -50,6 +54,9 @@ tr:hover{
 
 .incidentTdSmall{
     font-size: 13px;
+    width: fit-content;
+    margin: 0;
+    padding: 0;
 }
 
 .incidetPrevNext{
@@ -101,6 +108,164 @@ tr:hover{
     justify-content: right;
 }
 
-.red-bg{
-    background-color: red !important;
+.red-bg, .green-bg, .orange-bg{
+    height: 41px ;
+    margin-left: 0 !important;
+}
+
+.green-bg .tableData, .orange-bg .tableData, .red-bg .tableData{
+    border-radius: var(--border-radius) !important;
+    width: 60px;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.red-bg .tableData{
+    background-color: rgba(236, 168, 168, 0.1) !important;
+    color: #e87e80 !important;
+    border: 1px solid #e87e80 !important;
+}
+
+.green-bg .tableData{
+    background-color: rgba(131, 231, 158, 0.1) !important;
+    color: #83e79e !important;
+    border: 1px solid#83e79e !important;
+}
+
+.orange-bg .tableData{
+    background-color: rgba(124, 199, 232, 0.1) !important;
+    color: #7cc7e8 !important;
+    border: 1px solid#7cc7e8 !important;
+}
+
+.searchNill{
+    width: 100%;
+    text-align: center;
+}
+
+.incidentTbody{
+    position: relative;
+}
+
+.searchNill td{
+    height: 200px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1086px;
+    color: var(--not-black);
+    background-color: var( --search-nill);
+    position: absolute;
+}
+
+.tdAction{
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+}
+
+.countTr{
+    position: relative;
+}
+
+td .countTh{
+    width: 5px!important;
+    height: 5px !important;
+    margin: 0 !important;
+    padding: 0! important;
+}
+
+
+.count{
+    list-style: none;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.kebab-icon{
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 2px;
+    height: 18px;
+    width: 18px;
+    border-radius: var(--border-radius-small);
+}
+
+.table>thead{
+    border-radius: 50% !important;
+}
+
+tbody>tr{
+    padding: 300px 0 !important;
+}
+
+.list-style-square{
+    width: 15px;
+    height: 15px;
+    background-color: var(--see-through);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius-small);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -10px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.filterSortDownloadAdd{
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 7px;
+    margin-right: 0;
+    margin-top: 10px;
+}
+
+.filterSortDownloadAddLeft, .filterSortDownloadAddRight{
+    display: flex;
+    gap: 10px;
+}
+
+.filter, .sort, .download, .addData{
+    height: 27px;
+    border: 1px solid var(--not-not-black);
+    padding: 0 10px;
+    border-radius: var(--border-radius-small);
+    text-transform: capitalize;
+    font-size: 13px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.first-column{
+    border-top-left-radius: var(--border-radius) !important;
+    border-bottom-left-radius: var(--border-radius) !important;
+}
+
+/* .last-column{
+    border-top-right-radius: var(--border-radius) !important;
+    border-bottom-right-radius: var(--border-radius) !important;
+} */
+
+.action{
+    border-top-right-radius: var(--border-radius) !important;
+    border-bottom-right-radius: var(--border-radius) !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    width: 60px;
+    height: 45px;
+}
+
+thead{
+    border-color: transparent !important;
+}
+
+.addData{
+    background-color: #83e79e;
+    color: var(--angel);
+    border: none;
 }

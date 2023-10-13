@@ -1,0 +1,20 @@
+.accessAltSignUp{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1px;
+}
+
+.accessAltSignUpBlock1, .accessAltSignUpBlock2{
+    width: 50%;
+}
+
+.signUpGoogle{
+    border-top-right-radius: 0% !important;
+    border-bottom-right-radius: 0%;
+}
+
+.signUpFacebook{
+    border-top-left-radius: 0% !important;
+    border-bottom-left-radius: 0%;
+}

@@ -1,0 +1,270 @@
+.tasksContainer h1 {
+  text-transform: capitalize;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--main-color);
+}
+
+.taskTopLeft p {
+  font-size: 12px;
+  color: var(--not-not-black);
+}
+
+.taskTopLeft {
+  line-height: 15px;
+}
+
+.taskTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.taskMiddle {
+  margin: 10px 0;
+}
+
+.taskCategoryBottom {
+  margin-top: 20px;
+}
+
+.taskCategory {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.taskCategoryCell {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.taskCategoryCompleted {
+  background: #83e79e;
+  width: 150px;
+  height: 120px;
+  border-radius: var(--border-radius-big);
+  position: relative;
+}
+.taskCategoryCanceled {
+  background: #e87e80;
+  width: 150px;
+  height: 100px;
+  border-radius: var(--border-radius-big);
+  position: relative;
+}
+.taskCategoryPending {
+  background: #8891ea;
+  width: 150px;
+  height: 100px;
+  border-radius: var(--border-radius-big);
+  position: relative;
+}
+.taskCategoryOngoing {
+  background:  #7cc7e8 ;
+  width: 150px;
+  height: 120px;
+  border-radius: var(--border-radius-big);
+  position: relative;
+}
+
+.clipPathContainer {
+  display: flex;
+  position: absolute;
+  top: -15px;
+  right: 0;
+}
+
+.clipPath {
+  clip-path: polygon(
+    25% 25%,
+    50.41% 25%,
+    75% 50%,
+    50.41% 75%,
+    25% 75%,
+    47% 50%
+  );
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0)
+  );
+  width: 50px;
+  height: 65px;
+  margin: 0;
+  padding: 0;
+}
+
+.todayTaskTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todayTaskTop a {
+  text-decoration: underline;
+  text-transform: capitalize;
+  font-size: 12px;
+  color: var(--not-not-black);
+}
+
+.taskTime {
+  display: flex;
+  font-size: 11px;
+  color: var(--not-not-black);
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.taskCategoryBottomButtons {
+  display: flex;
+  gap: 5px;
+}
+
+.taskCategoryBottomContent {
+  background-color: rgba(72, 138, 153, 0.1);
+  border-radius: var(--border-radius);
+  line-height: 8px;
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+  width: 95%;
+  margin: 0 auto;
+}
+
+.taskAction {
+  float: right;
+  cursor: pointer;
+  color: var(--main-color);
+}
+
+.taskCategoryBottomContentRightContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.taskCategoryBottomContentRight .taskTitle {
+  font-size: 12px;
+  text-transform: capitalize;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--main-color);
+}
+
+.taskCategoryBottomContentLeft {
+  background-color: var(--main-color);
+  height: 28px;
+  width: 2px;
+  margin: 0;
+  border-radius: var(--border-radius-big);
+}
+
+.taskFooter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 2px;
+}
+
+.taskFooterContainer {
+  position: relative;
+}
+
+.taskFooter {
+  position: absolute;
+  top: 15px;
+  left: 30px;
+  width: 0px;
+  opacity: 0;
+  padding: 2px 4px;
+}
+
+.radiowavetask {
+  position: relative;
+  display: inline-block;
+  z-index: 1000;
+  margin-top: 0px;
+  padding: 0;
+}
+
+.notifyTask {
+  position: absolute;
+  top: 2px;
+  width: 7px;
+  height: 7px;
+  background-color: var(--red);
+  border-radius: 50%;
+  right: 3px;
+  border: 1px solid var(--main-color);
+  transform: scale(1);
+  box-shadow: 0 0 0 0 rgba(255, 82, 82, 1);
+  animation: pulse-red 2s infinite;
+}
+
+.taskFooterIcons {
+  cursor: pointer;
+  background-color: var(--main-color);
+  color: white;
+  padding: 3px;
+  border-radius: var(--border-radius-small);
+}
+
+.formAdd {
+  text-align: center;
+  margin: 0;
+}
+
+.seeAction {
+  width: fit-content;
+  opacity: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.actionIcon {
+  animation: animName 2s linear infinite;
+  margin: 40px 0px 0 0;
+}
+
+.actionIcon:hover {
+  animation-play-state: paused;
+  cursor: pointer;
+}
+
+@keyframes animName {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.taskIconContainer{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 20px auto;
+}
+
+
+.taskIconP1{
+    font-size: 11px;
+    color: var(--angel);
+    margin-bottom: 0;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.taskIconP2{
+    font-size: 10px;
+    color: var(--angel);
+}
+
+.taskIconInner p:first-of-type{
+    font-size: 14px;
+    text-transform: capitalize;
+}
