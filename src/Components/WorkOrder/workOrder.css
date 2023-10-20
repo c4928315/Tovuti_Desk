@@ -1,6 +1,7 @@
 .commonPage{
-    width: 100%;
+    width: 95%;
     height: 100vh;
+    margin: 0 auto;
 }
 
 .workOrderPosition{
@@ -12,12 +13,15 @@
     display: flex;
     justify-content: space-between;
     margin: 30px 0;
+    position: relative;
+    height: 35px;
+    align-items: center;
 }
 
 .pageTitle{
-    font-weight: 300;
+    font-weight: 500;
     font-size: 20px;
-    color: var(--not-black);
+    color: var(--main-color);
     text-transform: capitalize;
 }
 
@@ -28,6 +32,9 @@
     justify-content: center;
     align-items: center;
     font-size: 14px;
+    color: var(--main-color) !important;
+    border: 1px solid #D4D4D8 !important;
+    background-color: var(--angel) !important;
 }
 
 .action-dropdown-item{
@@ -44,20 +51,21 @@
     display: flex;
     border-radius: var(--border-radius-small);
     padding-left: 30px;
-    gap: 5px;
-    background-color: var(--angel);
+    gap: 9px;
+    background-color: var(--angel) !important;
     align-items: center;
     height: 30px;
 }
 
 .commonPageMiddle a{
-    color: var(--not-black);
+    color: var(--main-color) ;
     text-transform: capitalize;
     font-size: 13px;
+    font-weight: 500;
 }
 
 .dividerCommonPage{
-    background-color: var(--not-black);
+    background-color: var(--main-color);
     height: 15px;
     width: 1px;
 }
@@ -91,3 +99,17 @@
     gap: 2px !important;
 }
 
+
+
+.wOGreen{
+    color: green;
+}
+
+
+.wORed{
+    color: red;
+}
+
+.testBorder{
+    margin-top: 50px;
+}

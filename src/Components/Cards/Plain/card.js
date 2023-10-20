@@ -5,7 +5,7 @@ import customIcons from "../../../Icons/icons";
 import { Link } from "react-router-dom";
 
 
-function Card({ data, text, dropdownComp, link, itemProperty }) {
+function Card({ data, text, dropdownComp, link, itemProperty, navigate }) {
 
   // weeds out duplicate elements ************(NOT DONE WITH THIS)************
   const filteredData = data.filter(

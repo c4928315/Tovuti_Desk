@@ -1,0 +1,99 @@
+.table2TbodyTdata{
+    transition: all 0.2s ease-in-out !important;
+    margin: 0 !important;
+    border-top: 1px solid rgba(212, 212, 216, 0.2) !important;
+    border-bottom: 1px solid rgba(212, 212, 216, 0.2) !important;
+    
+}
+
+.table2Td{
+    padding-left: 32px!important;
+}
+
+.table2TbodyTdata:hover{
+    background-color: var(--see-through) !important;
+}
+
+.newTableTr{
+    transition: all 0.2s ease;
+    background-color: #8a8a8a !important;
+}
+
+.newTableTr:hover{
+    background-color: #8a8a8a !important;
+}
+
+.newTableTh{
+    text-transform: capitalize !important;
+    font-size: 15px;
+    border-left: none !important;
+}
+
+.tBodyTable2{
+    background-color: #D4D4D8 !important;
+}
+
+/* .table2Td{
+    padding-left: 32px!important;
+} */
+
+.search2{
+    margin-top: 20px !important;
+    height: 80px !important;
+}
+
+.input2o{
+    height: 35px !important;
+    border: 1px solid #D4D4D8 !important;
+    border-radius: var(--border-radius-small) !important;
+    padding: 8px;
+    background-color: #D4D4D8 !important;
+}
+
+.input2o:focus{
+    outline: black !important;
+    border: 1px solid black !important;
+}
+
+.table2Container{
+    height: fit-content !important;
+    border-radius: 19px !important;
+}
+
+.thCells{
+    border: 1px solid rgba(212, 212, 216, 0.2) !important;
+    border-bottom: 1px solid #D4D4D8 !important;
+    color: var(--main-color) !important;
+    font-weight: 700;
+}
+
+.table2{
+    border-radius: var(--border-radius-big) !important;
+}
+
+.tableFooter{
+    background-color: #D4D4D8 !important;
+    margin-bottom: 30px !important;
+    border-radius: 19px !important;
+    margin-top: 30px !important;
+}
+
+.searchFilter{
+   gap: 20px !important;
+   align-items: center !important;
+}
+
+.filter2{
+    border: 1px solid #8a8a8a;
+    height: 30px;
+    width: 30px;
+    padding: 0 4px;
+    border-radius: var(--border-radius-small);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.filter2:hover{
+    background-color: #8a8a8a;
+    color: var(--angel);
+}

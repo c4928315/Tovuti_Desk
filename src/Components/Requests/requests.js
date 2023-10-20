@@ -1,14 +1,31 @@
 import React from "react";
-import "./workOrder.css";
 import customIcons from "../../Icons/icons";
+import useFetch from "../../Hooks/useFetch";
 import { Link } from "react-router-dom";
-import DataTable from "../Tables/Table3/table3";
+import DataTable, { Table2 } from "../Tables/Table2/table2";
+import { createColumnHelper } from "@tanstack/table-core";
+import RequestTable from "../WorkingCode/WorkingRequests/RequestTable";
 
-function WorkOrder() {
+function Requests() {
+  
+  const { data } = useFetch("https://intra-deco.onrender.com/workOrder");
 
+  const columnHelper = createColumnHelper();
+
+  const visibleColumnKeys = ["due", "ref", "description", "priority", "asset", "status", "assigned", "location", "updated", "created"];
+
+  const dynamicColumns = visibleColumnKeys.map((columnKey) => {
+    return columnHelper.accessor(columnKey, {
+      header: () => <span>{columnKey}</span>,
+      cell: (info) => info.renderValue(),
+    });
+
+  
+
+  });
   return (
     <div className="commonPage container">
-      <div>
+      <div className="">
         <div className="commonPageTop">
           <h3 className="pageTitle">work order</h3>
           <div class="dropdown actionDropdown">
@@ -22,7 +39,7 @@ function WorkOrder() {
             </button>
             <ul class="dropdown-menu">
               <li>
-                <Link class="dropdown-item action-dropdown-item" to="/work-order-form">
+                <Link class="dropdown-item action-dropdown-item" to="/request-form">
                   <customIcons.add style={{color: "green"}}/>
                   <span>Add Work Order</span>
                 </Link>
@@ -36,11 +53,11 @@ function WorkOrder() {
           <Link>work order</Link>
         </div>
         <div className="testBorder">
-           <DataTable/>
+           <RequestTable/>
         </div>
       </div>
     </div>
   );
 }
 
-export default WorkOrder;
+export default Requests;

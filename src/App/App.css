@@ -15,7 +15,7 @@ body {
   --main-color-light: rgba(88, 69, 57, 0.6);
   --see-through: transparent;
   --angel: white;
-  --main-bgcolor: #dddcdc;
+  --main-bgcolor: #E7E7E7;
   --fallen-angel: rgb(212, 212, 212);
   --not-black: #4d4d4d;
   --not-not-black: rgb(77, 77, 77, 0.6);
@@ -32,6 +32,7 @@ body {
 
   --border-radius: 8px;
   --border-radius-small: 5px;
+  --border-radius-big: 19px;
 }
 
 .containers{
@@ -99,4 +100,20 @@ button{
 
 .App .row{
   background-color: beige;
+}
+
+
+
+
+
+
+
+.stepFlex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.innerAsset{
+  display: flex;
+  gap: 30px;
 }

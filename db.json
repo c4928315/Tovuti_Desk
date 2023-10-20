@@ -1,8 +1,5 @@
 {
-  "assets": [
-
-  ],
-
+  "assets": [],
   "incidents": [
     {
       "id": 1,
@@ -122,28 +119,2040 @@
       "status": "Open"
     }
   ],
-
   "reminders": [
     {
-        "id": 1,
-        "reference": "Broken Pump Valve",
-        "location": "Rubis Langata Road",
-        "description": "Pump A valve disintegrated and needs replacement",
-        "status": "New"
+      "id": 1,
+      "reference": "Broken Pump Valve",
+      "location": "Rubis Langata Road",
+      "description": "Pump A valve disintegrated and needs replacement",
+      "status": "New"
     },
     {
-        "id": 2,
-        "reference": "Leaking Pipe",
-        "location": "Rubis Capital Centre",
-        "description": "Pump A valve disintegrated and needs replacement",
-        "status": "Complete"
+      "id": 2,
+      "reference": "Leaking Pipe",
+      "location": "Rubis Capital Centre",
+      "description": "Pump A valve disintegrated and needs replacement",
+      "status": "Complete"
     },
     {
+      "id": 3,
+      "reference": "Tank Maintenance",
+      "location": "Rubis Karen",
+      "description": "Technician requested for Metal Screws Grade 1",
+      "status": "Ongoing"
+    }
+  ],
+  "requests": [
+    {
+      "id": 1,
+      "RequestRef": "RequestRef1",
+      "Recurrence": "First Time",
+      "Description": "Pump Nozzle leaking from the pipe since Monday",
+      "Status": {
+        "StatusId": 1,
+        "Name": "Pending"
+      },
+      "Location": {
+        "LocationId": 1,
+        "Name": "Narok"
+      },
+      "Asset": [
+        {
+          "AssetId": 1,
+          "Name": "Pump"
+        },
+        {
+          "AssetId": 2,
+          "Name": "Generator"
+        }
+      ],
+      "Fault": [
+        {
+          "FaultId": 1,
+          "Name": "Faulty POS"
+        },
+        {
+          "FaultId": 2,
+          "Name": "CPU Damage"
+        }
+      ],
+      "WorkOrder": {
+        "Title": "POS and CPU",
+        "Description": "Repair the POS and CPU",
+        "CategoryOfWork": {
+          "id": 1,
+          "Name": "Engineering"
+        },
+        "Priority": "Low",
+        "AssignTeam": {
+          "id": 1,
+          "Name": "Primary Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 2,
+          "Name": "Secondary Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 1,
+            "Name": "POS Checklist"
+          },
+          {
+            "ChecklistId": 2,
+            "Name": "CPU Checklist"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 1,
+            "Name": "File 1"
+          },
+          {
+            "FileId": 2,
+            "Name": "File 2"
+          }
+        ]
+      },
+      "CreatedBy": "Chris Smith",
+      "DateCreated": "18/10/2023"
+    },
+    {
+      "id": 2,
+      "RequestRef": "RequestRef2",
+      "Recurrence": "First Time",
+      "Description": "Pump Nozzle leaking from the pipe since Monday",
+      "Status": {
+        "StatusId": 2,
+        "Name": "Pending"
+      },
+      "Location": {
+        "LocationId": 2,
+        "Name": "Nairobi"
+      },
+      "Asset": [
+        {
+          "AssetId": 3,
+          "Name": "Fan"
+        },
+        {
+          "AssetId": 4,
+          "Name": "Laptop"
+        }
+      ],
+      "Fault": [
+        {
+          "FaultId": 3,
+          "Name": "Network Issue"
+        },
+        {
+          "FaultId": 4,
+          "Name": "Screen Crack"
+        }
+      ],
+      "WorkOrder": {
+        "Title": "Network and Screen",
+        "Description": "Fix network issue and replace the screen",
+        "CategoryOfWork": {
+          "id": 2,
+          "Name": "IT"
+        },
+        "Priority": "High",
+        "AssignTeam": {
+          "id": 3,
+          "Name": "IT Support"
+        },
+        "AssignAdditionalTeam": {
+          "id": 4,
+          "Name": "Hardware Team"
+        },
+        "TechnicianSignature": "False",
+        "Checklist": [
+          {
+            "ChecklistId": 3,
+            "Name": "Network Checklist"
+          },
+          {
+            "ChecklistId": 4,
+            "Name": "Screen Replacement Checklist"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 3,
+            "Name": "Network_Logs.pdf"
+          },
+          {
+            "FileId": 4,
+            "Name": "Screen_Replacement_Guide.pdf"
+          }
+        ]
+      },
+      "CreatedBy": "John Doe",
+      "DateCreated": "19/10/2023"
+    },
+    {
+      "id": 3,
+      "RequestRef": "RequestRef3",
+      "Recurrence": "First Time",
+      "Description": "Pump Nozzle leaking from the pipe since Monday",
+      "Status": {
+        "StatusId": 3,
+        "Name": "In Progress"
+      },
+      "Location": {
+        "LocationId": 3,
+        "Name": "Mombasa"
+      },
+      "Asset": [
+        {
+          "AssetId": 5,
+          "Name": "Printer"
+        },
+        {
+          "AssetId": 6,
+          "Name": "Projector"
+        }
+      ],
+      "Fault": [
+        {
+          "FaultId": 5,
+          "Name": "Paper Jam"
+        },
+        {
+          "FaultId": 6,
+          "Name": "Blurry Image"
+        }
+      ],
+      "WorkOrder": {
+        "Title": "Printer and Projector",
+        "Description": "Clear paper jam and fix blurry image on projector",
+        "CategoryOfWork": {
+          "id": 3,
+          "Name": "Hardware"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 5,
+          "Name": "Hardware Support"
+        },
+        "AssignAdditionalTeam": {
+          "id": 6,
+          "Name": "AV Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 5,
+            "Name": "Printer Jam Checklist"
+          },
+          {
+            "ChecklistId": 6,
+            "Name": "Projector Image Quality Checklist"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 5,
+            "Name": "Printer_Maintenance_Manual.pdf"
+          },
+          {
+            "FileId": 6,
+            "Name": "Projector_Calibration_Guide.pdf"
+          }
+        ]
+      },
+      "CreatedBy": "Alice Johnson",
+      "DateCreated": "20/10/2023"
+    },
+    {
+      "id": 4,
+      "RequestRef": "RequestRef4",
+      "Recurrence": "First Time",
+      "Description": "Pump Nozzle leaking from the pipe since Monday",
+      "Status": {
+        "StatusId": 4,
+        "Name": "Completed"
+      },
+      "Location": {
+        "LocationId": 4,
+        "Name": "Eldoret"
+      },
+      "Asset": [
+        {
+          "AssetId": 7,
+          "Name": "Lawn Mower"
+        },
+        {
+          "AssetId": 8,
+          "Name": "Leaf Blower"
+        }
+      ],
+      "Fault": [
+        {
+          "FaultId": 7,
+          "Name": "Won't Start"
+        },
+        {
+          "FaultId": 8,
+          "Name": "Noisy Operation"
+        }
+      ],
+      "WorkOrder": {
+        "Title": "Garden Equipment",
+        "Description": "Fix the lawn mower and reduce noise from the leaf blower",
+        "CategoryOfWork": {
+          "id": 4,
+          "Name": "Landscaping"
+        },
+        "Priority": "High",
+        "AssignTeam": {
+          "id": 7,
+          "Name": "Landscaping Crew"
+        },
+        "AssignAdditionalTeam": {
+          "id": 8,
+          "Name": "Noise Control Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 7,
+            "Name": "Lawn Mower Maintenance"
+          },
+          {
+            "ChecklistId": 8,
+            "Name": "Noise Reduction Checklist"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 7,
+            "Name": "Lawn_Mower_Manual.pdf"
+          },
+          {
+            "FileId": 8,
+            "Name": "Noise_Reduction_Guide.pdf"
+          }
+        ]
+      },
+      "CreatedBy": "Michael Brown",
+      "DateCreated": "21/10/2023"
+    },
+    {
+      "id": 5,
+      "RequestRef": "RequestRef5",
+      "Recurrence": "First Time",
+      "Description": "Pump Nozzle leaking from the pipe since Monday",
+      "Status": {
+        "StatusId": 5,
+        "Name": "Pending"
+      },
+      "Location": {
+        "LocationId": 5,
+        "Name": "Kisumu"
+      },
+      "Asset": [
+        {
+          "AssetId": 9,
+          "Name": "Refrigerator"
+        },
+        {
+          "AssetId": 10,
+          "Name": "Oven"
+        }
+      ],
+      "Fault": [
+        {
+          "FaultId": 9,
+          "Name": "Not Cooling"
+        },
+        {
+          "FaultId": 10,
+          "Name": "Uneven Heating"
+        }
+      ],
+      "WorkOrder": {
+        "Title": "Kitchen Appliances",
+        "Description": "Repair the refrigerator cooling issue and fix uneven heating in the oven",
+        "CategoryOfWork": {
+          "id": 5,
+          "Name": "Kitchen Appliances"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 9,
+          "Name": "Appliance Repair Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 10,
+          "Name": "Oven Calibration Team"
+        },
+        "TechnicianSignature": "False",
+        "Checklist": [
+          {
+            "ChecklistId": 9,
+            "Name": "Refrigerator Troubleshooting"
+          },
+          {
+            "ChecklistId": 10,
+            "Name": "Oven Heating Calibration"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 9,
+            "Name": "Refrigerator_User_Manual.pdf"
+          },
+          {
+            "FileId": 10,
+            "Name": "Oven_Calibration_Instructions.pdf"
+          }
+        ]
+      },
+      "CreatedBy": "Emily White",
+      "DateCreated": "22/10/2023"
+    },
+    {
+      "id": 6,
+      "RequestRef": "RequestRef6",
+      "Recurrence": "First Time",
+      "Description": "Pump Nozzle leaking from the pipe since Monday",
+      "Status": {
+        "StatusId": 6,
+        "Name": "In Progress"
+      },
+      "Location": {
+        "LocationId": 6,
+        "Name": "Mombasa"
+      },
+      "Asset": [
+        {
+          "AssetId": 11,
+          "Name": "Boat"
+        },
+        {
+          "AssetId": 12,
+          "Name": "Jet Ski"
+        }
+      ],
+      "Fault": [
+        {
+          "FaultId": 11,
+          "Name": "Engine Stalling"
+        },
+        {
+          "FaultId": 12,
+          "Name": "Overheating"
+        }
+      ],
+      "WorkOrder": {
+        "Title": "Marine Repairs",
+        "Description": "Fix engine stalling in the boat and address overheating issues in the jet ski",
+        "CategoryOfWork": {
+          "id": 6,
+          "Name": "Marine"
+        },
+        "Priority": "High",
+        "AssignTeam": {
+          "id": 11,
+          "Name": "Marine Engineers"
+        },
+        "AssignAdditionalTeam": {
+          "id": 12,
+          "Name": "Cooling System Experts"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 11,
+            "Name": "Boat Engine Troubleshooting"
+          },
+          {
+            "ChecklistId": 12,
+            "Name": "Jet Ski Cooling System Check"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 11,
+            "Name": "Boat_Repair_Manual.pdf"
+          },
+          {
+            "FileId": 12,
+            "Name": "Jet_Ski_Cooling_Instructions.pdf"
+          }
+        ]
+      },
+      "CreatedBy": "Daniel Johnson",
+      "DateCreated": "23/10/2023"
+    },
+    {
+      "id": 7,
+      "RequestRef": "RequestRef7",
+      "Recurrence": "First Time",
+      "Description": "Pump Nozzle leaking from the pipe since Monday",
+      "Status": {
+        "StatusId": 7,
+        "Name": "Completed"
+      },
+      "Location": {
+        "LocationId": 7,
+        "Name": "Nairobi"
+      },
+      "Asset": [
+        {
+          "AssetId": 13,
+          "Name": "Forklift"
+        },
+        {
+          "AssetId": 14,
+          "Name": "Crane"
+        }
+      ],
+      "Fault": [
+        {
+          "FaultId": 13,
+          "Name": "Hydraulic Leak"
+        },
+        {
+          "FaultId": 14,
+          "Name": "Crane Arm Jammed"
+        }
+      ],
+      "WorkOrder": {
+        "Title": "Heavy Machinery Repair",
+        "Description": "Fix hydraulic leak in the forklift and unjam the crane arm",
+        "CategoryOfWork": {
+          "id": 7,
+          "Name": "Heavy Machinery"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 13,
+          "Name": "Hydraulic Specialists"
+        },
+        "AssignAdditionalTeam": {
+          "id": 14,
+          "Name": "Crane Mechanics"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 13,
+            "Name": "Forklift Hydraulics Check"
+          },
+          {
+            "ChecklistId": 14,
+            "Name": "Crane Arm Repair Checklist"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 13,
+            "Name": "Forklift_Hydraulics_Manual.pdf"
+          },
+          {
+            "FileId": 14,
+            "Name": "Crane_Repair_Guide.pdf"
+          }
+        ]
+      },
+      "CreatedBy": "Sarah Davis",
+      "DateCreated": "24/10/2023"
+    },
+    {
+      "id": 8,
+      "RequestRef": "RequestRef8",
+      "Recurrence": "First Time",
+      "Description": "Pump Nozzle leaking from the pipe since Monday",
+      "Status": {
+        "StatusId": 8,
+        "Name": "Pending"
+      },
+      "Location": {
+        "LocationId": 8,
+        "Name": "Kisii"
+      },
+      "Asset": [
+        {
+          "AssetId": 15,
+          "Name": "Refrigerated Truck"
+        },
+        {
+          "AssetId": 16,
+          "Name": "Freezer"
+        }
+      ],
+      "Fault": [
+        {
+          "FaultId": 15,
+          "Name": "Cooling System Failure"
+        },
+        {
+          "FaultId": 16,
+          "Name": "Frost Buildup"
+        }
+      ],
+      "WorkOrder": {
+        "Title": "Cold Storage Repairs",
+        "Description": "Repair the cooling system in the refrigerated truck and remove frost buildup in the freezer",
+        "CategoryOfWork": {
+          "id": 8,
+          "Name": "Cold Storage"
+        },
+        "Priority": "High",
+        "AssignTeam": {
+          "id": 15,
+          "Name": "Refrigeration Experts"
+        },
+        "AssignAdditionalTeam": {
+          "id": 16,
+          "Name": "Freezer Maintenance Team"
+        },
+        "TechnicianSignature": "False",
+        "Checklist": [
+          {
+            "ChecklistId": 15,
+            "Name": "Refrigerated Truck Cooling System"
+          },
+          {
+            "ChecklistId": 16,
+            "Name": "Freezer Frost Removal"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 15,
+            "Name": "Truck_Cooling_Manual.pdf"
+          },
+          {
+            "FileId": 16,
+            "Name": "Freezer_Maintenance_Guide.pdf"
+          }
+        ]
+      },
+      "CreatedBy": "James Wilson",
+      "DateCreated": "25/10/2023"
+    },
+    {
+      "id": 9,
+      "RequestRef": "RequestRef9",
+      "Recurrence": "First Time",
+      "Description": "Pump Nozzle leaking from the pipe since Monday",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "Location": {
+        "LocationId": 9,
+        "Name": "Nairobi"
+      },
+      "Asset": [
+        {
+          "AssetId": 17,
+          "Name": "Elevator"
+        },
+        {
+          "AssetId": 18,
+          "Name": "Escalator"
+        }
+      ],
+      "Fault": [
+        {
+          "FaultId": 17,
+          "Name": "Stuck Between Floors"
+        },
+        {
+          "FaultId": 18,
+          "Name": "Slow Movement"
+        }
+      ],
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ]
+      },
+      "CreatedBy": "Sophia Lee",
+      "DateCreated": "26/10/2023"
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Location": {
         "id": 3,
-        "reference": "Tank Maintenance",
-        "location": "Rubis Karen",
-        "description": "Technician requested for Metal Screws Grade 1",
-        "status": "Ongoing"
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 1,
+          "Name": "Asset category 1"
+        }
+      ],
+      "Description": "warty",
+      "Recurrence": "Recurrent Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 10
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Location": {
+        "id": 3,
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 5,
+          "Name": "Asset category 5"
+        }
+      ],
+      "Description": "wexrctvybu",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 11
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Location": {
+        "id": 3,
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 1,
+          "Name": "Asset category 1"
+        }
+      ],
+      "Description": "12345",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 12
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Location": {
+        "id": 3,
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 5,
+          "Name": "Asset category 5"
+        }
+      ],
+      "Description": "234adc",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 13
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 3,
+          "Name": "Asset category 3"
+        }
+      ],
+      "Location": {
+        "id": 2,
+        "Name": "Asset category 2"
+      },
+      "Fault": [
+        {
+          "FaultId": 5,
+          "Name": "Asset category 5"
+        }
+      ],
+      "Description": "werctvybj12345",
+      "Recurrence": "Recurrent Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 14
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Location": {
+        "id": 3,
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 3,
+          "Name": "Asset category 3"
+        }
+      ],
+      "Description": "awsedrftgy",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 15
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 1,
+          "Name": "Asset category 1"
+        }
+      ],
+      "Location": {
+        "id": 2,
+        "Name": "Asset category 2"
+      },
+      "Fault": [
+        {
+          "FaultId": 1,
+          "Name": "Asset category 1"
+        },
+        {
+          "FaultId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Description": "qswdefrg",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 16
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Location": {
+        "id": 3,
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 4,
+          "Name": "Asset category 4"
+        },
+        {
+          "FaultId": 5,
+          "Name": "Asset category 5"
+        }
+      ],
+      "Description": "awserd",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 17
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 3,
+          "Name": "Asset category 3"
+        }
+      ],
+      "Location": {
+        "id": 2,
+        "Name": "Asset category 2"
+      },
+      "Fault": [
+        {
+          "FaultId": 3,
+          "Name": "Asset category 3"
+        },
+        {
+          "FaultId": 4,
+          "Name": "Asset category 4"
+        }
+      ],
+      "Description": "wsedrfg",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 18
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 3,
+          "Name": "Asset category 3"
+        }
+      ],
+      "Location": {
+        "id": 2,
+        "Name": "Asset category 2"
+      },
+      "Fault": [
+        {
+          "FaultId": 2,
+          "Name": "Asset category 2"
+        },
+        {
+          "FaultId": 1,
+          "Name": "Asset category 1"
+        },
+        {
+          "FaultId": 3,
+          "Name": "Asset category 3"
+        }
+      ],
+      "Description": "dxfcgvh",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 19
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Location": {
+        "id": 3,
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 4,
+          "Name": "Asset category 4"
+        }
+      ],
+      "Description": "wer",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 20
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 3,
+          "Name": "Asset category 3"
+        }
+      ],
+      "Location": {
+        "id": 3,
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 1,
+          "Name": "Asset category 1"
+        },
+        {
+          "FaultId": 2,
+          "Name": "Asset category 2"
+        },
+        {
+          "FaultId": 5,
+          "Name": "Asset category 5"
+        },
+        {
+          "FaultId": 4,
+          "Name": "Asset category 4"
+        },
+        {
+          "FaultId": 3,
+          "Name": "Asset category 3"
+        }
+      ],
+      "Description": "sxdcfvgbh",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 21
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 4,
+          "Name": "Asset category 4"
+        }
+      ],
+      "Location": {
+        "id": 3,
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 1,
+          "Name": "Asset category 1"
+        },
+        {
+          "FaultId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Description": "zxdcfgv",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 22
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Location": {
+        "id": 3,
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 5,
+          "Name": "Asset category 5"
+        },
+        {
+          "FaultId": 1,
+          "Name": "Asset category 1"
+        }
+      ],
+      "Description": "pdf",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 23
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Location": {
+        "id": 3,
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 2,
+          "Name": "Asset category 2"
+        },
+        {
+          "FaultId": 5,
+          "Name": "Asset category 5"
+        }
+      ],
+      "Description": "",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 24
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Location": {
+        "id": 3,
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 2,
+          "Name": "Asset category 2"
+        },
+        {
+          "FaultId": 5,
+          "Name": "Asset category 5"
+        }
+      ],
+      "Description": "",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 25
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Location": {
+        "id": 3,
+        "Name": "Asset category 3"
+      },
+      "Fault": [
+        {
+          "FaultId": 3,
+          "Name": "Asset category 3"
+        },
+        {
+          "FaultId": 4,
+          "Name": "Asset category 4"
+        }
+      ],
+      "Description": "dxcfgvbh",
+      "Recurrence": "First Time Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 26
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 3,
+          "Name": "Asset category 3"
+        }
+      ],
+      "Location": {
+        "id": 2,
+        "Name": "Asset category 2"
+      },
+      "Fault": [
+        {
+          "FaultId": 3,
+          "Name": "Asset category 3"
+        },
+        {
+          "FaultId": 4,
+          "Name": "Asset category 4"
+        },
+        {
+          "FaultId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Description": "23retyu67i8",
+      "Recurrence": "Recurrent Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 27
+    },
+    {
+      "Asset": [
+        {
+          "AssetId": 3,
+          "Name": "Asset category 3"
+        }
+      ],
+      "Location": {
+        "id": 2,
+        "Name": "Asset category 2"
+      },
+      "Fault": [
+        {
+          "FaultId": 3,
+          "Name": "Asset category 3"
+        },
+        {
+          "FaultId": 4,
+          "Name": "Asset category 4"
+        },
+        {
+          "FaultId": 2,
+          "Name": "Asset category 2"
+        }
+      ],
+      "Description": "23retyu67i8",
+      "Recurrence": "Recurrent Fault",
+      "AttachedFiles": [],
+      "RequestRef": "RequestRef9",
+      "Status": {
+        "StatusId": 9,
+        "Name": "In Progress"
+      },
+      "WorkOrder": {
+        "Title": "Vertical Transport Repairs",
+        "Description": "Unstuck the elevator and improve the speed of the escalator",
+        "CategoryOfWork": {
+          "id": 9,
+          "Name": "Vertical Transport"
+        },
+        "Priority": "Medium",
+        "AssignTeam": {
+          "id": 17,
+          "Name": "Elevator Rescue Team"
+        },
+        "AssignAdditionalTeam": {
+          "id": 18,
+          "Name": "Escalator Efficiency Team"
+        },
+        "TechnicianSignature": "True",
+        "Checklist": [
+          {
+            "ChecklistId": 17,
+            "Name": "Elevator Stuck Troubleshooting"
+          },
+          {
+            "ChecklistId": 18,
+            "Name": "Escalator Speed Optimization"
+          }
+        ],
+        "AttachedFiles": [
+          {
+            "FileId": 17,
+            "Name": "Elevator_Unstucking_Guide.pdf"
+          },
+          {
+            "FileId": 18,
+            "Name": "Escalator_Speed_Improvement.pdf"
+          }
+        ],
+        "CreatedBy": "Sophia Lee",
+        "DateCreated": "26/10/2023"
+      },
+      "id": 28
     }
   ]
 }

@@ -23,7 +23,7 @@ function Nav() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav navLinksContainer">
+            <div className="navbar-nav navLinksContainer mainNavigationBar">
               <Link className="nav-link navLinks active" aria-current="page" href="#">
                 Home
               </Link>

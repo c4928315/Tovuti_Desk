@@ -38,6 +38,7 @@ function Grid() {
         <div className="item2 items123">
           <Card
             data={data}
+            link="/requests"
             text="Incidents"
             dropdownText="Period"
             dropdownClassName="gridStatusSelect"

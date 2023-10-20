@@ -41,11 +41,10 @@
 
 .workOrderEntry {
   width: fit-content;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   text-transform: capitalize;
   margin-bottom: 30px;
-  border-bottom: 1px solid var(--not-black);
   padding-bottom: 5px;
 }
 
@@ -159,7 +158,6 @@
 }
 
 .attachFile{
-    width: 400px !important;
     margin-bottom: 30px;
     border-left: none;
 }
@@ -189,4 +187,25 @@
     bottom: 0;
     opacity: 1;
     color: white;
+}
+
+
+
+.stepFlex{
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  height: fit-content;
+  background-color: white;
+}
+
+.center-stepper{
+  width: 40%;
+}
+
+.stepHeader{
+  padding: 30px 30px 10px 30px;
+  background-color: var(--angel);
+  font-weight: 600;
+  font-size: 18px;
 }

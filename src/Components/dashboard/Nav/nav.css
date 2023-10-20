@@ -1,11 +1,14 @@
 .navigation{
     background-color: var(--main-color);
     margin-bottom: 0;
+    width: 100%;
 }
 
 .mainNav{
     background-color: var(--main-color) !important;
     padding: 20px 0!important;
+    width: 89%;
+    margin: 0 auto;
 }
 
 .container-fluid{

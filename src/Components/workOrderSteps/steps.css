@@ -1,0 +1,99 @@
+.stepInput{
+    background-color: lightgray;
+    width: 320px !important;
+    padding: 0px 10px 0 10px !important;
+    border-radius: 12px;
+    height: 48px !important;
+    text-align: center;
+}
+
+.notHeader{
+    background-color: lightgray;
+    height: 57px;
+    margin-top: 5px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.innerAsset{
+    display: flex;
+    width: 100%;
+    margin-bottom: 40px;
+    height: 100%;
+}
+
+.checkBox{
+    width: 320px;
+
+}
+
+.stepFlex{
+    margin-bottom: 20px;
+}
+
+.allStepAsset{
+    padding: 0 30px;
+}
+
+.innerAsset div label{
+    margin: 4px 0 0 8px;
+}
+
+.stepTopHeader, .nextBtn{
+    margin-left: 27px !important;
+}
+
+.stepFlex label{
+    padding-top: 3px;
+    padding-left: 10px;
+    text-transform: capitalize;
+    display: none;
+}
+
+
+
+
+/**
+Work Order
+**/
+
+.workOrderInput{
+    background-color: lightgray;
+    width: 330px !important;
+    border-radius: 12px;
+    height: 45px !important;
+    padding: 0px 10px 0 10px !important;
+    border-bottom: none !important;
+    margin-left: 0 !important;
+}
+
+.tabContainer{
+    margin-bottom: 30px;
+}
+
+.fieldLabel{
+    display: flex;
+    flex-direction: column;
+}
+
+.tabsNav{
+    border-radius: 50%;
+}
+
+.stepBtnContainer{
+    width: 100%;
+    float: right;
+}
+
+.summaryHeader{
+    color: lightgray;
+    text-transform: uppercase;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.summarryStep{
+    width: 100%;
+}

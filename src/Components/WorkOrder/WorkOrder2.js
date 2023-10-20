@@ -2,13 +2,15 @@ import React from "react";
 import "./workOrder.css";
 import customIcons from "../../Icons/icons";
 import { Link } from "react-router-dom";
-import DataTable from "../Tables/Table3/table3";
+import DataTable from "../Tables/Table2/table2";
+import WorkOrderForm from "../Forms/WorkOrder/workOrderForm";
 
-function WorkOrder() {
+
+function WorkOrder2() {
 
   return (
     <div className="commonPage container">
-      <div>
+      <div className="">
         <div className="commonPageTop">
           <h3 className="pageTitle">work order</h3>
           <div class="dropdown actionDropdown">
@@ -22,7 +24,7 @@ function WorkOrder() {
             </button>
             <ul class="dropdown-menu">
               <li>
-                <Link class="dropdown-item action-dropdown-item" to="/work-order-form">
+                <Link class="dropdown-item action-dropdown-item" to="/request-form">
                   <customIcons.add style={{color: "green"}}/>
                   <span>Add Work Order</span>
                 </Link>
@@ -36,11 +38,11 @@ function WorkOrder() {
           <Link>work order</Link>
         </div>
         <div className="testBorder">
-           <DataTable/>
+           <WorkOrderForm/>
         </div>
       </div>
     </div>
   );
 }
 
-export default WorkOrder;
+export default WorkOrder2;

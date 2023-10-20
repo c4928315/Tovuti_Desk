@@ -1,0 +1,151 @@
+.requestTable table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.requestTable {
+  background-color: white;
+  position: relative;
+  padding: 60px 30px;
+  border-radius: 12px;
+}
+
+.requestTable table thead tr th{
+    font-size: 15px;
+    font-weight: 600;
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.requestTable table thead tr:hover{
+    background-color: white !important;
+}
+
+.requestTable table thead tr th,
+.requestTable table tbody tr td {
+  padding: 15px 5px !important;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+
+.requestTable table tbody tr td {
+  font-size: 14px;
+  width: 10px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+tbody tr .tBodyTd{
+  max-width: 100px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.requestTable table tbody tr:hover {
+  background-color: #d6eeee !important;
+}
+
+.paginationIcon {
+  height: 38px !important;
+}
+
+.searchFilterContainer{
+    position: relative;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filterInputContainer {
+  display: flex;
+  gap: 10px;
+  bottom: 0px;
+  right: 40px;
+}
+
+.visible{
+    display: flex;
+}
+
+.globalSearch{
+    border: 1px solid lightgray;
+    padding: 5px;
+    border-radius: 6px;
+    padding-left: 8px;
+    color: black;
+    width: 170px;
+}
+
+.filterInput {
+  width: 90px;
+  outline: none;
+  border: 1px solid lightgray;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 5px;
+  border-radius: 4px;
+  height: 28px;
+}
+
+.filterInput::placeholder{
+    color: black;
+    text-transform: capitalize;
+    font-size: 13px;
+}
+
+.filterInput:focus::placeholder{
+    color: rgb(157, 157, 157);
+    text-transform: lowercase;
+}
+
+.paginationNav{
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    margin-top: 30px;
+}
+
+.pagination a{
+    background-color: white !important;
+    color: black !important;
+}
+
+.activeNav a{
+    color: black !important;
+    background-color: lightgray !important;
+}
+
+.columnFilterSign{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.filterIcon{
+    border: 1px solid black ;
+    border-radius: 4px;
+    height: 24px;
+    width: 24px;
+    padding: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.filterIcon:hover{
+    background-color: black;
+    color: white;
+}
+
+.columnFilterSign p{
+    font-size: 16px;
+    font-weight: 500;
+}
+

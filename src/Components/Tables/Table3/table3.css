@@ -1,0 +1,19 @@
+.custom-header{
+    color: var(--main-color) !important;
+    text-transform: capitalize !important;
+    background-color: lightgray !important;
+    font-size: 15px;
+    outline: none;
+    border: none;
+    font-weight: bolder !important;
+}
+
+.custom-header:active{
+    outline: none;
+    border: none;
+}
+
+.mainTable{
+    overflow: hidden;
+    text-align: center;
+}
