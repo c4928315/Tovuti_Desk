@@ -58,6 +58,8 @@ function Request() {
   const [Recurrence, setRecurrence] = useState("notDefault");
   const [AttachedFiles, setAttachedFiles] = useState([]);
 
+  const [data, setData] = useState([]);
+
   useEffect(() => {
     const storedFormData = JSON.parse(localStorage.getItem("formData"));
     if (storedFormData) {
@@ -280,6 +282,7 @@ function Request() {
       })
       .then((data) => {
         console.log("Data posted successfully:", data);
+        setData(data)
       })
       .catch((error) => {
         console.error("There was a problem with the network request:", error);
@@ -332,9 +335,9 @@ function Request() {
         <div className="commonPageMiddle">
           <Link to="/">home</Link>
           <div className="dividerCommonPage"></div>
-          <Link to="/requests">work order</Link>
+          <Link to="/requests">New Request</Link>
           <div className="dividerCommonPage"></div>
-          <Link>Add work order</Link>
+          <Link>Add New Request</Link>
         </div>
         <div className="commonPageBottom container">
           <h3 className="workOrderTitle">New Request</h3>
@@ -508,6 +511,7 @@ function Request() {
                         </label>
                         <input
                           type="file"
+                          disabled
                           class="form-control attachFile"
                           id="inputGroupFile02"
                           onChange={handleFileChange}

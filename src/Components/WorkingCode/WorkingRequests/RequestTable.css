@@ -149,3 +149,58 @@ tbody tr .tBodyTd{
     font-weight: 500;
 }
 
+.statusFilterBlock{
+  display: block;
+}
+
+.allFiltersContainer{
+  position: relative;
+}
+
+.statusFilter{
+  position: absolute;
+  padding: 10px 5px;
+  background-color: rgb(229, 229, 229);
+  margin-top: 4px;
+  border-radius: 4px;
+}
+
+.statusFilter input{
+  border-radius: 4px;
+  padding-left: 4px;
+  margin: 0 5px;
+}
+
+.statusFilterNoShow{
+  display: block;
+}
+
+.statusFilterShow{
+  display: none;
+}
+
+.filterIconDropDown{
+  transform: scaleY(-1);
+}
+
+.filterIconStatement{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: capitalize;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-size: 14px;
+}
+
+.topFilterContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.statusFilterAbsolute{
+  display: block;
+}

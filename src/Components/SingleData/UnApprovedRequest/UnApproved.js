@@ -7,7 +7,7 @@ function UnApprovedRequestDetailsPage() {
   const [itemDetails, setItemDetails] = useState(null);
 
   useEffect(() => {
-    const apiUrl = `http://localhost:3000/requests/${Id}`;
+    const apiUrl = `https://intra-deco.onrender.com/requests/${Id}`;
 
     fetch(apiUrl)
       .then((response) => {

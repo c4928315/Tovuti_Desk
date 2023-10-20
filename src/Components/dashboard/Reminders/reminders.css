@@ -90,6 +90,10 @@
     margin-left: 14px;
     display: flex;
     gap: 20px;
+    margin-top: 20px;
 }
 
 
+.singleReminder hr{
+    margin: 20px 0;
+}
