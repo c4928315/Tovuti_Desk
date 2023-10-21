@@ -373,24 +373,8 @@ function Request() {
 
                 <form onSubmit={handleFormSubmit}>
                   <div className="formRow">
-                    <div className="formRowLeft">
-                      <h3 className="requestHeader">select faulty asset</h3>
-                      <select
-                        data-te-select-init
-                        data-te-select-clear-button="true"
-                        className="requestSelect"
-                        value={selectedAsset.id}
-                        onChange={handleAssetChange}
-                      >
-                        {assetCategory.map((option) => (
-                          <option key={option.id} value={option.id}>
-                            {option.Name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
 
-                    <div className="formRowRight">
+                  <div className="formRowRight">
                       <h3 className="requestHeader">where are you located</h3>
                       <select
                         data-te-select-init
@@ -405,6 +389,23 @@ function Request() {
                             value={option.id}
                             className="optionButtons"
                           >
+                            {option.Name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="formRowLeft">
+                      <h3 className="requestHeader">select faulty asset</h3>
+                      <select
+                        data-te-select-init
+                        data-te-select-clear-button="true"
+                        className="requestSelect"
+                        value={selectedAsset.id}
+                        onChange={handleAssetChange}
+                      >
+                        {assetCategory.map((option) => (
+                          <option key={option.id} value={option.id}>
                             {option.Name}
                           </option>
                         ))}
