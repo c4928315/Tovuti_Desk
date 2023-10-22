@@ -2,7 +2,7 @@ import React from "react";
 import "./workOrder.css";
 import customIcons from "../../Icons/icons";
 import { Link } from "react-router-dom";
-import DataTable from "../Tables/Table3/table3";
+import DataTable from "../Tables/Table3/workOrderTable";
 
 function WorkOrder() {
 
