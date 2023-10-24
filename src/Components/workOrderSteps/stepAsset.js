@@ -1,65 +1,172 @@
 import React, { useContext } from "react";
 import Box from "@mui/material/Box";
-import { Button, Checkbox, TextField } from "@material-ui/core";
+import { Button, Checkbox } from "@material-ui/core";
 import { MultiStepContext } from "../Context";
 import "./steps.css";
 
-const assetCategory = [
-  {
-    value: "Asset category 1",
-    label: "Asset category 1",
-  },
-  {
-    value: "Asset category 2",
-    label: "Asset category 2",
-  },
-  {
-    value: "Asset category 3",
-    label: "Asset category 3",
-  },
-  {
-    value: "foAsset category 4",
-    label: "Asset category 4",
-  },
-];
-
 const locations = [
   {
-    value: "Kenya",
+    value: 1,
     label: "Kenya",
+    assetCategory: [
+      {
+        CategoryId: 1,
+        CategoryName: "Movers",
+        Assets: [
+          {
+            AssetId: 1,
+            AssetName: "Pump",
+          },
+          {
+            AssetId: 2,
+            AssetName: "Cooler",
+          },
+        ],
+      },
+      {
+        CategoryId: 2,
+        CategoryName: "Shaker",
+        Assets: [
+          {
+            AssetId: 3,
+            AssetName: "Generator",
+          },
+          {
+            AssetId: 4,
+            AssetName: "Drill",
+          },
+        ],
+      },
+    ],
   },
   {
-    value: "Uganda",
+    value: 2,
     label: "Uganda",
+    assetCategory: [
+      {
+        CategoryId: 14,
+        CategoryName: "Movers2",
+        Assets: [
+          {
+            AssetId: 10,
+            AssetName: "Pump2",
+          },
+          {
+            AssetId: 5,
+            AssetName: "Cooler2",
+          },
+        ],
+      },
+      {
+        CategoryId: 20,
+        CategoryName: "Shaker2",
+        Assets: [
+          {
+            AssetId: 30,
+            AssetName: "Generator2",
+          },
+          {
+            AssetId: 40,
+            AssetName: "Drill2",
+          },
+        ],
+      },
+    ],
   },
   {
-    value: "Tanzania",
+    value: 3,
     label: "Tanzania",
+    assetCategory: [
+      {
+        CategoryId: 100,
+        CategoryName: "Movers3",
+        Assets: [
+          {
+            AssetId: 12,
+            AssetName: "Pump3",
+          },
+          {
+            AssetId: 24,
+            AssetName: "Cooler3",
+          },
+        ],
+      },
+      {
+        CategoryId: 200,
+        CategoryName: "Shaker3",
+        Assets: [
+          {
+            AssetId: 30,
+            AssetName: "Generator3",
+          },
+          {
+            AssetId: 40,
+            AssetName: "Drill3",
+          },
+        ],
+      },
+    ],
   },
   {
-    value: "Rwanda",
+    value: 4,
     label: "Rwanda",
+    assetCategory: [
+      {
+        CategoryId: 130,
+        CategoryName: "Movers4",
+        Assets: [
+          {
+            AssetId: 120,
+            AssetName: "Pump4",
+          },
+          {
+            AssetId: 204,
+            AssetName: "Cooler4",
+          },
+        ],
+      },
+      {
+        CategoryId: 210,
+        CategoryName: "Shaker4",
+        Assets: [
+          {
+            AssetId: 301,
+            AssetName: "Generator4",
+          },
+          {
+            AssetId: 410,
+            AssetName: "Drill4",
+          },
+        ],
+      },
+    ],
   },
-
-  //value gets shown
 ];
-
-const assets = ["Asset 1", "Asset 2", "Asset 3", "Asset 4"];
 
 function StepAsset() {
   const { setStep, userData, setUserData } = useContext(MultiStepContext);
 
-  console.log(userData);
+  const handleAssetCheckboxChange = (asset) => {
+    const { TicketAssets } = userData;
+    const assetIndex = TicketAssets.findIndex(
+      (selectedAsset) => selectedAsset.AssetId === asset.AssetId
+    );
 
-  const handleAssetCheckboxChange = (assets) => {
-    const { asset } = userData;
-
-    const updatedasset = asset.includes(assets)
-      ? asset.filter((selectedAsset) => selectedAsset !== assets)
-      : [...asset, assets];
-
-    setUserData({ ...userData, asset: updatedasset });
+    if (assetIndex !== -1) {
+      // Asset exists, remove it
+      const updatedTicketAssets = [...TicketAssets];
+      updatedTicketAssets.splice(assetIndex, 1);
+      setUserData({ ...userData, TicketAssets: updatedTicketAssets });
+    } else {
+      // Asset doesn't exist, add it
+      setUserData({
+        ...userData,
+        TicketAssets: [...TicketAssets, asset],
+      });
+    }
   };
+
+  console.log(userData)
 
   return (
     <div className="allStepAsset">
@@ -73,85 +180,123 @@ function StepAsset() {
         autoComplete="off"
       >
         <div className="innerAsset">
-          <div>
-            <TextField
-              id="outlined-select-currency-native"
-              select
-              className="stepInput"
-              InputProps={{ disableUnderline: true }}
-              label="location"
-              value={userData["location"] ? userData["location"].value : ""}
-              onChange={(e) => {
-                const selectedValue = e.target.value;
-                const selectedLabel =
-                  e.nativeEvent.target[e.nativeEvent.target.selectedIndex].text;
-                setUserData({
-                  ...userData,
-                  location: {
-                    selectedLocation: selectedValue,
-                    selectedLocationLabel: selectedLabel
-                  },
-                });
-              }}
-              defaultValue="EUR"
-              SelectProps={{
-                native: true,
-              }}
-            >
-              {locations.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </TextField>
-
-            <br />
-            <TextField
-              id="outline-select-currency-native"
-              select
-              label="assetCategory"
-              InputProps={{ disableUnderline: true }}
-              className="stepInput"
-              value={userData["assetCategory"]}
-              onChange={(e) =>
-                setUserData({ ...userData, assetCategory: e.target.value })
-              }
-              defaultValue="EUR"
-              SelectProps={{
-                native: true,
-              }}
-              variant="standard"
-            >
-              {assetCategory.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </TextField>
-          </div>
-          <div>
-            <h4>Asset(s)</h4>
-            <h4 className="notHeader">select</h4>
-            {assets.map((asset) => (
-              <div key={asset} className="checkBox">
-                <Checkbox
-                  checked={userData.asset.includes(asset)}
-                  onChange={() => handleAssetCheckboxChange(asset)}
-                />
-                <label>{asset}</label>
+          <div className="allEncompassing">
+            <div className="categoryAssetscontainer">
+              <div>
+                <h3>Location</h3>
+                <select
+                  className="assetsSelect"
+                  value={userData.TicketLocation.LocationId}
+                  onChange={(e) => {
+                    const selectedValue = e.target.value;
+                    const selectedLabel =
+                      e.nativeEvent.target[e.nativeEvent.target.selectedIndex].text;
+                    setUserData({
+                      ...userData,
+                      TicketLocation: {
+                        LocationId: parseInt(selectedValue),
+                        LocationName: selectedLabel,
+                      },
+                      TicketCategoryOfWork: {
+                        CategoryOfWorkId: null,
+                        CategoryOfWorkName: "",
+                      },
+                      TicketAssets: [], // Reset assets
+                    });
+                  }}
+                >
+                  <option value="" className="WoFade">Select</option>
+                  {locations.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               </div>
-            ))}
+
+              <div className="categoryAssetsFlex">
+                <div className="categoryAssets">
+                  <span>
+                    <h3>Asset Category</h3>
+                    <select
+                      className="assetsSelect"
+                      value={userData.TicketCategoryOfWork.CategoryOfWorkId}
+                      onChange={(e) => {
+                        const selectedValue = e.target.value;
+                        const selectedLabel =
+                          e.nativeEvent.target[
+                            e.nativeEvent.target.selectedIndex
+                          ].text;
+                        setUserData({
+                          ...userData,
+                          TicketCategoryOfWork: {
+                            CategoryOfWorkId: parseInt(selectedValue),
+                            CategoryOfWorkName: selectedLabel,
+                          },
+                          TicketAssets: [], // Reset assets
+                        });
+                      }}
+                    >
+                      <option value="" className="WoFade">Select</option>
+                      {locations
+                        .find((location) => {
+                          const isMatch =
+                            parseInt(location.value) ===
+                            parseInt(userData.TicketLocation.LocationId);
+                          return isMatch;
+                        })
+                        ?.assetCategory.map((category) => (
+                          <option
+                            key={category.CategoryId}
+                            value={category.CategoryId}
+                          >
+                            {category.CategoryName}
+                          </option>
+                        ))
+                      }
+                    </select>
+                  </span>
+                </div>
+                <span>
+                  <h4>Asset(s)</h4>
+                  <h4 className="notHeader WoFade">Select</h4>
+                  {locations
+                    .find(
+                      (location) =>
+                        parseInt(location.value) ===
+                        parseInt(userData.TicketLocation.LocationId)
+                    )
+                    ?.assetCategory.find(
+                      (category) =>
+                        parseInt(category.CategoryId) ===
+                        parseInt(userData.TicketCategoryOfWork.CategoryOfWorkId)
+                    )
+                    ?.Assets.map((asset) => (
+                      <div key={parseInt(asset.AssetId)} className="checkBox">
+                        <Checkbox
+                          checked={userData.TicketAssets.some(
+                            (selectedAsset) =>
+                              selectedAsset.AssetId === asset.AssetId
+                          )}
+                          onChange={() => handleAssetCheckboxChange(asset)}
+                        />
+                        <label>{asset.AssetName}</label>
+                        <span>{asset.AssetName}</span>
+                      </div>
+                    ))}
+                </span>
+              </div>
+            </div>
+            <Button
+              variant="contained"
+              className="nextBtn assetNextBtn"
+              color="primary"
+              onClick={() => setStep(2)}
+            >
+              Next
+            </Button>
           </div>
         </div>
-
-        <Button
-          variant="contained"
-          className="nextBtn"
-          color="primary"
-          onClick={() => setStep(2)}
-        >
-          Next
-        </Button>
       </Box>
     </div>
   );

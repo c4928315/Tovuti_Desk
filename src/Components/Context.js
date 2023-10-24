@@ -7,8 +7,34 @@ const Context = ({children}) => {
    
     assets: [],
     asset: [],
-    description: ""
+    TicketRef: "Ref101",
+    DueDate: "2023-11-20",
+    ModifiedDate: "2023-06-16",
+    TicketStatus: {
+      StatusId: 3,
+      StatusName: "In Progress"
+    },
+    TicketCurrentTeam:{},
+    TicketAdditionalTeams:[],
+    TicketLocation: {
+      
+    },
+    TicketPriority: {
+      TicketPriorityId: 1,
+      TicketPriorityName: "High"
+    },
+    TicketChecklistForms: {
+      FormsAndSectionsId: 20,
+      FormsAndSectionsName: "Form 1"
+    },
+    features:[],
+    TicketCategoryOfWork: {
+
+    }
+    
 })
+
+
 
   const [requestData, setRequestData] = useState({})
   const [finalData, setFinalData] = useState([])

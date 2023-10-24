@@ -8,13 +8,15 @@
 }
 
 .notHeader{
-    background-color: lightgray;
-    height: 57px;
-    margin-top: 5px;
-    border-radius: 12px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     padding-left: 20px;
+    width: 350px !important;
+    height: 35px !important;
+    background-color: #F1EFEF !important;
+    margin-top: 4%;
+    margin-bottom: -10%;
 }
 
 .innerAsset{
@@ -26,8 +28,12 @@
 
 .checkBox{
     width: 320px;
-
+    margin: 0px;
 }
+
+/* .checkBox span{
+    margin-top: 20px;
+} */
 
 .stepFlex{
     margin-bottom: 20px;
@@ -41,8 +47,10 @@
     margin: 4px 0 0 8px;
 }
 
-.stepTopHeader, .nextBtn{
-    margin-left: 27px !important;
+.stepTopHeader{
+    font-size: 17px;
+    font-weight: 500;
+    margin: 4% 0;
 }
 
 .stepFlex label{
@@ -97,3 +105,380 @@ Work Order
 .summarryStep{
     width: 100%;
 }
+
+
+.assetsSelect, .asset-toggle{
+    width: 350px !important;
+    height: 35px !important;
+    background-color: #f5f5f5 !important;
+    margin-top: 4%;
+}
+
+.asset-toggle{
+    color: black !important;
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+}
+
+.categoryAssets{
+    display: flex;
+    margin-top: 30px;
+    justify-content: space-between;
+    gap: 15%;
+}
+
+.assetNextBtn{
+    float: right;
+    margin-top: 20% !important;
+    background-color: orange !important;
+}
+
+.assetPrevBtn{
+    float: right;
+    margin-top: 20% !important;
+    background-color: white !important;
+    color: orange !important;
+    border: 1px solid orange !important;
+}
+
+.wOTabContainer{
+    display: flex;
+    align-items: center;
+}
+
+.css-1aquho2-MuiTabs-indicator{
+    background-color: white;
+}
+
+.newWorkOrder{
+    padding: 30px 0;
+}
+
+.newWorkOrderInput{
+    width: 350px !important;
+}
+
+.newWorkOrderCells{
+    display: flex;
+    gap: 50px;
+}
+
+.newWorkOrderCellsCheckBox{
+    display: flex;
+    gap: 2px;
+    margin-top: 20px;
+}
+
+
+.newWorkOrderCellsCheckBox .checkbox-button {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    background-color: #F1EFEF;
+    padding: 0;
+    padding-right: 12px !important;
+    width: 86px;
+    height: 45px;
+    display: flex;
+    justify-content: center;align-items: center;
+  }
+  
+  .newWorkOrderCellsCheckBox .checkbox-button input {
+    display: none;
+  }
+  
+  .newWorkOrderCellsCheckBox .checkbox-button .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+  }
+  
+ .newWorkOrderCellsCheckBox .checkbox-button .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+ .newWorkOrderCellsCheckBox .checkbox-button input:checked + .checkmark {
+    background-color: #2196F3;
+  }
+  
+ .newWorkOrderCellsCheckBox .checkbox-button input:checked + .checkmark:after {
+    display: block;
+  }
+  
+ .newWorkOrderCellsCheckBox .checkbox-button .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  
+
+  .newWorkOrderSelectStep2{
+    width: 350px !important;
+  }
+
+  .first-option{
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+
+  .last-option{
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+
+  .newWOflex{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    
+  }
+
+.newWOflex p{
+    margin-top: 20px !important;
+  }
+
+  .newWorkOrder select, .newWorkOrder input{
+    background-color: #F1EFEF;
+    margin-top: 20px;
+  }
+
+  .form-label-newWO{
+    margin-top: 10px;
+    font-weight: 400;
+    color: rgb(91, 91, 91);
+  }
+
+  .newWorkOrderSingleCellHolder{
+    margin-top: 40px;
+  }
+  
+ .newWorkOrderSingleCell .partsTable{
+    width: 90%;
+    min-height: 130px;
+    border: 1px solid rgb(198, 198, 198);
+    border-radius: 6px !important;
+    margin: 20px 0;
+  }
+
+  .partsTable thead tr th:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+  
+  .partsTable thead tr th:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+
+  .partsTable tBody tr{
+    background-color: white !important;
+    border-radius: 6px !important;
+  }
+
+  .partsTable tBody tr td{
+    text-align: center;
+  }
+
+  .partsTable thead tr th{
+    font-weight: 400 !important;
+    font-size: 15px !important;
+    color: rgb(255, 255, 255) !important;
+    padding: 10px 15px !important;
+    text-align: center;
+  }
+
+
+  .partsTable thead tr {
+    background-color: rgb(180, 180, 180);
+    border-radius: 6px !important;
+  }
+
+  .partsTable thead tr:hover{
+    background-color: rgb(180, 180, 180) !important;
+
+  }
+
+  .newWorkOrder hr{
+    margin: 30px 0;
+    width: 90%;
+    
+  }
+
+  .newWOTabs{
+    border: white 1px solid !important;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: black !important;
+    padding-left: 0;
+  }
+
+  .nav-tabs-newWo{
+    border: white 1px solid !important;
+  }
+
+  .newWOTabs .active{
+    border: none !important;
+
+  }
+
+  .checkWhite{
+    color: white !important;
+  }
+
+  .newWoBtn{
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .categoryAssetsFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .allEncompassing{
+    width: 100%;
+  }
+
+
+  .checkListDropdown{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    line-height: 10px;
+  }
+
+  .checkListDropdown p{
+    margin-top: 20px;
+  }
+
+  /*line-height: 20px;*/
+
+  .partsTop{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    align-items: center;
+  }
+
+  .partsTop a{
+    color: orange;
+    text-decoration: underline;
+  }
+
+  .otherInfoWo h3{
+    margin: 30px 0;
+  }
+
+  .partsForm{
+    position: absolute;
+    top: -40%;
+    display: flex;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    height: 420px;
+    width: 400px;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+  }
+
+  .partsFormInner{
+    height: 80%;
+    width: 80%;
+    position: static;
+    top: 0;
+    bottom: 0;
+  }
+
+  .partsFormInner input, .partsFormInner select{
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+    margin: 10px 0;
+  }
+
+  .newWorkOrderSingleCell{
+    position: relative;
+  }
+
+  .partsFormInner button{
+    float: right;
+    color: white;
+    background-color: orange;
+    margin-top: 20px;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+
+  .partsHeader{
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .partsFormHide{
+    display: none;
+  }
+
+
+  .form-label-newWO{
+    margin-top: 10px;
+  }
+
+ .newWOflex .checkListDropdown{
+    margin-bottom: 20px;
+ }
+
+ .newWOTabs span{
+    font-size: 15px;
+    color: rgb(91, 91, 91);
+ }
+
+
+ .tBodyTd span{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+ }
+
+ .WoFade{
+    color: #ccc !important;
+ }
+
+
+ .workOrderSummary{
+    display: flex;
+    gap: 60px;
+    width: 100%;
+ }
+
+ .summaryPTop, .summaryBottom{
+    font-size: 15px;
+    color: black;
+    
+ }
+
+ .summaryPTop{
+    color: lightgray;
+ }
+
+ .summaryHeader{
+    text-transform: uppercase;
+ }

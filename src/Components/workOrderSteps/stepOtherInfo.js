@@ -7,17 +7,17 @@ function StepOtherInfo() {
   const { setStep, userData, setUserData } = useContext(MultiStepContext);
 
   return (
-    <div>
-      <h3>Other Info</h3>
+    <div className="otherInfoWo">
+      <h3>Other Infomation</h3>
       <div className="formRowRight">
         <h3 className="requestHeader">upload file</h3>
         <div class="input-group mb-3 faultFile">
-          <label
+          <div
             class="input-group-text attachFileLabel"
             for="inputGroupFile02"
           >
             <customIcons.attach />
-          </label>
+          </div>
           <input
             type="file"
             class="form-control attachFile"
@@ -30,10 +30,24 @@ function StepOtherInfo() {
           />
         </div>
       </div>
-      <div stepBtnContainer>
-      <Button variant="contained" className="nextBtn" color="primary" onClick={() => setStep(2)}>back</Button>
-      <Button variant="contained" className="nextBtn" color="primary" onClick={() => setStep(4)}>next</Button>
-      </div>
+      <div className="newWoBtn">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setStep(2)}
+                  className="nextBtn assetPrevBtn"
+                >
+                  Back
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setStep(4)}
+                  className="nextBtn assetNextBtn"
+                >
+                  Next
+                </Button>
+    </div>
     </div>
   );
 }

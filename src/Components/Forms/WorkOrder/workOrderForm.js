@@ -8,6 +8,7 @@ import { MultiStepContext } from "../../Context";
 import "./workOrderForm.css";
 import customIcons from "../../../Icons/icons";
 import { Link } from "react-router-dom";
+import NewWorkOrder from "../../workOrderSteps/newWorkOrder";
 
 function WorkOrderForm() {
   const { currentStep, finalData } = useContext(MultiStepContext);
@@ -18,7 +19,7 @@ function WorkOrderForm() {
         return <StepAsset />;
 
       case 2:
-        return <StepWorkOrder />;
+        return <NewWorkOrder />;
 
       case 3:
         return <StepOtherInfo />;
@@ -31,11 +32,19 @@ function WorkOrderForm() {
     }
   }
 
+  const styleLabel = {
+    display: "flex",
+    gap: "10px",
+    color: "lightgrey",
+    fontSize: "16px",
+    with: "fit-content"
+  }
+
   return (
     <div className="commonPage container">
       <div className="">
         <div className="commonPageTop">
-          <h3 className="pageTitle">New Request</h3>
+          <h3 className="pageTitle">Work Order</h3>
           <div class="dropdown actionDropdown">
             <button
               class="btn btn-light dropdown-toggle actionBtn"
@@ -65,28 +74,43 @@ function WorkOrderForm() {
           <div className="dividerCommonPage"></div>
           <Link>Add work order</Link>
         </div>
-        <div className="commonPageBottom container">
-          <h3 className="workOrderTitle">New Request</h3>
+        <div className="commonPageBottom container workOrder">
           <div className="formsCommonPageBottom">
             <div className="stepFlex">
               <div className="center-stepper">
                 <h3 className="stepHeader">ADD WORK ORDER</h3>
-                <Stepper activeStep={currentStep - 1} orientation="vertical">
-                  <Step>
-                    <StepLabel>Asset</StepLabel>
-                  </Step>
-                  <Step>
-                    <StepLabel>Work Order</StepLabel>
-                  </Step>
-                  <Step>
-                    <StepLabel>Other Info</StepLabel>
-                  </Step>
-                  <Step>
-                    <StepLabel>Summary</StepLabel>
-                  </Step>
+                <Stepper activeStep={currentStep - 1} orientation="vertical" >
+                  <StepLabel className="stepLabel">
+                    <span className={`stepLabelPointer ${currentStep - 1 === 0 ? "backgroundOrange" : ""}`}>
+                      <customIcons.check className={`stepIconAbsolute ${currentStep - 1 === 0 ? "hiddenPointer" : ""}`} size={16}/>
+                    </span>
+                    <span>Asset</span>
+                  </StepLabel>
+
+                  <StepLabel className="stepLabel">
+                  <span className={`stepLabelPointer ${currentStep - 1 === 1 ? "backgroundOrange" : ""}`}>
+                    <customIcons.check className={`stepIconAbsolute ${currentStep - 1 === 1 ? "hiddenPointer" : ""}`}/>
+                  </span>
+                    <span>Work Order</span>
+                  </StepLabel>
+
+                  <StepLabel className="stepLabel">
+                  <span className={`stepLabelPointer ${currentStep - 1 === 2 ? "backgroundOrange" : ""}`}>
+                    <customIcons.check className={`stepIconAbsolute ${currentStep - 1 === 2 ? "hiddenPointer" : ""}`}/>
+                  </span>
+                    <span>Other Info</span>
+                  </StepLabel>
+
+                  <StepLabel className="stepLabel">
+                  <span className={`stepLabelPointer ${currentStep - 1 === 3 ? "backgroundOrange" : ""}`}>
+                  <customIcons.check className={`stepIconAbsolute ${currentStep - 1 === 3 ? "hiddenPointer" : ""}`}/>
+                  </span>
+                    <span>Summary</span>
+                  </StepLabel>
+
                 </Stepper>
               </div>
-              <div>{showStep(currentStep)}</div>
+              <div className="showSteps">{showStep(currentStep)}</div>
             </div>
           </div>
         </div>

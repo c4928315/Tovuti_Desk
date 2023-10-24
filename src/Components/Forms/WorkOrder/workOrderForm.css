@@ -195,12 +195,16 @@
   display: flex;
   width: 100%;
   gap: 20px;
-  height: fit-content;
+  min-height: 550px;
   background-color: white;
 }
 
 .center-stepper{
-  width: 40%;
+  width: 30%;
+}
+
+.showSteps{
+  width: 70%;
 }
 
 .stepHeader{
@@ -209,3 +213,49 @@
   font-weight: 600;
   font-size: 18px;
 }
+
+
+
+.stepLabel{
+  margin-bottom: 20px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stepIconAbsolute{
+  color: white;
+  display: none;
+}
+
+.stepLabelPointer{
+  border: 2px solid lightgray;
+  height: 18px !important;
+  width: 18px !important;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.MuiTypography-displayBlock{
+  display: flex !important;
+  gap: 10px !important;
+  align-items: center !important;
+}
+
+.MuiStepLabel-label.MuiStepLabel-active{
+  color: var(--orange) !important;
+}
+
+.hiddenPointer{
+display: block;
+}
+
+.backgroundOrange{
+  border: none;
+  background-color: var(--orange);
+}
+

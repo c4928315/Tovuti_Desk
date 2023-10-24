@@ -126,7 +126,7 @@ function StepWorkOrder() {
 
   const [value, setValue] = useState(0);
 
-  console.log(userData)
+  console.log(userData);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -134,35 +134,48 @@ function StepWorkOrder() {
 
   return (
     <div>
-      <div>
-        <Paper square>
-          <Tabs
-            value={value}
-            indicatorColor="primary"
-            textColor="primary"
-            onChange={handleChange}
-            aria-label="simple tabs example"
-            className="tabContainer"
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button
+            class="nav-link active"
+            id="nav-home-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-home"
+            type="button"
+            role="tab"
+            aria-controls="nav-home"
+            aria-selected="true"
           >
-            <Tab label="One WO For All Assets" className="tabsNav"/>
-            <Tab label="One WO Per Asset" className="tabsNav"/>
-          </Tabs>
-        </Paper>
-
-        {value === 0 && (
+            Home
+          </button>
+          <button
+            class="nav-link"
+            id="nav-profile-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-profile"
+            type="button"
+            role="tab"
+            aria-controls="nav-profile"
+            aria-selected="false"
+          >
+            Profile
+          </button>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="nav-home"
+          role="tabpanel"
+          aria-labelledby="nav-home-tab"
+          tabindex="0"
+        >
           <div>
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <div className="stepFlex">
-                <div className="fieldLabel">
+            <div className="stepFlex">
+              <div className="fieldLabel">
                 <lable>Due Date</lable>
-                  <TextField
+                zxdcfvgbh
+                <TextField
                   required
                   InputProps={{ disableUnderline: true }}
                   id="standard-helperText"
@@ -177,9 +190,9 @@ function StepWorkOrder() {
                     })
                   }
                 />
-                </div>
-                
-                <div className="fieldLabel">
+              </div>
+
+              <div className="fieldLabel">
                 <lable>Desciption</lable>
                 <TextField
                   id="outlined-textarea"
@@ -196,257 +209,48 @@ function StepWorkOrder() {
                     })
                   }
                 />
-                </div>
               </div>
-              <div className="stepFlex">
-                <div className="fieldLabel">
+            </div>
+            <div className="stepFlex">
+              <div className="fieldLabel">
                 <lable>assigned Tech</lable>
-                  <TextField
-                    id="standard-select-currency-native"
-                    InputProps={{ disableUnderline: true }}
-                    select
-                    label="assigned"
-                    defaultValue="EUR"
-                    className="workOrderInput"
-                    value={userData["assigned"]}
-                    onChange={(e) =>
-                      setUserData({
-                        ...userData,
-                        assigned: e.target.value,
-                      })
-                    }
-                    SelectProps={{
-                      native: true,
-                    }}
-                    variant="standard"
-                  >
-                    {technitians.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </TextField>
-                </div>
-
-                <div className="fieldLabel">
-                <lable>Priority</lable>
-                  <TextField
-                    id="standard-select-currency-native"
-                    InputProps={{ disableUnderline: true }}
-                    select
-                    label="priority"
-                    defaultValue="EUR"
-                    className="workOrderInput"
-                    value={userData["priority"]}
-                    onChange={(e) =>
-                      setUserData({
-                        ...userData,
-                        priority: e.target.value,
-                      })
-                    }
-                    SelectProps={{
-                      native: true,
-                    }}
-                    variant="standard"
-                  >
-                    {priorities.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </TextField>
-                </div>
-              </div>
-              <div className="stepFlex">
-                <div className="fieldLabel">
-                <lable>Assign Team(primary)</lable>
-                  <TextField
-                    id="standard-select-currency-native"
-                    InputProps={{ disableUnderline: true }}
-                    select
-                    label="assign team(primary)"
-                    className="workOrderInput"
-                    value={userData["assign team(primary)"]}
-                    onChange={(e) =>
-                      setUserData({
-                        ...userData,
-                        "assign team(primary)": e.target.value,
-                      })
-                    }
-                    defaultValue="EUR"
-                    SelectProps={{
-                      native: true,
-                    }}
-                    variant="standard"
-                  >
-                    {teams.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </TextField>
-                </div>
-
-                <div className="fieldLabel">
-                <lable>Refference</lable>
-                  <TextField
-                    id="standard-select-currency-native"
-                    InputProps={{ disableUnderline: true }}
-                    select
-                    label="ref"
-                    className="workOrderInput"
-                    value={userData["ref"]}
-                    onChange={(e) =>
-                      setUserData({
-                        ...userData,
-                        ref: e.target.value,
-                      })
-                    }
-                    defaultValue="EUR"
-                    SelectProps={{
-                      native: true,
-                    }}
-                    variant="standard"
-                  >
-                    {refs.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </TextField>
-                </div>
+                <TextField
+                  id="standard-select-currency-native"
+                  InputProps={{ disableUnderline: true }}
+                  select
+                  label="assigned"
+                  defaultValue="EUR"
+                  className="workOrderInput"
+                  value={userData["assigned"]}
+                  onChange={(e) =>
+                    setUserData({
+                      ...userData,
+                      assigned: e.target.value,
+                    })
+                  }
+                  SelectProps={{
+                    native: true,
+                  }}
+                  variant="standard"
+                >
+                  {technitians.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </TextField>
               </div>
 
               <div className="fieldLabel">
-                <lable>Estimated Hours</lable>
+                <lable>Priority</lable>
                 <TextField
                   id="standard-select-currency-native"
                   InputProps={{ disableUnderline: true }}
-                  select
-                  label="estimated hours"
-                  className="workOrderInput"
-                  value={userData["estimated hours"]}
-                  onChange={(e) =>
-                    setUserData({
-                      ...userData,
-                      "estimated hours": e.target.value,
-                    })
-                  }
-                  defaultValue="EUR"
-                  SelectProps={{
-                    native: true,
-                  }}
-                  variant="standard"
-                >
-                  {hours.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
-              </div>
-
-              <div>
-                <h3>add parts</h3>
-              </div>
-
-              <div>
-                <h3>add task</h3>
-              </div>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setStep(1)}
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setStep(3)}
-              >
-                Next
-              </Button>
-            </Box>
-          </div>
-        )}
-        {value === 1 && (
-          <div>
-            tab 2
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <div className="stepFlex">
-                <div className="fieldLabel">
-                <lable>Work Oreder Title</lable>
-                  <TextField
-                  required
-                  id="standard-helperText"
-                  label="work order title"
-                  placeholder="title"
-                  value={userData["work order title"]}
-                  onChange={(e) =>
-                    setUserData({
-                      ...userData,
-                      "work order title": e.target.value,
-                    })
-                  }
-                />
-                </div>
-                
-
-                <TextField
-                  id="outlined-textarea"
-                  label="description"
-                  placeholder="describe"
-                  multiline
-                  value={userData["description"]}
-                  onChange={(e) =>
-                    setUserData({
-                      ...userData,
-                      description: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="stepFlex">
-                <TextField
-                  id="standard-select-currency-native"
-                  InputProps={{ disableUnderline: true }}
-                  select
-                  label="asset"
-                  defaultValue="EUR"
-                  value={userData["asset"]}
-                  onChange={(e) =>
-                    setUserData({
-                      ...userData,
-                      asset: e.target.value,
-                    })
-                  }
-                  SelectProps={{
-                    native: true,
-                  }}
-                  variant="standard"
-                >
-                  {currencies.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
-
-                <TextField
-                  id="standard-select-currency-native"
                   select
                   label="priority"
                   defaultValue="EUR"
+                  className="workOrderInput"
                   value={userData["priority"]}
-                  InputProps={{ disableUnderline: true }}
                   onChange={(e) =>
                     setUserData({
                       ...userData,
@@ -458,44 +262,23 @@ function StepWorkOrder() {
                   }}
                   variant="standard"
                 >
-                  {currencies.map((option) => (
+                  {priorities.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
                   ))}
                 </TextField>
               </div>
-              <div className="stepFlex">
+            </div>
+            <div className="stepFlex">
+              <div className="fieldLabel">
+                <lable>Assign Team(primary)</lable>
                 <TextField
                   id="standard-select-currency-native"
-                  select
-                  label="assigned"
                   InputProps={{ disableUnderline: true }}
-                  value={userData["assigned"]}
-                  onChange={(e) =>
-                    setUserData({
-                      ...userData,
-                      assigned: e.target.value,
-                    })
-                  }
-                  defaultValue="EUR"
-                  SelectProps={{
-                    native: true,
-                  }}
-                  variant="standard"
-                >
-                  {currencies.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
-
-                <TextField
-                  id="standard-select-currency-native"
                   select
                   label="assign team(primary)"
-                  InputProps={{ disableUnderline: true }}
+                  className="workOrderInput"
                   value={userData["assign team(primary)"]}
                   onChange={(e) =>
                     setUserData({
@@ -509,7 +292,7 @@ function StepWorkOrder() {
                   }}
                   variant="standard"
                 >
-                  {currencies.map((option) => (
+                  {teams.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
@@ -517,17 +300,19 @@ function StepWorkOrder() {
                 </TextField>
               </div>
 
-              <div>
+              <div className="fieldLabel">
+                <lable>Refference</lable>
                 <TextField
                   id="standard-select-currency-native"
-                  select
-                  label="assign additional team"
                   InputProps={{ disableUnderline: true }}
-                  value={userData["assign additional team"]}
+                  select
+                  label="ref"
+                  className="workOrderInput"
+                  value={userData["ref"]}
                   onChange={(e) =>
                     setUserData({
                       ...userData,
-                      "assign additional team": e.target.value,
+                      ref: e.target.value,
                     })
                   }
                   defaultValue="EUR"
@@ -536,74 +321,292 @@ function StepWorkOrder() {
                   }}
                   variant="standard"
                 >
-                  {currencies.map((option) => (
+                  {refs.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
                   ))}
                 </TextField>
               </div>
+            </div>
 
-              <div>
-                <TextField
-                  id="standard-select-currency-native"
-                  select
-                  label="estimated hours"
-                  InputProps={{ disableUnderline: true }}
-                  value={userData["estimated hours"]}
-                  onChange={(e) =>
-                    setUserData({
-                      ...userData,
-                      "estimated hours": e.target.value,
-                    })
-                  }
-                  defaultValue="EUR"
-                  SelectProps={{
-                    native: true,
-                  }}
-                  variant="standard"
-                >
-                  {currencies.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
-              </div>
+            <div className="fieldLabel">
+              <lable>Estimated Hours</lable>
+              <TextField
+                id="standard-select-currency-native"
+                InputProps={{ disableUnderline: true }}
+                select
+                label="estimated hours"
+                className="workOrderInput"
+                value={userData["estimated hours"]}
+                onChange={(e) =>
+                  setUserData({
+                    ...userData,
+                    "estimated hours": e.target.value,
+                  })
+                }
+                defaultValue="EUR"
+                SelectProps={{
+                  native: true,
+                }}
+                variant="standard"
+              >
+                {hours.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </div>
 
-              <div>
+            <div>
+              <h3>add parts</h3>
+            </div>
+
+            <div>
+              <h3>add task</h3>
+            </div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setStep(1)}
+            >
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setStep(3)}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="nav-profile"
+          role="tabpanel"
+          aria-labelledby="nav-profile-tab"
+          tabindex="0"
+        >
+          <div>
+            tab 2
+            <div className="stepFlex">
+              <div className="fieldLabel">
+                <lable>Work Oreder Title</lable>
                 <TextField
                   required
-                  id="outlined-required"
-                  label="estimated hours"
-                  placeholder="hours"
+                  id="standard-helperText"
+                  label="work order title"
+                  placeholder="title"
+                  value={userData["work order title"]}
+                  onChange={(e) =>
+                    setUserData({
+                      ...userData,
+                      "work order title": e.target.value,
+                    })
+                  }
                 />
               </div>
 
-              <div>
-                <h3>add parts</h3>
-              </div>
+              <TextField
+                id="outlined-textarea"
+                label="description"
+                placeholder="describe"
+                multiline
+                value={userData["description"]}
+                onChange={(e) =>
+                  setUserData({
+                    ...userData,
+                    description: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="stepFlex">
+              <TextField
+                id="standard-select-currency-native"
+                InputProps={{ disableUnderline: true }}
+                select
+                label="asset"
+                defaultValue="EUR"
+                value={userData["asset"]}
+                onChange={(e) =>
+                  setUserData({
+                    ...userData,
+                    asset: e.target.value,
+                  })
+                }
+                SelectProps={{
+                  native: true,
+                }}
+                variant="standard"
+              >
+                {currencies.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
 
-              <div>
-                <h3>add task</h3>
-              </div>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setStep(1)}
+              <TextField
+                id="standard-select-currency-native"
+                select
+                label="priority"
+                defaultValue="EUR"
+                value={userData["priority"]}
+                InputProps={{ disableUnderline: true }}
+                onChange={(e) =>
+                  setUserData({
+                    ...userData,
+                    priority: e.target.value,
+                  })
+                }
+                SelectProps={{
+                  native: true,
+                }}
+                variant="standard"
               >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setStep(3)}
+                {currencies.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </div>
+            <div className="stepFlex">
+              <TextField
+                id="standard-select-currency-native"
+                select
+                label="assigned"
+                InputProps={{ disableUnderline: true }}
+                value={userData["assigned"]}
+                onChange={(e) =>
+                  setUserData({
+                    ...userData,
+                    assigned: e.target.value,
+                  })
+                }
+                defaultValue="EUR"
+                SelectProps={{
+                  native: true,
+                }}
+                variant="standard"
               >
-                Next
-              </Button>
-            </Box>
+                {currencies.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+
+              <TextField
+                id="standard-select-currency-native"
+                select
+                label="assign team(primary)"
+                InputProps={{ disableUnderline: true }}
+                value={userData["assign team(primary)"]}
+                onChange={(e) =>
+                  setUserData({
+                    ...userData,
+                    "assign team(primary)": e.target.value,
+                  })
+                }
+                defaultValue="EUR"
+                SelectProps={{
+                  native: true,
+                }}
+                variant="standard"
+              >
+                {currencies.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </div>
+            <div>
+              <TextField
+                id="standard-select-currency-native"
+                select
+                label="assign additional team"
+                InputProps={{ disableUnderline: true }}
+                value={userData["assign additional team"]}
+                onChange={(e) =>
+                  setUserData({
+                    ...userData,
+                    "assign additional team": e.target.value,
+                  })
+                }
+                defaultValue="EUR"
+                SelectProps={{
+                  native: true,
+                }}
+                variant="standard"
+              >
+                {currencies.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </div>
+            <div>
+              <TextField
+                id="standard-select-currency-native"
+                select
+                label="estimated hours"
+                InputProps={{ disableUnderline: true }}
+                value={userData["estimated hours"]}
+                onChange={(e) =>
+                  setUserData({
+                    ...userData,
+                    "estimated hours": e.target.value,
+                  })
+                }
+                defaultValue="EUR"
+                SelectProps={{
+                  native: true,
+                }}
+                variant="standard"
+              >
+                {currencies.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </div>
+            <div>
+              <TextField
+                required
+                id="outlined-required"
+                label="estimated hours"
+                placeholder="hours"
+              />
+            </div>
+            <div>
+              <h3>add parts</h3>
+            </div>
+            <div>
+              <h3>add task</h3>
+            </div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setStep(1)}
+            >
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setStep(3)}
+            >
+              Next
+            </Button>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
