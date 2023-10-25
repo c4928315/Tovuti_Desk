@@ -93,10 +93,10 @@ function WorkOrderTable() {
   const firstIndex = lastIndex - recordsPerPage;
 
   const statusOptions = ["Completed", "In Progress", "Pending", "Cancelled"];
-  const stageOptions = ["Completed", "In Progress", "Pending", "Cancelled"];
-  const locationOptions = ["nairobi", "Kisumu", "eldoret", "mombasa"];
+  const stageOptions = ["Completed", "In Progress", "Open", "Scheduled"];
+  const locationOptions = ["industrial park", "beach resort", "shopping mall", "tech park", "gigiri", "downtown"];
   const typeOptions = [
-    "maintenace",
+    "Maintenace",
     "Service Request",
     "Inspection",
     "IT Support",
@@ -119,37 +119,51 @@ function WorkOrderTable() {
     "not cooling",
   ];
 
+  const globalFilterString = globalFilter ? globalFilter.toString().toLowerCase() : '';
+
   const filteredData = data.filter((item) => {
-    return (
-      (item.TicketRef.includes(globalFilter.toLowerCase()) ||
-        item.TicketLocation.LocationName.toLowerCase().includes(
-          globalFilter.toLowerCase()
-        ) ||
-        item.Description.toLowerCase().includes(globalFilter.toLowerCase())) &&
-      (selectedStatuses.length === 0 ||
-        selectedStatuses.includes(item.TicketStatus.StatusName)) &&
-      (selectedStages.length === 0 ||
-        selectedStages.includes(item.TicketStage.StageName)) &&
-      (selectedTicketType.length === 0 ||
-        selectedTicketType.includes(item.TicketType.TicketTypeName)) &&
-      (selectedFaults.length === 0 ||
-        selectedFaults.some((fault) =>
-          item.Fault.some((f) => f.Name.toLowerCase() === fault.toLowerCase())
-        )) &&
-      (selectedLocations.length === 0 ||
-        selectedLocations.some(
-          (location) =>
-            item.TicketLocation.LocationName.toLowerCase() ===
-            location.toLowerCase()
-        )) &&
-      (selectedAssets.length === 0 ||
-        selectedAssets.some((asset) =>
-          item.TicketAssets.some(
-            (a) => a.AssetName.toLowerCase() === asset.toLowerCase()
-          )
-        ))
-    );
+    // Check if the item has the required properties
+    if (
+      item.TicketRef &&
+      item.TicketLocation?.LocationName &&
+      item.TicketDescription &&
+      item.TicketType?.TicketTypeName &&
+      item.TicketStatus?.StatusName &&
+      item.TicketStage?.StageName
+    ) {
+      const ticketRef = item.TicketRef.toString().toLowerCase();
+      const locationName = item.TicketLocation.LocationName.toString().toLowerCase();
+      const description = item.TicketDescription.toString().toLowerCase();
+      const ticketType = item.TicketType.TicketTypeName.toString();
+      const ticketStatus = item.TicketStatus.StatusName.toString();
+      const ticketStage = item.TicketStage.StageName.toString();
+  
+      return (
+        (ticketRef.includes(globalFilterString) ||
+        locationName.includes(globalFilterString) ||
+        description.includes(globalFilterString)) &&
+        (selectedStatuses.length === 0 || selectedStatuses.includes(ticketStatus)) &&
+        (selectedStages.length === 0 || selectedStages.includes(ticketStage)) &&
+        (selectedTicketType.length === 0 || selectedTicketType.includes(ticketType)) &&
+        (selectedFaults.length === 0 ||
+          selectedFaults.some((fault) =>
+            item.Fault && item.Fault.some((f) => f.Name?.toLowerCase() === fault.toLowerCase())
+          )) &&
+        (selectedLocations.length === 0 ||
+          selectedLocations.some((location) =>
+            locationName === location.toString().toLowerCase()
+          )) &&
+        (selectedAssets.length === 0 ||
+          selectedAssets.some((asset) =>
+            item.TicketAssets && item.TicketAssets.some((a) => a.AssetName.toLowerCase() === asset.toLowerCase())
+          ))
+      );
+    }
+  
+    // If any required properties are missing, exclude the item from the filter
+    return false;
   });
+  
 
   const handleStatusSearch = (e) => {
     const searchValue = e.target.value;
