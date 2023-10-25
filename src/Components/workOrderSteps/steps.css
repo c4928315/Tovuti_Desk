@@ -266,11 +266,22 @@ Work Order
   }
   
  .newWorkOrderSingleCell .partsTable{
-    width: 90%;
-    min-height: 130px;
-    border: 1px solid rgb(198, 198, 198);
+    width: 100%;
+    min-height: 80px;
     border-radius: 6px !important;
     margin: 20px 0;
+    margin-top: 0;
+  }
+
+  .partTableConatainer{
+    border: 1px solid rgba(91, 91, 91, 0.1);
+    padding: 30px 20px;
+    padding-top: 0;
+    width: 90%;
+    border-radius: 8px;
+    margin-top: 20px;
+    height: 180px;
+    position: relative;
   }
 
   .partsTable thead tr th:first-child {
@@ -286,28 +297,34 @@ Work Order
   .partsTable tBody tr{
     background-color: white !important;
     border-radius: 6px !important;
+    border-bottom: 1px solid rgba(91, 91, 91, 0.1) !important;
+    padding-bottom: 20px !important;
   }
 
   .partsTable tBody tr td{
     text-align: center;
+    font-size: 13px;
+    text-transform: capitalize;
+    color: rgb(68, 68, 68);
   }
 
   .partsTable thead tr th{
     font-weight: 400 !important;
-    font-size: 15px !important;
-    color: rgb(255, 255, 255) !important;
+    font-size: 14.3px !important;
+    color: rgb(177, 177, 177) !important;
     padding: 10px 15px !important;
     text-align: center;
+    padding-bottom: 0px !important;
   }
 
 
   .partsTable thead tr {
-    background-color: rgb(180, 180, 180);
+    background-color: white;
     border-radius: 6px !important;
   }
 
   .partsTable thead tr:hover{
-    background-color: rgb(180, 180, 180) !important;
+    background-color: white !important;
 
   }
 
@@ -376,9 +393,14 @@ Work Order
     align-items: center;
   }
 
-  .partsTop a{
+  .partTableConatainer a{
     color: orange;
     text-decoration: underline;
+    float: right;
+    font-size: 13px;
+    position: absolute;
+    bottom: 10px;
+    right: 25px;
   }
 
   .otherInfoWo h3{
@@ -481,4 +503,8 @@ Work Order
 
  .summaryHeader{
     text-transform: uppercase;
+ }
+
+ .estimatedHours{
+  margin-top: 30px;
  }

@@ -405,6 +405,7 @@ function NewWorkOrder() {
 
                 <div>
                   <p className="form-label-newWO">Assign Additional Team</p>
+                  
                   {teamOptions.map((team) => (
                     <div
                       key={team.TeamId}
@@ -453,7 +454,7 @@ function NewWorkOrder() {
 
                 <div className="newWorkOrderSingleCell">
                   <div className="mb-3">
-                    <p className="form-label-newWO">Estimated Hours</p>
+                    <p className="form-label-newWO estimatedHours">Estimated Hours</p>
                     <input
                       type="text"
                       className="form-control newWorkOrderInput"
@@ -474,10 +475,10 @@ function NewWorkOrder() {
               <div className="newWorkOrderSingleCell">
                 <div className="partsTop">
                   <p className="form-label-newWO">Projected Parts</p>
-                  <Link  onClick={handleShowParts}>Add Part</Link>
                 </div>
 
-                <table className="partsTable">
+               <div className="partTableConatainer">
+               <table className="partsTable">
                   <thead>
                     <tr>
                       <th>Parts</th>
@@ -494,14 +495,16 @@ function NewWorkOrder() {
                         <td className="tBodyTd">{item.amount}</td>
                         <td className="tBodyTd">
                             <span>
-                            <customIcons.delete size={18}/>
-                            <customIcons.edit size={18}/>
+                            <customIcons.edit size={17} style={{color: "#584539", cursor: "pointer"}}/>
+                            <customIcons.delete size={17} style={{color: "#584539", cursor: "pointer"}}/>
                             </span>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+                <Link  onClick={handleShowParts}>Add Part</Link>
+               </div>
 
                 <form onSubmit={handleFormSubmit} className={`partsForm ${ !showParts ? "partsFormHide" : ""}`}>
                   <div className="partsFormInner">

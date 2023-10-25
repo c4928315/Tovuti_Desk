@@ -11,18 +11,18 @@ function WorkOrder() {
       <div>
         <div className="commonPageTop">
           <h3 className="pageTitle">work order</h3>
-          <div class="dropdown actionDropdown">
+          <div className="dropdown actionDropdown">
             <button
-              class="btn btn-light dropdown-toggle actionBtn"
+              className="btn btn-light dropdown-toggle actionBtn"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
               Actions
             </button>
-            <ul class="dropdown-menu">
+            <ul className="dropdown-menu">
               <li>
-                <Link class="dropdown-item action-dropdown-item" to="/work-order-form">
+                <Link className="dropdown-item action-dropdown-item" to="/work-order-form">
                   <customIcons.add style={{color: "green"}}/>
                   <span>Add Work Order</span>
                 </Link>

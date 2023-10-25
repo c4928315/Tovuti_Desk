@@ -20,14 +20,6 @@ function StepSummary() {
     // Save data to local storage
     saveDataToLocalStorage(userData);
 
-    // You can also reset the userData state if needed
-    setUserData({
-      location: "",
-      selectedAssets: [],
-      asset: "",
-      description: "",
-    });
-
     // Optionally, navigate to the next step
     setStep(4);
   };
@@ -71,11 +63,12 @@ function StepSummary() {
       console.error("Error saving data to local storage:", error);
     }
   };
-
+  const location = userData.TicketLocation.LocationName
+console.log(userData.TicketLocation.LocationName)
   return (
     <div className="summarryStep">
       <h3>Other Infomation</h3>
-      {/* <div >
+      <div >
         <h3 className="summaryHeader">Assets</h3>
 
         <div>
@@ -177,7 +170,7 @@ function StepSummary() {
       
       
 
-      </div> */}
+      </div>
 
       <Button
         variant="contained"

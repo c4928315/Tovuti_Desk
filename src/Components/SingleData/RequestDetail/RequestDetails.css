@@ -50,6 +50,7 @@
     text-transform: uppercase;
     color: rgb(167, 167, 167);
     font-size: 13px;
+    font-weight: 600;
 }
 
 .requestKeyValueContainer{
@@ -57,19 +58,20 @@
 }
 
 .requestKeyValue{
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .requestKeyValue  h5, .requestKeyValue2StatusH6, .workOrderDetailContainerH5{
     font-size: 15px;
     text-transform: capitalize;
-    color: rgb(167, 167, 167);
+    color: rgb(135, 135, 135);
 }
 
 
 
 .requestKeyValue p, .workOrderDetailContainerP{
-    font-size: 14px;
+    font-size: 13.6px;
+    margin-top: 4px;
 }
 
 .requestKeyValue2{
@@ -85,13 +87,16 @@
 
 .requestKeyValue2Status{
     border: 1px solid rgb(184, 184, 184) !important;
-    height: 35px !important;
+    height: 28px !important;
     text-align: center !important;
     display: flex !important;
     gap: 10px !important;
     align-items: center !important;
     width: 100px !important;
     margin-top: 5px;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    color: rgb(91, 91, 91);
 }
 
 .workOrderDetailContainer{
@@ -169,9 +174,10 @@
     display: flex;
     justify-content: space-between;
     bottom: 0;
-    padding: 100px 10px;
+    padding: 40px 10px;
     
 }
+
 
 .declineApprove{
     width: 130px;

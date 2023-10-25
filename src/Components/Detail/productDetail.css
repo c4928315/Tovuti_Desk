@@ -1,0 +1,95 @@
+.topWObtn{
+    width: 150px;
+    height: 35px;
+    font-size: 14px;
+    border: 1px solid orange;
+    border-radius: 6px;
+    text-align: center;
+    color: orange;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.requestNoticeWO{
+    background-color: transparent;
+}
+
+.topWObtn:hover{
+    background-color: orange;
+    color: white;
+}
+
+.WOClosebtn{
+    background-color: #584539;
+    color: white;
+}
+
+.WOAssignbtn{
+    color: #584539;
+    background-color: white;
+    border: 1px solid #584539;
+}
+
+.WOdetailsPosition{
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.detailsDropdownStatus{
+    font-size: 14px !important;
+    border-radius: 4px !important;
+}
+
+.detailsDropdownStatus li button {
+    color: rgb(84, 84, 84) !important;
+}
+
+.WOcheckListDets{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.WOcheckListDetsCheck{
+    width: 13px;
+    height: 13px;
+    background-color: orange;
+    color: white;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.allLinks{
+    color: orange;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.partsTableWO{
+    width: 100%;
+}
+
+.partsTableWO thead tr{
+    height: 55px;
+}
+
+.partsTableWO thead tr th{
+    text-align: left;
+    padding-left: 0 !important;
+}
+
+.partsTableWO tbody tr td{
+    text-align: left;
+}
+
+.partsTableWO tbody tr {
+    padding-bottom: 20px !important;
+}
+
+.partTableConatainerWO{
+    margin: 15px;
+    width: 96%;
+}

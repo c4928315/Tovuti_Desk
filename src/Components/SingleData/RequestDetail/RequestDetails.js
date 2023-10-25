@@ -101,7 +101,7 @@ function RequestDetailsPage() {
                     >
                       Select
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-lg-end">
+                    <ul class="dropdown-menu dropdown-menu-lg-end detailsDropdownStatus">
                       <li>
                         <button class="dropdown-item" type="button">
                           In Progress

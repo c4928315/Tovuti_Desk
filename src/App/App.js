@@ -13,6 +13,7 @@ import RequestTable from "../Components/WorkingCode/WorkingRequests/RequestTable
 import RequestDetailsPage from "../Components/SingleData/RequestDetail/RequestDetails";
 import UnApprovedRequestDetailsPage from "../Components/SingleData/UnApprovedRequest/UnApproved";
 import WorkOrderDetail from "../Components/Forms/WorkOrderDetailForm/WorkOrderDetail";
+import WorkOrderDetailsPage from "../Components/Detail/workOrderDetail";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/request-form" element={<Request/>} />
           <Route path="/work-order-detail-form" element={<WorkOrderDetail/>} />
           <Route path="/details/:itemId" element={<RequestDetailsPage />} />
+          <Route path="/WOdetails/:itemId" element={<WorkOrderDetailsPage />} />
           <Route path="/detailsUnAp/:Id" element={<UnApprovedRequestDetailsPage />} />
 
           {/* <Route path="/requests" element={<RequestTable/>} /> */}
