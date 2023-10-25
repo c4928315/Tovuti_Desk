@@ -5,30 +5,29 @@ const Context = ({children}) => {
   const [currentStep, setStep] = useState(1)
   const [userData, setUserData] = useState({
    
-    assets: [],
-    asset: [],
-    TicketRef: "Ref101",
-    DueDate: "2023-11-20",
-    ModifiedDate: "2023-06-16",
-    TicketStatus: {
-      StatusId: 3,
-      StatusName: "In Progress"
+   
+    "TicketRef": "Ref101",
+    "DueDate": "2023-11-20",
+    "ModifiedDate": "2023-06-16",
+    "TicketStatus": {
+      "StatusId": 3,
+      "StatusName": "In Progress"
     },
-    TicketCurrentTeam:{},
-    TicketAdditionalTeams:[],
-    TicketLocation: {
+    "TicketCurrentTeam":{},
+    "TicketAdditionalTeams":[],
+    "TicketLocation": {
       
     },
-    TicketPriority: {
-      TicketPriorityId: 1,
-      TicketPriorityName: "High"
+    "TicketPriority": {
+      "TicketPriorityId": 1,
+      "TicketPriorityName": "High"
     },
-    TicketChecklistForms: {
-      FormsAndSectionsId: 20,
-      FormsAndSectionsName: "Form 1"
+    "TicketChecklistForms": {
+      "FormsAndSectionsId": 20,
+      "FormsAndSectionsName": "Form 1"
     },
-    features:[],
-    TicketCategoryOfWork: {
+    "features":[],
+    "TicketCategoryOfWork": {
 
     }
     

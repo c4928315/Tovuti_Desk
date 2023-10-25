@@ -46,16 +46,16 @@ function StepSummary() {
     })
       .then((response) => {
         if (response.ok) {
-          
+          // Data was successfully sent to the API
           return response.json();
         } else {
           throw new Error("Data submission failed.");
         }
       })
       .then((responseData) => {
-        
+        // Handle the API response, if needed
         console.log("API response:", responseData);
-        
+        // navigate("work-order")
       })
       .catch((error) => {
         console.error("API Error:", error);
