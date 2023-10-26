@@ -207,11 +207,23 @@ function WorkOrderDetailsPage() {
             >
               Actions
             </button>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu WOactionDropdown">
               <li>
-                <Link class="dropdown-item action-dropdown-item" to="">
-                  <customIcons.add style={{ color: "green" }} />
+                <Link class="dropdown-item action-dropdown-item" to="" style={{gap: "15px", color: "#584539"}}>
+                  <customIcons.plus size={19}/>
                   <span>Add Work Order</span>
+                </Link>
+                <Link class="dropdown-item action-dropdown-item" to="" style={{gap: "15px", color: "#584539"}}>
+                  <customIcons.edit size={16}/>
+                  <span>Edit Work Order</span>
+                </Link>
+                <Link class="dropdown-item action-dropdown-item" to="" style={{gap: "15px", color: "#584539"}}>
+                  <customIcons.share size={16}/>
+                  <span>Share Work Order</span>
+                </Link>
+                <Link class="dropdown-item action-dropdown-item" to="" style={{gap: "15px", color: "#584539"}}>
+                  <customIcons.card size={16}/>
+                  <span>Generate Job Card</span>
                 </Link>
               </li>
             </ul>
@@ -318,10 +330,10 @@ function WorkOrderDetailsPage() {
 
               <div className="declineApproveContainner">
                 <button className="declineApprove WOAssignbtn">
-                  Decline Request
+                 Assign Technician
                 </button>
                 <button className="declineApprove WOClosebtn">
-                  Approve Request
+                  Close Work Order
                 </button>
               </div>
             </div>
@@ -658,7 +670,7 @@ function WorkOrderDetailsPage() {
             >
               <div className="requestDetailExpand">
                 <h3 className="request-details-page-main request-details-page-main-WO">
-                  OTHER INFORMATION
+                  OTHER COSTS
                 </h3>
                 <customIcons.down
                   size={14}
@@ -712,7 +724,7 @@ function WorkOrderDetailsPage() {
                   !extendOtherInfoTable ? "woDownDispalyNone" : ""
                 } `}
               >
-                Add Part
+                Add Cost
               </Link>
             </div>
 
@@ -775,7 +787,7 @@ function WorkOrderDetailsPage() {
                 onClick={handleLabourForm}
                 className={` ${!extendLabourTable ? "woDownDispalyNone" : ""} `}
               >
-                Add Part
+                Add Labour
               </Link>
             </div>
 
@@ -860,7 +872,7 @@ function WorkOrderDetailsPage() {
                   !extendDiagnosisTable ? "woDownDispalyNone" : ""
                 } `}
               >
-                Add Part
+                Add Diagnosis
               </Link>
             </div>
 

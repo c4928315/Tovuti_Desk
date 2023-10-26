@@ -1,12 +1,12 @@
 import { AiOutlineSearch } from "react-icons/ai"
-import { IoIosNotifications } from "react-icons/io"
+import { IoIosNotifications, IoMdAdd } from "react-icons/io"
 import { CiMenuKebab } from "react-icons/ci"
 import { MdOutlineFilterList, MdDelete, MdEdit, MdOutlineAttachFile } from "react-icons/md"
 import { CgAttachment } from "react-icons/cg"
 import { GoCheckCircle } from "react-icons/go"
 import { BiCheck } from "react-icons/bi"
-import { BsChevronDown } from "react-icons/bs"
-import { GrFormNext, GrFormPrevious, GrActions, GrAddCircle } from "react-icons/gr"
+import { BsChevronDown, BsCardList, BsFillShareFill } from "react-icons/bs"
+import { GrFormNext, GrFormPrevious, GrActions, GrAddCircle, GrFormAdd } from "react-icons/gr"
 
 const customIcons = {
     search: AiOutlineSearch,
@@ -23,7 +23,11 @@ const customIcons = {
     down: BsChevronDown,
     delete: MdDelete,
     edit: MdEdit,
-    attach: MdOutlineAttachFile
+    attach: MdOutlineAttachFile,
+    card: BsCardList,
+    share: BsFillShareFill,
+    plus: IoMdAdd
+
 }
 
 export default customIcons;
