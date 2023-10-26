@@ -257,9 +257,10 @@ function StepAsset() {
                     </select>
                   </span>
                 </div>
-                <span>
+                <span className="assetsSpan">
                   <h4>Asset(s)</h4>
                   <h4 className="notHeader WoFade">Select</h4>
+                  <div className="assetsContainerInSteps">
                   {locations
                     .find(
                       (location) =>
@@ -284,6 +285,7 @@ function StepAsset() {
                         <span>{asset.AssetName}</span>
                       </div>
                     ))}
+                  </div>
                 </span>
               </div>
             </div>

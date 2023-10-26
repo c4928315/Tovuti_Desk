@@ -112,8 +112,8 @@ function NewWorkOrder() {
   const [error, setError] = useState([]);
 
   const handleShowParts = () => {
-    setShowParts(!showParts)
-  }
+    setShowParts(!showParts);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -362,32 +362,29 @@ function NewWorkOrder() {
                 <div className="newWorkOrderCellsCheckBox">
                   {/* fbu4hfu4hi */}
                   {options.map((option, index) => {
-                    console.log(option); // Add this line to log the option
-                    return (
-                      <label
-                        key={option}
-                        className={`checkbox-button ${
-                          checkedItems[option] ? "checked" : ""
-                        } ${index === 0 ? "first-option" : ""} ${
-                          index === options.length - 1 ? "last-option" : ""
-                        }`}
-                        onClick={() => handleCheckboxChange(option)}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={checkedItems[option]}
-                          onChange={() => {}}
-                        />
-                        {option}
-                      </label>
-                    );
-                  })}
+  console.log(option); // Add this line to log the option
+  return (
+    <label
+      key={option}
+      className={`checkbox-button ${checkedItems[option] ? "checked checked-label" : ""} ${index === 0 ? "first-option" : ""} ${index === options.length - 1 ? "last-option" : ""}`}
+      onClick={() => handleCheckboxChange(option)}
+    >
+      <input
+        type="checkbox"
+        checked={checkedItems[option]}
+        onChange={() => {}}
+      />
+      {option}
+    </label>
+  );
+})}
+
                 </div>
               </div>
             </div>
 
             <div>
-              <div className="newWorkOrderCells">
+              <div className="newWorkOrderCells newWorkOrderCellsAssetCategory">
                 <div>
                   <p className="form-label-newWO">Assign Team(primary)</p>
                   <select
@@ -404,25 +401,41 @@ function NewWorkOrder() {
                 </div>
 
                 <div>
-                  <p className="form-label-newWO">Assign Additional Team</p>
-                  
-                  {teamOptions.map((team) => (
-                    <div
-                      key={team.TeamId}
-                      className="checkbox-item checkListDropdown"
-                    >
-                      <input
-                        type="checkbox"
-                        id={`team-${team.TeamId}`}
-                        name={`team-${team.TeamId}`}
-                        checked={userData.TicketAdditionalTeams.some(
-                          (t) => t.TeamId === team.TeamId
-                        )}
-                        onChange={() => handleTeamCheckboxChange(team.TeamId)}
-                      />
-                      <p htmlFor={`team-${team.TeamId}`}>{team.TeamName}</p>
+                  <div class="dropdown actionDropdown dropdownAdditionalTeam">
+                    <div className="header">
+                      <p>Assign Additional Team</p>
                     </div>
-                  ))}
+                    <p
+                      className="form-label-newWO btn btn-light dropdown-toggle dropdown-toggle-add-team"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      select
+                    </p>
+
+                    <ul class="dropdown-menu">
+                      {teamOptions.map((team) => (
+                        <div
+                          key={team.TeamId}
+                          className="checkbox-item checkListDropdown"
+                        >
+                          <input
+                            type="checkbox"
+                            id={`team-${team.TeamId}`}
+                            name={`team-${team.TeamId}`}
+                            checked={userData.TicketAdditionalTeams.some(
+                              (t) => t.TeamId === team.TeamId
+                            )}
+                            onChange={() =>
+                              handleTeamCheckboxChange(team.TeamId)
+                            }
+                          />
+                          <p htmlFor={`team-${team.TeamId}`}>{team.TeamName}</p>
+                        </div>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
 
@@ -446,15 +459,15 @@ function NewWorkOrder() {
                         })
                       }
                     />
-                    <p htmlFor="vehicle">
-                      Technician Signature Required
-                    </p>
+                    <p htmlFor="vehicle">Technician Signature Required</p>
                   </div>
                 </div>
 
                 <div className="newWorkOrderSingleCell">
                   <div className="mb-3">
-                    <p className="form-label-newWO estimatedHours">Estimated Hours</p>
+                    <p className="form-label-newWO estimatedHours">
+                      Estimated Hours
+                    </p>
                     <input
                       type="text"
                       className="form-control newWorkOrderInput"
@@ -477,38 +490,47 @@ function NewWorkOrder() {
                   <p className="form-label-newWO">Projected Parts</p>
                 </div>
 
-               <div className="partTableConatainer">
-               <table className="partsTable">
-                  <thead>
-                    <tr>
-                      <th>Parts</th>
-                      <th>Quantity</th>
-                      <th>Ammount(ks)</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {partData.map((item, i) => (
-                      <tr key={i}>
-                        <td className="tBodyTd">{item.part}</td>
-                        <td className="tBodyTd">{item.quantity}</td>
-                        <td className="tBodyTd">{item.amount}</td>
-                        <td className="tBodyTd">
-                            <span>
-                            <customIcons.edit size={17} style={{color: "#584539", cursor: "pointer"}}/>
-                            <customIcons.delete size={17} style={{color: "#584539", cursor: "pointer"}}/>
-                            </span>
-                        </td>
+                <div className="partTableConatainer">
+                  <table className="partsTable">
+                    <thead>
+                      <tr>
+                        <th>Parts</th>
+                        <th>Quantity</th>
+                        <th>Ammount(ks)</th>
+                        <th>Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <Link  onClick={handleShowParts}>Add Part</Link>
-               </div>
+                    </thead>
+                    <tbody>
+                      {partData.map((item, i) => (
+                        <tr key={i}>
+                          <td className="tBodyTd">{item.part}</td>
+                          <td className="tBodyTd">{item.quantity}</td>
+                          <td className="tBodyTd">{item.amount}</td>
+                          <td className="tBodyTd">
+                            <span>
+                              <customIcons.edit
+                                size={17}
+                                style={{ color: "#584539", cursor: "pointer" }}
+                              />
+                              <customIcons.delete
+                                size={17}
+                                style={{ color: "#584539", cursor: "pointer" }}
+                              />
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <Link onClick={handleShowParts}>Add Part</Link>
+                </div>
 
-                <form onSubmit={handleFormSubmit} className={`partsForm ${ !showParts ? "partsFormHide" : ""}`}>
+                <form
+                  onSubmit={handleFormSubmit}
+                  className={`partsForm ${!showParts ? "partsFormHide" : ""}`}
+                >
                   <div className="partsFormInner">
-                  <h3 className="partsHeader">Add Part</h3>
+                    <h3 className="partsHeader">Add Part</h3>
 
                     <p className="partFormHeader">Selected Part</p>
                     <select

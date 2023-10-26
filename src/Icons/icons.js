@@ -1,7 +1,7 @@
 import { AiOutlineSearch } from "react-icons/ai"
 import { IoIosNotifications } from "react-icons/io"
 import { CiMenuKebab } from "react-icons/ci"
-import { MdOutlineFilterList, MdDelete, MdEdit } from "react-icons/md"
+import { MdOutlineFilterList, MdDelete, MdEdit, MdOutlineAttachFile } from "react-icons/md"
 import { CgAttachment } from "react-icons/cg"
 import { GoCheckCircle } from "react-icons/go"
 import { BiCheck } from "react-icons/bi"
@@ -22,7 +22,8 @@ const customIcons = {
     circleCheck: GoCheckCircle,
     down: BsChevronDown,
     delete: MdDelete,
-    edit: MdEdit
+    edit: MdEdit,
+    attach: MdOutlineAttachFile
 }
 
 export default customIcons;

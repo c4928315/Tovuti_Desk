@@ -87,9 +87,166 @@
 
 .partsTableWO tbody tr {
     padding-bottom: 20px !important;
+    height: 40px !important;
 }
 
 .partTableConatainerWO{
     margin: 15px;
     width: 96%;
+    height: 20px;
+    padding-top: 20px;
+    overflow: hidden;
+    border: 1px solid rgb(201, 201, 201);
+    border-radius: 12px;
 }
+
+.extendWOtable{
+    height: 250px;
+}
+
+.woDownDispalyNone{
+    display: none;
+    margin-top: 20px;
+}
+
+.nav-tabs-WODets{
+    border:  none !important;
+    display: flex !important;
+    gap: 25px !important;
+    margin-top: 20px;
+}
+
+.nav-tabs-WODets li button{
+    border: none !important;
+    color: black !important;
+    text-transform: uppercase;
+    padding: 0 !important;
+    font-size: 13px;
+}
+
+.nav-tabs-WODets .nav-item .active{
+    color: orange !important;
+    border-bottom: 1px solid orange !important;
+    padding-bottom: 0px !important;
+    font-size: 13px !important;
+}
+
+.tab-content-WOdets{
+    margin-left: 15px !important;
+}
+
+.woLeft{
+    width: 40%;
+    background-color: white;
+    border-radius: 12px;
+    height: 100%;
+    padding: 25px 20px;
+}
+
+.woRight{
+    height: fit-content;
+}
+
+.woFiles{
+    display: flex;
+    float: right;
+    gap: 5px;
+    background-color: rgb(226, 226, 226);
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.rotateDropdown{
+    transform: rotate(-90deg);
+}
+
+.timerWORef{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.timer{
+    background-color: red;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+}
+
+.request-details-page-main-WO{
+    color: #584539;
+}
+
+
+
+.partsFormWO{
+    display: flex;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    height: 500px;
+    width: 560px;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    border-radius: 12px;
+    padding-bottom: 30px;
+  }
+
+  .formContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgb(0, 0, 0, 0.1), rgb(0, 0, 0,0.1));
+    overflow: hidden;
+    position: fixed;
+  }
+
+  .partsFormWO input{
+    background-color: rgb(233, 233, 233);
+    padding: 0 10px;
+    font-size: 14px;
+  }
+
+  .partsFormHide{
+    display: none;
+  }
+
+  .closeForm{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: #686664;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+  }
+
+  .formCloseContainer{
+    position: relative;
+  }
+
+  .newAddPartLink{
+    margin-top: 20px;
+  }
+
+  .partFormHeader{
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 30px;
+  }
