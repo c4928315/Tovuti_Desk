@@ -1,536 +1,527 @@
-.stepInput{
-    background-color: lightgray;
-    width: 320px !important;
-    padding: 0px 10px 0 10px !important;
-    border-radius: 12px;
-    height: 48px !important;
-    text-align: center;
+.stepInput {
+  background-color: lightgray;
+  width: 320px !important;
+  padding: 0px 10px 0 10px !important;
+  border-radius: 12px;
+  height: 48px !important;
+  text-align: center;
 }
 
-.notHeader{
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    width: 350px !important;
-    height: 35px !important;
-    background-color: #e7e7e7 !important;
-    margin-top: 4%;
-    margin-bottom: -9%;
+.notHeader {
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  width: 350px !important;
+  height: 35px !important;
+  background-color: #e7e7e7 !important;
+  margin-top: 4%;
+  margin-bottom: -9%;
 }
 
-.innerAsset{
-    display: flex;
-    width: 100%;
-    margin-bottom: 40px;
-    height: 100%;
+.innerAsset {
+  display: flex;
+  width: 100%;
+  margin-bottom: 40px;
+  height: 100%;
 }
 
-.checkBox{
-    width: 320px;
-    margin: 0px;
+.checkBox {
+  width: 320px;
+  margin: 0px;
 }
 
-.MuiSvgIcon-root{
+.MuiSvgIcon-root {
   width: 0.8em !important;
 }
 
-.stepFlex{
-    margin-bottom: 20px;
+.stepFlex {
+  margin-bottom: 20px;
 }
 
-.allStepAsset{
-    padding: 0 30px;
+.allStepAsset {
+  padding: 0 30px;
 }
 
-.innerAsset div label{
-    margin: 4px 0 0 8px;
+.innerAsset div label {
+  margin: 4px 0 0 8px;
 }
 
-.stepTopHeader{
-    font-size: 17px;
-    font-weight: 500;
-    margin: 4% 0;
+.stepTopHeader {
+  font-size: 17px;
+  font-weight: 500;
+  margin: 4% 0;
 }
 
-.stepFlex label{
-    padding-top: 3px;
-    padding-left: 10px;
-    text-transform: capitalize;
-    display: none;
+.stepFlex label {
+  padding-top: 3px;
+  padding-left: 10px;
+  text-transform: capitalize;
+  display: none;
 }
-
-
-
-
-
 
 /**
 Work Order
 **/
 
-.workOrderInput{
-    background-color: lightgray;
-    width: 330px !important;
-    border-radius: 12px;
-    height: 45px !important;
-    padding: 0px 10px 0 10px !important;
-    border-bottom: none !important;
-    margin-left: 0 !important;
+.workOrderInput {
+  background-color: lightgray;
+  width: 330px !important;
+  border-radius: 12px;
+  height: 45px !important;
+  padding: 0px 10px 0 10px !important;
+  border-bottom: none !important;
+  margin-left: 0 !important;
 }
 
-.tabContainer{
-    margin-bottom: 30px;
+.tabContainer {
+  margin-bottom: 30px;
 }
 
-.fieldLabel{
-    display: flex;
-    flex-direction: column;
+.fieldLabel {
+  display: flex;
+  flex-direction: column;
 }
 
-.tabsNav{
-    border-radius: 50%;
+.tabsNav {
+  border-radius: 50%;
 }
 
-.stepBtnContainer{
-    width: 100%;
-    float: right;
+.stepBtnContainer {
+  width: 100%;
+  float: right;
 }
 
-.summarryStep{
-    width: 100%;
+.summarryStep {
+  width: 100%;
 }
 
-
-.assetsSelect, .asset-toggle{
-    width: 350px !important;
-    height: 35px !important;
-    background-color: #f5f5f5 !important;
-    margin-top: 4%;
-    font-size: 14px !important;
+.assetsSelect,
+.asset-toggle {
+  width: 350px !important;
+  height: 35px !important;
+  background-color: #f5f5f5 !important;
+  margin-top: 4%;
+  font-size: 14px !important;
 }
 
-.asset-toggle{
-    color: black !important;
-    display: flex !important;
-    justify-content: space-between;
-    align-items: center;
-    border: none;
+.asset-toggle {
+  color: black !important;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
 }
 
-.categoryAssets{
-    display: flex;
-    margin-top: 30px;
-    justify-content: space-between;
-    gap: 15%;
+.categoryAssets {
+  display: flex;
+  margin-top: 30px;
+  justify-content: space-between;
+  gap: 15%;
 }
 
-.assetNextBtn{
-    float: right;
-    margin-top: 20% !important;
-    background-color: orange !important;
+.assetNextBtn {
+  float: right;
+  margin-top: 20% !important;
+  background-color: orange !important;
 }
 
-.assetPrevBtn{
-    float: right;
-    margin-top: 20% !important;
-    background-color: white !important;
-    color: orange !important;
-    border: 1px solid orange !important;
+.assetPrevBtn {
+  float: right;
+  margin-top: 20% !important;
+  background-color: white !important;
+  color: orange !important;
+  border: 1px solid orange !important;
 }
 
-.wOTabContainer{
-    display: flex;
-    align-items: center;
+.wOTabContainer {
+  display: flex;
+  align-items: center;
 }
 
-.css-1aquho2-MuiTabs-indicator{
-    background-color: white;
+.css-1aquho2-MuiTabs-indicator {
+  background-color: white;
 }
 
-.newWorkOrder{
-    padding: 30px 0;
+.newWorkOrder {
+  padding: 30px 0;
 }
 
-.newWorkOrderInput{
-    width: 350px !important;
+.newWorkOrderInput {
+  width: 350px !important;
 }
 
-.newWorkOrderCells{
-    display: flex;
-    gap: 50px;
+.newWorkOrderCells {
+  display: flex;
+  gap: 50px;
 }
 
-.newWorkOrderCellsCheckBox{
-    display: flex;
-    gap: 2px;
-    margin-top: 20px;
+.newWorkOrderCellsCheckBox {
+  display: flex;
+  gap: 2px;
+  margin-top: 20px;
 }
-
 
 .newWorkOrderCellsCheckBox .checkbox-button {
-    display: inline-block;
-    position: relative;
-    cursor: pointer;
-    user-select: none;
-    background-color: #F1EFEF;
-    padding: 0;
-    padding-right: 12px !important;
-    width: 86px;
-    height: 38px;
-    display: flex;
-    justify-content: center;align-items: center;
-    font-size: 14px;
-  }
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  background-color: #f1efef;
+  padding: 0;
+  padding-right: 12px !important;
+  width: 86px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
 
-  .checked-label {
-    background-color: orange !important; /* Replace with the color you want */
-  }
-  
-  .newWorkOrderCellsCheckBox .checkbox-button input {
-    display: none;
-  }
-  
-  .newWorkOrderCellsCheckBox .checkbox-button .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-  }
-  
- .newWorkOrderCellsCheckBox .checkbox-button .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-  
- .newWorkOrderCellsCheckBox .checkbox-button input:checked + .checkmark {
-    background-color: #2196F3;
-  }
-  
- .newWorkOrderCellsCheckBox .checkbox-button input:checked + .checkmark:after {
-    display: block;
-  }
-  
- .newWorkOrderCellsCheckBox .checkbox-button .checkmark:after {
-    left: 6px;
-    top: 2px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-  }
-  
+.checked-label {
+  background-color: orange !important; /* Replace with the color you want */
+}
 
-  .newWorkOrderSelectStep2{
-    width: 350px !important;
-  }
+.newWorkOrderCellsCheckBox .checkbox-button input {
+  display: none;
+}
 
-  .first-option{
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-  }
+.newWorkOrderCellsCheckBox .checkbox-button .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
 
-  .last-option{
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-  }
+.newWorkOrderCellsCheckBox .checkbox-button .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
 
-  .newWOflex{
-    display: flex;
-    gap: 5px;
-    align-items: center;
-    
-  }
+.newWorkOrderCellsCheckBox .checkbox-button input:checked + .checkmark {
+  background-color: #2196f3;
+}
 
-.newWOflex p{
-    margin-top: 20px !important;
-  }
+.newWorkOrderCellsCheckBox .checkbox-button input:checked + .checkmark:after {
+  display: block;
+}
 
-  .newWorkOrder select, .newWorkOrder input{
-    background-color: #F1EFEF;
-    margin-top: 20px;
-  }
+.newWorkOrderCellsCheckBox .checkbox-button .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
 
-  .form-label-newWO{
-    margin-top: 10px;
-    font-weight: 400;
-    color: rgb(91, 91, 91);
-    margin-top: 10px;
+.newWorkOrderSelectStep2 {
+  width: 350px !important;
+}
 
-  }
+.first-option {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
 
-  .newWorkOrderSingleCellHolder{
-    margin-top: 40px;
-  }
-  
- .newWorkOrderSingleCell .partsTable{
-    width: 100%;
-    min-height: 80px;
-    border-radius: 6px !important;
-    margin: 20px 0;
-    margin-top: 0;
-  }
+.last-option {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
 
-  .partTableConatainer{
-    border: 1px solid rgba(91, 91, 91, 0.1);
-    padding: 30px 20px;
-    padding-top: 0;
-    width: 90%;
-    border-radius: 8px;
-    margin-top: 20px;
-    height: 180px;
-    position: relative;
-  }
+.newWOflex {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
 
-  .partsTable thead tr th:first-child {
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-  }
-  
-  .partsTable thead tr th:last-child {
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-  }
+.newWOflex p {
+  margin-top: 20px !important;
+}
 
-  .partsTable tBody tr{
-    background-color: white !important;
-    border-radius: 6px !important;
-    border-bottom: 1px solid rgba(91, 91, 91, 0.1) !important;
-    padding-bottom: 20px !important;
-  }
+.newWorkOrder select,
+.newWorkOrder input {
+  background-color: #f1efef;
+  margin-top: 20px;
+}
 
-  .partsTable tBody tr td{
-    text-align: center;
-    font-size: 13px;
-    text-transform: capitalize;
-    color: rgb(68, 68, 68);
-  }
+.form-label-newWO {
+  margin-top: 10px;
+  margin-top: 10px;
 
-  .partsTable thead tr th{
-    font-weight: 400 !important;
-    font-size: 14.3px !important;
-    color: rgb(177, 177, 177) !important;
-    padding: 10px 15px !important;
-    text-align: center;
-    padding-bottom: 0px !important;
-  }
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.333px;
+}
 
+.newWorkOrderSingleCellHolder {
+  margin-top: 40px;
+}
 
-  .partsTable thead tr {
-    background-color: white;
-    border-radius: 6px !important;
-  }
+.newWorkOrderSingleCell .partsTable {
+  width: 100%;
+  min-height: 80px;
+  border-radius: 6px !important;
+  margin: 20px 0;
+  margin-top: 0;
+}
 
-  .partsTable thead tr:hover{
-    background-color: white !important;
+.partTableConatainer {
+  border: 1px solid rgba(91, 91, 91, 0.1);
+  padding: 30px 20px;
+  padding-top: 0;
+  width: 90%;
+  border-radius: 8px;
+  margin-top: 20px;
+  height: 180px;
+  position: relative;
+}
 
-  }
+.partsTable thead tr th:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
 
-  .newWorkOrder hr{
-    margin: 30px 0;
-    width: 90%;
-    
-  }
+.partsTable thead tr th:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
 
-  .newWOTabs{
-    border: white 1px solid !important;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    color: black !important;
-    padding-left: 0;
-  }
+.partsTable tBody tr {
+  background-color: white !important;
+  border-radius: 6px !important;
+  border-bottom: 1px solid rgba(91, 91, 91, 0.1) !important;
+  padding-bottom: 20px !important;
+}
 
-  .nav-tabs-newWo{
-    border: white 1px solid !important;
-  }
+.partsTable tBody tr td {
+  text-align: center;
+  font-size: 13px;
+  text-transform: capitalize;
+  color: rgb(68, 68, 68);
+}
 
-  .newWOTabs .active{
-    border: none !important;
+.partsTable thead tr th {
+  font-weight: 400 !important;
+  font-size: 14.3px !important;
+  color: rgb(177, 177, 177) !important;
+  padding: 10px 15px !important;
+  text-align: center;
+  padding-bottom: 0px !important;
+}
 
-  }
+.partsTable thead tr {
+  background-color: white;
+  border-radius: 6px !important;
+}
 
-  .checkWhite{
-    color: white !important;
-  }
+.partsTable thead tr:hover {
+  background-color: white !important;
+}
 
-  .newWoBtn{
-    width: 90%;
-    display: flex;
-    justify-content: space-between;
-  }
+.newWorkOrder hr {
+  margin: 30px 0;
+  width: 90%;
+}
 
-  .categoryAssetsFlex{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-  }
-  
-  .allEncompassing{
-    width: 100%;
-  }
+.newWOTabs {
+  border: white 1px solid !important;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: black !important;
+  padding-left: 0;
+}
 
+.nav-tabs-newWo {
+  border: white 1px solid !important;
+}
 
-  .checkListDropdown{
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    line-height: 10px;
-  }
+.newWOTabs .active {
+  border: none !important;
+}
 
-  .checkListDropdown p{
-    margin-top: 20px;
-  }
+.checkWhite {
+  color: white !important;
+}
 
-  /*line-height: 20px;*/
+.newWoBtn {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
 
-  .partsTop{
-    display: flex;
-    justify-content: space-between;
-    width: 90%;
-    align-items: center;
-  }
+.categoryAssetsFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
 
-  .partTableConatainer a{
-    color: orange;
-    text-decoration: underline;
-    float: right;
-    font-size: 13px;
-    position: absolute;
-    bottom: 10px;
-    right: 25px;
-  }
+.allEncompassing {
+  width: 100%;
+}
 
-  .otherInfoWo h3{
-    margin: 30px 0;
-  }
+.checkListDropdown {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  line-height: 10px;
+}
 
-  .partsForm{
-    position: absolute;
-    top: -40%;
-    display: flex;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-    height: 420px;
-    width: 400px;
-    justify-content: center;
-    align-items: center;
-    z-index: 20;
-  }
+.checkListDropdown p {
+  margin-top: 20px;
+}
 
-  .partsFormInner{
-    height: 80%;
-    width: 80%;
-    position: static;
-    top: 0;
-    bottom: 0;
-  }
+/*line-height: 20px;*/
 
-  .partsFormInner input, .partsFormInner select{
-    width: 100%;
-    height: 40px;
-    border-radius: 6px;
-    margin: 10px 0;
-  }
+.partsTop {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  align-items: center;
+}
 
-  .newWorkOrderSingleCell{
-    position: relative;
-  }
+.partTableConatainer a {
+  color: orange;
+  text-decoration: underline;
+  float: right;
+  font-size: 13px;
+  position: absolute;
+  bottom: 10px;
+  right: 25px;
+}
 
-  .partsFormInner button{
-    float: right;
-    color: white;
-    background-color: orange;
-    margin-top: 20px;
-    padding: 4px 8px;
-    border-radius: 6px;
-  }
+.otherInfoWo h3 {
+  margin: 30px 0;
+}
 
-  .partsHeader{
-    margin-bottom: 20px;
-    font-size: 16px;
-    font-weight: 600;
-  }
+.partsForm {
+  position: absolute;
+  top: -40%;
+  display: flex;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  height: 420px;
+  width: 400px;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
 
-  .partsFormHide{
-    display: none;
-  }
+.partsFormInner {
+  height: 80%;
+  width: 80%;
+  position: static;
+  top: 0;
+  bottom: 0;
+}
 
-.dropdown-toggle-add-team{
+.partsFormInner input,
+.partsFormInner select {
+  width: 100%;
+  height: 40px;
+  border-radius: 6px;
+  margin: 10px 0;
+}
+
+.newWorkOrderSingleCell {
+  position: relative;
+}
+
+.partsFormInner button {
+  float: right;
+  color: white;
+  background-color: orange;
+  margin-top: 20px;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.partsHeader {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.partsFormHide {
+  display: none;
+}
+
+.dropdown-toggle-add-team {
   width: 350px !important;
   display: flex !important;
   justify-content: left !important;
-  background-color: #F1EFEF !important;
+  background-color: #f1efef !important;
   transition: all 0.3s ease-in-out;
   color: black !important;
   margin-top: 20px !important;
 }
 
-.dropdown-toggle-add-team:hover{
+.dropdown-toggle-add-team:hover {
   border: none !important;
-  background-color: #F1EFEF !important;
+  background-color: #f1efef !important;
 }
 
-.dropdownAdditionalTeam .header p{
+.dropdownAdditionalTeam .header p {
   color: rgb(91, 91, 91) !important;
 }
- .newWOflex .checkListDropdown{
-    margin-bottom: 20px;
- }
+.newWOflex .checkListDropdown {
+  margin-bottom: 20px;
+}
 
- .newWOTabs span{
-    font-size: 15px;
-    color: rgb(91, 91, 91);
- }
+.newWOTabs span {
+  font-size: 15px;
+  color: rgb(91, 91, 91);
+}
 
+.tBodyTd span {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
+}
 
- .tBodyTd span{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    gap: 20px;
- }
+.WoFade {
+  color: black !important;
+  font-size: 14px !important;
+}
 
- .WoFade{
-    color: black!important;
-    font-size: 14px !important;
- }
+.summaryPTop,
+.summaryBottom {
+  font-size: 15px;
+  color: black;
+}
 
+.summaryPTop {
+  color: lightgray;
+}
 
- .summaryPTop, .summaryBottom{
-    font-size: 15px;
-    color: black;
-    
- }
+.summaryHeader {
+  text-transform: uppercase;
+}
 
- .summaryPTop{
-    color: lightgray;
- }
-
- .summaryHeader{
-    text-transform: uppercase;
- }
-
- .estimatedHours{
+.estimatedHours {
   margin-top: 30px;
- }
- 
+}
 
- .assetsContainerInSteps{
-    margin-top: 33px !important;
-    position: absolute;
-    border: 1px solid rgb(207, 207, 207);
-    width: 100%;
-    border-radius: 4px;
- }
+.assetsContainerInSteps {
+  margin-top: 33px !important;
+  position: absolute;
+  border: 1px solid rgb(207, 207, 207);
+  width: 100%;
+  border-radius: 4px;
+}
 
-.assetsSpan{
+.assetsSpan {
   position: relative;
 }
 
@@ -538,24 +529,21 @@ Work Order
   display: none;
 }
 
-.dropdownAdditionalTeam{
+.dropdownAdditionalTeam {
   margin-top: 10px;
 }
 
-
-.dropdownAdditionalTeam .dropdown-menu{
+.dropdownAdditionalTeam .dropdown-menu {
   border: none !important;
   width: 100% !important;
   padding-left: 20px !important;
-  background-color: #F1EFEF;
+  background-color: #f1efef;
   margin-top: 5px !important;
 }
 
-
-
 /* SUMMARY*/
 
-.summaryMainHeader{
+.summaryMainHeader {
   margin-top: 30px;
   color: #000;
   font-family: Mulish;
@@ -566,7 +554,7 @@ Work Order
   letter-spacing: -0.333px;
 }
 
-.summaryHeader{
+.summaryHeader {
   color: rgba(0, 0, 0, 0.38);
   font-family: Mulish;
   margin-bottom: 10px;
@@ -578,7 +566,7 @@ Work Order
   letter-spacing: -0.333px;
 }
 
-.subHeaderSummary{
+.subHeaderSummary {
   color: rgba(0, 0, 0, 0.38);
   font-family: Mulish;
   font-size: 14px;
@@ -589,7 +577,7 @@ Work Order
   text-transform: capitalize;
 }
 
-.mainInfoSummary{
+.mainInfoSummary {
   color: #000;
   font-family: Mulish;
   font-size: 14px;
@@ -600,27 +588,27 @@ Work Order
   margin-bottom: 20px;
 }
 
-.blockSummary{
+.blockSummary {
   display: block;
   line-height: 20px;
 }
 
-.summaryMainFlex{
+.summaryMainFlex {
   display: flex;
   gap: 10px;
 }
 
-.WOsummaryRight{
+.WOsummaryRight {
   width: 170px;
 }
 
-.workOrderSummary{
+.workOrderSummary {
   display: flex;
   justify-content: space-between;
   width: 60%;
 }
 
-.priorityBtn{
+.priorityBtn {
   background-color: red;
   color: white;
   padding: 3px 10px;
@@ -633,37 +621,37 @@ Work Order
   margin-top: 5px;
 }
 
-.submitWO{
+.submitWO {
   float: right;
   width: 102px;
   height: 33px;
   flex-shrink: 0;
-  background-color: #D57D2ADE !important;
-  color: #FFF;
-font-family: Mulish;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 20px;
-letter-spacing: 0.2px;
-margin-right: 20px;
+  background-color: #d57d2ade !important;
+  color: #fff;
+  font-family: Mulish;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  margin-right: 20px;
 }
 
-.summarryStep hr{
-  width: 90%; 
+.summarryStep hr {
+  width: 90%;
   margin: 20px 0;
   color: #888888;
   margin-bottom: 0;
 }
 
-.summaryHeaderContainer{
+.summaryHeaderContainer {
   display: flex;
   justify-content: space-between;
   width: 90%;
   align-items: center;
- }
- 
- .summaryHeaderContainer span{
+}
+
+.summaryHeaderContainer span {
   color: rgba(88, 69, 57, 0.87);
   display: flex;
   justify-content: center;
@@ -676,24 +664,138 @@ margin-right: 20px;
   width: 60px;
   height: 30px;
   transition: all 0.3s ease-in-out;
- }
+}
 
- .summaryHeaderContainer span:hover{
+.summaryHeaderContainer span:hover {
   border-radius: 12px;
   width: 60px;
   height: 30px;
   background-color: #d8d8d8;
   color: rgba(88, 69, 57, 0.87);
- }
+}
 
- .submitWOContainer{
+.submitWOContainer {
   width: 90%;
   margin-top: 50px;
- }
+}
 
- .checkBox span{
+.checkBox span {
   font-size: 14px;
 }
+
+.priorities .unselected-button {
+  background-color: #d8d8d8;
+}
+
+.priorities .selected-button {
+  background-color: orange;
+}
+
+.priorities {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+}
+
+.priorities button {
+  width: calc(100% / 4);
+  font-size: 14px;
+}
+
+.addChecklist {
+  width: fit-content;
+  height: 30px;
+  flex-shrink: 0;
+  fill: #fff;
+  border: 1px solid rgba(88, 69, 57, 0.87);
+  color: rgba(88, 69, 57, 0.87);
+  border-radius: 4px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+  gap: 18px;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.checklistToggle .dropdown-toggle::after {
+  display: none;
+}
+
+.checklistSearch{
+  height: 30px;
+  padding: 0 5px;
+}
+
+.checklistToggle .dropdown-menu.show{
+  padding: 0 12px !important;
+  padding-bottom: 12px !important;
+}
+
+.checklistList{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 2px;
+}
+
+.checklistList p{
+  margin-top: 20px;
+  color: #000;
+font-family: Mulish;
+font-size: 15px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+letter-spacing: -0.333px;
+}
+
+.checklistTable{
+  width: 100% !important;
+}
+
+.checklistTableContainer{
+  padding-left: 0;
+  padding-right: 0;
+  border-radius: 12px;
+}
+
+.checklistTable thead tr th{
+  background-color: white !important;
+  width: 100% !important;
+  border-bottom: 1px solid rgba(91, 91, 91, 0.1) !important;
+  padding: 10px 20px;
+  transition: all 0.3s ease-in-out;
+  color: rgba(88, 69, 57, 0.87);
+font-family: Mulish;
+font-size: 15px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+letter-spacing: 0.4px;
+}
+
+.checklistTable thead tr th:hover, .checklistTable tbody tr td:hover{
+  background-color: white !important;
+}
+
+.checklistTable tbody tr td{
+  background-color: white !important;
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 25px;
+  transition: all 0.3s ease-in-out;
+}
+
+.checklistTable tbody tr td li{
+  list-style: square;
+}
+
+
+
 
 /* 
 font-weight: 500;
@@ -703,6 +805,11 @@ font-weight: 500;
   justify-content: space-between;
   width: 90%;
   align-items: center;
+  border-radius: 12px;
+
+  border: 1px solid rgba(88, 69, 57, 0.87); 
+  color: rgba(88, 69, 57, 0.87);
+  font-weight: 600;
 
   cursor: pointer;
  }
@@ -724,7 +831,7 @@ font-weight: 500;
  }
 
  .assetsContainerInSteps
- 
+ .form-label-newWO
  .checkBox span{
 
   font-size: 13px;

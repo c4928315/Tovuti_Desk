@@ -22,10 +22,7 @@ const Context = ({children}) => {
       "TicketPriorityId": 1,
       "TicketPriorityName": "High"
     },
-    "TicketChecklistForms": {
-      "FormsAndSectionsId": 20,
-      "FormsAndSectionsName": "Form 1"
-    },
+    "TicketChecklistForms":[],
     "features":[],
     "TicketCategoryOfWork": {
 

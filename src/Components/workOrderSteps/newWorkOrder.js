@@ -91,9 +91,49 @@ const teamOptions = [
   // Add more teams as needed
 ];
 
-const options = ["Low", "Medium", "High", "Criticle"];
+const priorities = [
+  {
+    TicketPriorityId: 1,
+    TicketPriorityName: "Low",
+  },
+  {
+    TicketPriorityId: 2,
+    TicketPriorityName: "Medium",
+  },
+  {
+    TicketPriorityId: 3,
+    TicketPriorityName: "High",
+  },
+  {
+    TicketPriorityId: 4,
+    TicketPriorityName: "Criticle",
+  },
+];
 
 const features = ["Scales", "Horns", "Claws", "Wings"];
+
+const checklists = [
+  {
+    FormsAndSectionsId: 1,
+    FormsAndSectionsName: "Pump Calibaration Checklist",
+  },
+  {
+    FormsAndSectionsId: 2,
+    FormsAndSectionsName: "Laptops Checklist",
+  },
+  {
+    FormsAndSectionsId: 3,
+    FormsAndSectionsName: "Compressor Checklist",
+  },
+  {
+    FormsAndSectionsId: 4,
+    FormsAndSectionsName: "Generators Checklist",
+  },
+  {
+    FormsAndSectionsId: 5,
+    FormsAndSectionsName: "Engine Checklist",
+  },
+];
 
 function NewWorkOrder() {
   const { setStep, userData, setUserData } = useContext(MultiStepContext);
@@ -171,8 +211,6 @@ function NewWorkOrder() {
     setActiveTab2(!activeTab2);
   };
 
-  console.log(userData);
-
   const handleCheckboxChanges = (option) => {
     setCheckedItems((prevItems) => ({
       ...prevItems,
@@ -237,6 +275,48 @@ function NewWorkOrder() {
         TicketAdditionalTeams: [
           ...userData.TicketAdditionalTeams,
           selectedTeam,
+        ],
+      });
+    }
+  };
+
+  const handlePrioritySelection = (priority) => {
+    setUserData({
+      ...userData,
+      TicketPriority: {
+        TicketPriorityId: priority.TicketPriorityId,
+        TicketPriorityName: priority.TicketPriorityName,
+      },
+    });
+  };
+
+  const handleChecklistChange = (checklistId) => {
+    // Check if the checklistId is already in the array
+    const isChecked = userData.TicketChecklistForms.some(
+      (form) => form.FormsAndSectionsId === checklistId
+    );
+
+    if (isChecked) {
+      // Remove the checklist if already checked
+      const updatedChecklist = userData.TicketChecklistForms.filter(
+        (form) => form.FormsAndSectionsId !== checklistId
+      );
+
+      setUserData({
+        ...userData,
+        TicketChecklistForms: updatedChecklist,
+      });
+    } else {
+      // Add the checklist if not checked
+      const selectedChecklist = checklists.find(
+        (checklist) => checklist.FormsAndSectionsId === checklistId
+      );
+
+      setUserData({
+        ...userData,
+        TicketChecklistForms: [
+          ...userData.TicketChecklistForms,
+          selectedChecklist,
         ],
       });
     }
@@ -361,24 +441,24 @@ function NewWorkOrder() {
                 <p className="form-label-newWO">Priority</p>
                 <div className="newWorkOrderCellsCheckBox">
                   {/* fbu4hfu4hi */}
-                  {options.map((option, index) => {
-  console.log(option); // Add this line to log the option
-  return (
-    <label
-      key={option}
-      className={`checkbox-button ${checkedItems[option] ? "checked checked-label" : ""} ${index === 0 ? "first-option" : ""} ${index === options.length - 1 ? "last-option" : ""}`}
-      onClick={() => handleCheckboxChange(option)}
-    >
-      <input
-        type="checkbox"
-        checked={checkedItems[option]}
-        onChange={() => {}}
-      />
-      {option}
-    </label>
-  );
-})}
-
+                  <div className="priorities">
+                    {priorities.map((priority) => (
+                      <Button
+                        key={priority.TicketPriorityId}
+                        onClick={() => handlePrioritySelection(priority)}
+                        variant="contained"
+                        className={
+                          userData.TicketPriority &&
+                          userData.TicketPriority.TicketPriorityId ===
+                            priority.TicketPriorityId
+                            ? "selected-button"
+                            : "unselected-button"
+                        }
+                      >
+                        {priority.TicketPriorityName}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -602,22 +682,85 @@ function NewWorkOrder() {
                 </form> */}
               </div>
               <hr />
-              <div className="newWorkOrderSingleCell">
+              <div className="newWorkOrderSingleCell checklistToggle">
                 <p className="form-label-newWO">Tasks and Checklists</p>
-                {features.map((feature) => (
-                  <div key={feature} className="checkListDropdown">
-                    <input
-                      type="checkbox"
-                      id={feature.toLowerCase()}
-                      name={feature.toLowerCase()}
-                      checked={
-                        userData.features && userData.features.includes(feature)
-                      }
-                      onChange={() => handleCheckboxChange(feature)}
-                    />
-                    <p htmlFor={feature.toLowerCase()}>{feature}</p>
+
+                <div class="dropdown actionDropdown">
+                  <button
+                    className="btn btn-light dropdown-toggle actionBtn addChecklist"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <span>Add Checklists</span>
+                    <span>
+                      <customIcons.down />
+                    </span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <div class="search-container">
+                      {/* <customIcons.search/> */}
+                      <input
+                        type="text"
+                        class="form-control search-input"
+                        placeholder="Search..."
+                      />
+                    </div>
+                    <li>
+                      {checklists.map((checklist) => (
+                        <div
+                          key={checklist.FormsAndSectionsId}
+                          className="checklistList"
+                        >
+                          <input
+                            type="checkbox"
+                            id={`checklist-${checklist.FormsAndSectionsId}`}
+                            checked={userData.TicketChecklistForms.some(
+                              (form) =>
+                                form.FormsAndSectionsId ===
+                                checklist.FormsAndSectionsId
+                            )}
+                            onChange={() =>
+                              handleChecklistChange(
+                                checklist.FormsAndSectionsId
+                              )
+                            }
+                          />
+                          <p
+                            htmlFor={`checklist-${checklist.FormsAndSectionsId}`}
+                          >
+                            {checklist.FormsAndSectionsName}
+                          </p>
+                        </div>
+                      ))}
+                      {/* <Link class="dropdown-item action-dropdown-item" to="/request-form">
+                  <customIcons.add style={{color: "green"}}/>
+                  <span>New Request</span>
+                </Link> */}
+                    </li>
+                  </ul>
+                </div>
+                {userData.TicketChecklistForms.length > 0 && (
+                  <div className="partTableConatainer checklistTableContainer">
+                    <table className="checklistTable">
+                      <thead>
+                        <tr>
+                          <th>Checklists</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {userData.TicketChecklistForms.map((item, i) => (
+                          <tr key={i}>
+                            <td>
+                              <li>{item.FormsAndSectionsName}</li>
+                              <customIcons.delete style={{color: "rgba(88, 69, 57, 0.87)"}}/>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
-                ))}
+                )}
               </div>
               <div className="newWoBtn">
                 <Button
@@ -639,7 +782,7 @@ function NewWorkOrder() {
               </div>
             </div>
           </div>
-          <div
+          {/* <div
             className="tab-pane fade"
             id="nav-profile"
             role="tabpanel"
@@ -865,7 +1008,7 @@ function NewWorkOrder() {
                 </Button>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
