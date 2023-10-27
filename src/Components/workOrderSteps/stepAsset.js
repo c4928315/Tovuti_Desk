@@ -275,6 +275,7 @@ function StepAsset() {
                     ?.Assets.map((asset) => (
                       <div key={parseInt(asset.AssetId)} className="checkBox">
                         <Checkbox
+                        style={{color: "orange"}}
                           checked={userData.TicketAssets.some(
                             (selectedAsset) =>
                               selectedAsset.AssetId === asset.AssetId

@@ -31,11 +31,9 @@
     margin: 0px;
 }
 
-.checkbox-button
-
-/* .checkBox span{
-    margin-top: 20px;
-} */
+.MuiSvgIcon-root{
+  width: 0.8em !important;
+}
 
 .stepFlex{
     margin-bottom: 20px;
@@ -525,9 +523,11 @@ Work Order
  
 
  .assetsContainerInSteps{
-    margin-top: 30px !important;
+    margin-top: 33px !important;
     position: absolute;
-
+    border: 1px solid rgb(207, 207, 207);
+    width: 100%;
+    border-radius: 4px;
  }
 
 .assetsSpan{
@@ -573,7 +573,7 @@ Work Order
   margin-top: 30px;
   font-size: 14px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   line-height: normal;
   letter-spacing: -0.333px;
 }
@@ -691,6 +691,10 @@ margin-right: 20px;
   margin-top: 50px;
  }
 
+ .checkBox span{
+  font-size: 14px;
+}
+
 /* 
 font-weight: 500;
 
@@ -718,6 +722,13 @@ font-weight: 500;
   width: 90%;
   margin-top: 50px;
  }
+
+ .assetsContainerInSteps
+ 
+ .checkBox span{
+
+  font-size: 13px;
+}
 
 */
 

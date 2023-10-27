@@ -10,7 +10,7 @@
     width: 40%;
     background-color: white;
     border-radius: 12px;
-    height: 100%;
+    height: fit-content;
     padding: 25px 20px;
 }
 
@@ -18,7 +18,8 @@
     width: 60%;
     background-color: white;
     border-radius: 12px;
-    min-height: 100%;
+    min-height: 100vh;
+    min-height: 132vh;
 }
 
 .requestDetailTitle{
@@ -212,3 +213,4 @@
 .requestKeyValue h5{
     font-size: 14.49px;
 }
+
