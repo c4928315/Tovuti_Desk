@@ -65,6 +65,8 @@
 
 
 
+
+
 /**
 Work Order
 **/
@@ -95,13 +97,6 @@ Work Order
 .stepBtnContainer{
     width: 100%;
     float: right;
-}
-
-.summaryHeader{
-    color: lightgray;
-    text-transform: uppercase;
-    font-size: 17px;
-    font-weight: 500;
 }
 
 .summarryStep{
@@ -510,12 +505,6 @@ Work Order
  }
 
 
- .workOrderSummary{
-    display: flex;
-    gap: 60px;
-    width: 100%;
- }
-
  .summaryPTop, .summaryBottom{
     font-size: 15px;
     color: black;
@@ -561,3 +550,175 @@ Work Order
   background-color: #F1EFEF;
   margin-top: 5px !important;
 }
+
+
+
+/* SUMMARY*/
+
+.summaryMainHeader{
+  margin-top: 30px;
+  color: #000;
+  font-family: Mulish;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.333px;
+}
+
+.summaryHeader{
+  color: rgba(0, 0, 0, 0.38);
+  font-family: Mulish;
+  margin-bottom: 10px;
+  margin-top: 30px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.333px;
+}
+
+.subHeaderSummary{
+  color: rgba(0, 0, 0, 0.38);
+  font-family: Mulish;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.333px;
+  text-transform: capitalize;
+}
+
+.mainInfoSummary{
+  color: #000;
+  font-family: Mulish;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.333px;
+  margin-bottom: 20px;
+}
+
+.blockSummary{
+  display: block;
+  line-height: 20px;
+}
+
+.summaryMainFlex{
+  display: flex;
+  gap: 10px;
+}
+
+.WOsummaryRight{
+  width: 170px;
+}
+
+.workOrderSummary{
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.priorityBtn{
+  background-color: red;
+  color: white;
+  padding: 3px 10px;
+  width: 69px;
+  border-radius: 12px;
+  height: 21px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.submitWO{
+  float: right;
+  width: 102px;
+  height: 33px;
+  flex-shrink: 0;
+  background-color: #D57D2ADE !important;
+  color: #FFF;
+font-family: Mulish;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px;
+letter-spacing: 0.2px;
+margin-right: 20px;
+}
+
+.summarryStep hr{
+  width: 90%; 
+  margin: 20px 0;
+  color: #888888;
+  margin-bottom: 0;
+}
+
+.summaryHeaderContainer{
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  align-items: center;
+ }
+ 
+ .summaryHeaderContainer span{
+  color: rgba(88, 69, 57, 0.87);
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  font-size: 13px;
+  font-weight: 400;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 12px;
+  width: 60px;
+  height: 30px;
+  transition: all 0.3s ease-in-out;
+ }
+
+ .summaryHeaderContainer span:hover{
+  border-radius: 12px;
+  width: 60px;
+  height: 30px;
+  background-color: #d8d8d8;
+  color: rgba(88, 69, 57, 0.87);
+ }
+
+ .submitWOContainer{
+  width: 90%;
+  margin-top: 50px;
+ }
+
+/* 
+font-weight: 500;
+
+.summaryHeader{
+  display; flex;
+  justify-content: space-between;
+  width: 90%;
+  align-items: center;
+
+  cursor: pointer;
+ }
+
+ transition: all 0.3s ease-in-out;
+
+ .summaryHeaderContainer span:hover{
+  border-radius: 8px;
+  width: 40px;
+  height: 20px;
+  padding: 3px 8px;
+  background-color: rgba(88, 69, 57, 0.87);
+  color: #fff;
+ }
+
+ .submitWOContainer{
+  width: 90%;
+  margin-top: 50px;
+ }
+
+*/
+
+/* SUMMARY*/

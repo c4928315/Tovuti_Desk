@@ -259,3 +259,8 @@ display: block;
   background-color: var(--orange);
 }
 
+
+.workOrderRoot{
+  padding-bottom: 60px;
+  padding-top: 20px;
+}

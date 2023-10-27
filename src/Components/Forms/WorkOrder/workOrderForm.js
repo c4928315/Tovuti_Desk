@@ -74,7 +74,7 @@ function WorkOrderForm() {
           <div className="dividerCommonPage"></div>
           <Link>Add work order</Link>
         </div>
-        <div className="commonPageBottom container workOrder">
+        <div className="commonPageBottom container workOrder  workOrderRoot">
           <div className="formsCommonPageBottom">
             <div className="stepFlex">
               <div className="center-stepper">

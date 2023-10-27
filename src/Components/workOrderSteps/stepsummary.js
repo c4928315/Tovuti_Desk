@@ -4,14 +4,15 @@ import { Button } from "@material-ui/core";
 import { MultiStepContext } from "../Context";
 import useFetch from "../../Hooks/useFetch";
 import { useNavigate } from "react-router-dom";
+import customIcons from "../../Icons/icons";
 
 function StepSummary() {
   const { setStep, userData, setUserData } = useContext(MultiStepContext);
-  const { dataParts } = useFetch("https://intra-deco.onrender.com/Parts")
+  const { dataParts } = useFetch("https://intra-deco.onrender.com/Parts");
 
   console.log(userData);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleDataSubmissionAndSave = () => {
     // Submit data to the API
@@ -24,11 +25,9 @@ function StepSummary() {
     setStep(4);
   };
 
-
   const submitDataToAPI = (userData) => {
     const apiUrl = "https://intra-deco.onrender.com/workOrders";
 
-   
     fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -63,122 +62,162 @@ function StepSummary() {
       console.error("Error saving data to local storage:", error);
     }
   };
-  const location = userData.TicketLocation.LocationName
-console.log(userData.TicketLocation.LocationName)
+
   return (
     <div className="summarryStep">
-      <h3>Other Infomation</h3>
-      <div >
-        <h3 className="summaryHeader">Assets</h3>
+      <h3 className="summaryMainHeader">Other Infomation</h3>
+      <div>
+        <div className="summaryHeaderContainer">
+          <h3 className="summaryHeader">Assets</h3>
+          <span onClick={() => setStep(1)}>
+            <customIcons.edit />
+            <p>Edit</p>
+          </span>
+        </div>
 
         <div>
-          <div>
-          <h6>Location</h6>
-          <p>{userData.TicketLocation.LocationName}</p>
+          <div className="workOrderSummary">
+            <div>
+              <h6 className="subHeaderSummary">Location:</h6>
+              <p className="mainInfoSummary">
+                {userData.TicketLocation.LocationName}
+              </p>
+            </div>
 
-          <h6>asset category</h6>
-          <p>{userData.TicketCategoryOfWork.CategoryOfWorkName}</p>
+            <div className="WOsummaryRight">
+              <h6 className="subHeaderSummary">asset category:</h6>
+              <p className="mainInfoSummary">
+                {userData.TicketCategoryOfWork.CategoryOfWorkName}
+              </p>
+            </div>
           </div>
 
           <div>
-            <h6>Assets</h6>
-            {userData.TicketAssets.map((item) => item.AssetName)}
+            <h6 className="subHeaderSummary">Assets:</h6>
+            <p className="mainInfoSummary ">
+              {userData.TicketAssets.map((item) => {
+                return <div className="blockSummary">{item.AssetName}</div>;
+              })}
+            </p>
           </div>
         </div>
       </div>
-
+      <hr />
       <div>
-      <h3 className="summaryHeader">Work Order(s)</h3>
-
-      <p>Work Order 1 :</p> {userData.TicketAssets.map((item) => item[0] && item[0].AssetName)}
-
-      <div className="workOrderSummary">
-        <div>
-          <p className="summaryPTop">Work Order Title:</p>
-          <p className="summaryPBottom">{userData.TicketTitle}</p>
-        </div>
-        <div>
-          <p className="summaryPTop">Description:</p>
-          <p className="summaryPBottom">{userData.TicketDescription}</p>
-        </div>
-      </div>
-
-      <div className="workOrderSummary">
-        <div>
-          <p className="summaryPTop">Category Of Work:</p>
-          <p className="summaryPBottom">{userData.TicketCategoryOfWork.CategoryOfWorkName}</p>
-        </div>
-        <div>
-          <p className="summaryPTop">Priority:</p>
-          <p className="summaryPBottom">{userData.TicketPriority.TicketPriorityName}</p>
-        </div>
-      </div>
-
-      <div className="workOrderSummary">
-        <div>
-          <p className="summaryPTop">Team:</p>
-          <p className="summaryPBottom">{userData.TicketCurrentTeam.CurrentAssignedTeamName}</p>
+        <div className="summaryHeaderContainer">
+          <h3 className="summaryHeader">Work Order(s)</h3>
+          <span onClick={() => setStep(2)}>
+            <customIcons.edit />
+            <p>Edit</p>
+          </span>
         </div>
 
-        <div>
-          <p className="summaryPTop">Additional Team:</p>
-          <p className="summaryPBottom">{userData.TicketAdditionalTeams.map((item) => {
-            return (
-              <div>{item.TeamName}</div>
-            )
-            })}</p>
-        </div>
-      </div>
+        <div className="summaryMainFlex">
+          <p className="subHeaderSummary">Work Order 1:</p>
 
-      <div className="workOrderSummary">
-        <div>
-          <p className="summaryPTop">Technitian Signature Required?</p>
-          <p className="summaryPBottom">{userData.TechnitianSignature}</p>
+          <p className="mainInfoSummary">
+            {userData.TicketAssets[0].AssetName}
+          </p>
         </div>
-        <div>
-          <p className="summaryPTop">Estimated Hours:</p>
-          <p className="summaryPBottom">{userData.TechnitianSignature ? "Yes" : "No"}</p>
-        </div>
-      </div>
 
-      <div className="workOrderSummaryBlock">
-      <div>
-          <p className="summaryPTop">CheckLists:</p>
-          <div className="summaryPBottom">
-            {userData.TicketChecklistForms.FormsAndSectionsName}
+        <div className="workOrderSummary">
+          <div>
+            <p className="subHeaderSummary">Work Order Title:</p>
+            <p className="mainInfoSummary">{userData.TicketTitle}</p>
+          </div>
+          <div className="WOsummaryRight">
+            <p className="subHeaderSummary">Description:</p>
+            <p className="mainInfoSummary">{userData.TicketDescription}</p>
+          </div>
+        </div>
+
+        <div className="workOrderSummary">
+          <div>
+            <p className="subHeaderSummary">Category Of Work:</p>
+            <p className="mainInfoSummary">
+              {userData.TicketCategoryOfWork.CategoryOfWorkName}
+            </p>
+          </div>
+          <div className="WOsummaryRight">
+            <p className="subHeaderSummary">Priority:</p>
+            <p className="mainInfoSummary priorityBtn">
+              {userData.TicketPriority.TicketPriorityName}
+            </p>
+          </div>
+        </div>
+
+        <div className="workOrderSummary">
+          <div>
+            <p className="subHeaderSummary">Team:</p>
+            <p className="mainInfoSummary">
+              {userData.TicketCurrentTeam.CurrentAssignedTeamName}
+            </p>
+          </div>
+
+          <div className="WOsummaryRight">
+            <p className="subHeaderSummary">Additional Team:</p>
+            <p className="mainInfoSummary">
+              {userData.TicketAdditionalTeams.map((item) => {
+                return <div>{item.TeamName}</div>;
+              })}
+            </p>
+          </div>
+        </div>
+
+        <div className="workOrderSummary">
+          <div>
+            <p className="subHeaderSummary">Technitian Signature Required?</p>
+            <p className="mainInfoSummary">
+              {userData.TechnitianSignature ? "Yes" : "No"}
+            </p>
+          </div>
+          <div className="WOsummaryRight">
+            <p className="subHeaderSummary">Estimated Hours:</p>
+            <p className="mainInfoSummary">{userData.EstimatedHours}</p>
+          </div>
+        </div>
+
+        <div className="workOrderSummaryBlock">
+          <div>
+            <p className="subHeaderSummary">CheckLists:</p>
+            <div className="mainInfoSummary">
+              {userData.TicketChecklistForms.FormsAndSectionsName}
+            </div>
+          </div>
+        </div>
+
+        <div className="workOrderSummaryBlock">
+          <div>
+            <p className="subHeaderSummary">Projected Parts:</p>
+          </div>
+        </div>
+        <hr />
+        <div className="workOrderSummaryBlock">
+          <div>
+            <div className="summaryHeaderContainer">
+              <p className="summaryHeader">Other Informayion:</p>
+              <span onClick={() => setStep(3)}>
+                <customIcons.edit />
+                <p>Edit</p>
+              </span>
+            </div>
+
+            <p className="subHeaderSummary">Files</p>
+            <p className="mainInfoSummary">pump1.png</p>
           </div>
         </div>
       </div>
-
-      <div className="workOrderSummaryBlock">
-      <div>
-          <p className="summaryPTop">Projected Parts:</p>
-          
-        </div>
-      </div>
-
-      <div className="workOrderSummaryBlock">
-      <div>
-          <p className="summaryHeader">Other Informayion:</p>
-          <p className="summaryPTop">Files</p>
-          <p className="summaryPBottom">pump1.png</p>
-        </div>
-      </div>
-
-      
-
-      
-      
-
-      </div>
-
-      <Button
+<div className="submitWOContainer">
+  <Button
         variant="contained"
         color="primary"
         onClick={handleDataSubmissionAndSave}
+        className="submitWO"
       >
         Submit
       </Button>
+</div>
+      
     </div>
   );
 }
