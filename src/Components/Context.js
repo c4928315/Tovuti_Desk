@@ -22,12 +22,18 @@ const Context = ({children}) => {
       "TicketPriorityId": 1,
       "TicketPriorityName": "High"
     },
+    "TicketProjectedParts": [],
+    "TicketRequestedParts": [],
+    "TicketUsedParts": [],
     "TicketChecklistForms":[],
-    "features":[],
-    "TicketCategoryOfWork": {
-
-    }
-    
+    "TicketRecievedParts": [],
+    "TicketReturnedParts": [],
+    "TicketCategoryOfWork": {},
+    "TicketMileageDetails": {},
+    "TicketCostItems": {},
+    "ItemType": {},
+    "Cost": "",
+    "Budget": "",
 })
 
 
