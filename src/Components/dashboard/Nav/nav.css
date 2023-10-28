@@ -6,7 +6,7 @@ width: 100% !important;
 }
 
 .innerMainNav {
-width: 89%;
+width: 91%;
 margin-left: auto !important;
 margin-right: auto !important;
 display: flex;
@@ -20,6 +20,10 @@ margin: 0 !important;
 .navLinksContainer {
 display: flex;
 gap: 25px;
+}
+
+.dashboardHr{
+  width: 91%;
 }
 
 .navLinks,

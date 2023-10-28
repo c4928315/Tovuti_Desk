@@ -45,27 +45,6 @@ function WorkOrderForm() {
       <div className="">
         <div className="commonPageTop">
           <h3 className="pageTitle">Work Order</h3>
-          <div className="dropdown actionDropdown">
-            <button
-              className="btn btn-light dropdown-toggle actionBtn"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Actions
-            </button>
-            <ul className="dropdown-menu">
-              <li>
-                <Link
-                  className="dropdown-item action-dropdown-item"
-                  to="/work-order-form"
-                >
-                  <customIcons.add style={{ color: "green" }} />
-                  <span>New Request</span>
-                </Link>
-              </li>
-            </ul>
-          </div>
         </div>
         <div className="commonPageMiddle">
           <Link to="/">home</Link>

@@ -412,8 +412,8 @@ const handleShowFaultFilter = () => {
             <th>Status</th>
             <th>Location</th>
             <th>Fault</th>
-            <th>Asset</th>
             <th>Fault Description</th>
+            <th>Asset</th>
             <th>Submitted By</th>
             <th>Work Order</th>
             <th>Date Submitted</th>
@@ -428,10 +428,10 @@ const handleShowFaultFilter = () => {
               <td className="tBodyTd">
                 {item.Fault.map((fault) => fault.Name).join(", ")}
               </td>
+              <td className="tBodyTd">{item.Description}</td>
               <td className="tBodyTd">
                 {item.Asset.map((asset) => asset.Name).join(", ")}
               </td>
-              <td className="tBodyTd">{item.Description}</td>
               <td className="tBodyTd">{item.CreatedBy}</td>
               <td className="tBodyTd">{item.WorkOrder.Title}</td>
               <td className="tBodyTd">{item.DateCreated}</td>

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Box from "@mui/material/Box";
 import { Button, Checkbox } from "@material-ui/core";
 import { MultiStepContext } from "../Context";
+import customIcons from "../../Icons/icons";
 import "./steps.css";
 
 const locations = [
@@ -166,7 +167,7 @@ function StepAsset() {
     }
   };
 
-  console.log(userData)
+  console.log(userData);
 
   return (
     <div className="allStepAsset">
@@ -184,109 +185,128 @@ function StepAsset() {
             <div className="categoryAssetscontainer">
               <div>
                 <h3>Location</h3>
-                <select
-                  className="assetsSelect"
-                  value={userData.TicketLocation.LocationId}
-                  onChange={(e) => {
-                    const selectedValue = e.target.value;
-                    const selectedLabel =
-                      e.nativeEvent.target[e.nativeEvent.target.selectedIndex].text;
-                    setUserData({
-                      ...userData,
-                      TicketLocation: {
-                        LocationId: parseInt(selectedValue),
-                        LocationName: selectedLabel,
-                      },
-                      TicketCategoryOfWork: {
-                        CategoryOfWorkId: null,
-                        CategoryOfWorkName: "",
-                      },
-                      TicketAssets: [], // Reset assets
-                    });
-                  }}
-                >
-                  <option value="" className="WoFade">Select</option>
-                  {locations.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
+                <div className="selectNewContainer selectNewContainerWO">
+                  <select
+                    className="requestSelect"
+                    value={userData.TicketLocation.LocationId}
+                    onChange={(e) => {
+                      const selectedValue = e.target.value;
+                      const selectedLabel =
+                        e.nativeEvent.target[e.nativeEvent.target.selectedIndex]
+                          .text;
+                      setUserData({
+                        ...userData,
+                        TicketLocation: {
+                          LocationId: parseInt(selectedValue),
+                          LocationName: selectedLabel,
+                        },
+                        TicketCategoryOfWork: {
+                          CategoryOfWorkId: null,
+                          CategoryOfWorkName: "",
+                        },
+                        TicketAssets: [], // Reset assets
+                      });
+                    }}
+                  >
+                    <option value="" className="WoFade">
+                      Select
                     </option>
-                  ))}
-                </select>
+                    {locations.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <customIcons.down className="selectNewIcon" size={13} />
+                </div>
               </div>
 
               <div className="categoryAssetsFlex">
                 <div className="categoryAssets">
                   <span>
                     <h3>Asset Category</h3>
-                    <select
-                      className="assetsSelect"
-                      value={userData.TicketCategoryOfWork.CategoryOfWorkId}
-                      onChange={(e) => {
-                        const selectedValue = e.target.value;
-                        const selectedLabel =
-                          e.nativeEvent.target[
-                            e.nativeEvent.target.selectedIndex
-                          ].text;
-                        setUserData({
-                          ...userData,
-                          TicketCategoryOfWork: {
-                            CategoryOfWorkId: parseInt(selectedValue),
-                            CategoryOfWorkName: selectedLabel,
-                          },
-                          TicketAssets: [], // Reset assets
-                        });
-                      }}
-                    >
-                      <option value="" className="WoFade">Select</option>
-                      {locations
-                        .find((location) => {
-                          const isMatch =
-                            parseInt(location.value) ===
-                            parseInt(userData.TicketLocation.LocationId);
-                          return isMatch;
-                        })
-                        ?.assetCategory.map((category) => (
-                          <option
-                            key={category.CategoryId}
-                            value={category.CategoryId}
-                          >
-                            {category.CategoryName}
-                          </option>
-                        ))
-                      }
-                    </select>
+                    <div className="selectNewContainer selectNewContainerWO selectNewContainerWOHalf">
+                      <select
+                        className="requestSelect"
+                        value={userData.TicketCategoryOfWork.CategoryOfWorkId}
+                        onChange={(e) => {
+                          const selectedValue = e.target.value;
+                          const selectedLabel =
+                            e.nativeEvent.target[
+                              e.nativeEvent.target.selectedIndex
+                            ].text;
+                          setUserData({
+                            ...userData,
+                            TicketCategoryOfWork: {
+                              CategoryOfWorkId: parseInt(selectedValue),
+                              CategoryOfWorkName: selectedLabel,
+                            },
+                            TicketAssets: [], // Reset assets
+                          });
+                        }}
+                      >
+                        <option value="" className="WoFade">
+                          Select
+                        </option>
+                        {locations
+                          .find((location) => {
+                            const isMatch =
+                              parseInt(location.value) ===
+                              parseInt(userData.TicketLocation.LocationId);
+                            return isMatch;
+                          })
+                          ?.assetCategory.map((category) => (
+                            <option
+                              key={category.CategoryId}
+                              value={category.CategoryId}
+                            >
+                              {category.CategoryName}
+                            </option>
+                          ))}
+                      </select>
+                      <customIcons.down className="selectNewIcon" size={13} />
+                    </div>
                   </span>
                 </div>
                 <span className="assetsSpan">
                   <h4>Asset(s)</h4>
                   <h4 className="notHeader WoFade">Select</h4>
-                  <div className="assetsContainerInSteps">
-                  {locations
-                    .find(
-                      (location) =>
-                        parseInt(location.value) ===
-                        parseInt(userData.TicketLocation.LocationId)
-                    )
-                    ?.assetCategory.find(
-                      (category) =>
-                        parseInt(category.CategoryId) ===
-                        parseInt(userData.TicketCategoryOfWork.CategoryOfWorkId)
-                    )
-                    ?.Assets.map((asset) => (
-                      <div key={parseInt(asset.AssetId)} className="checkBox">
-                        <Checkbox
-                        style={{color: "orange"}}
-                          checked={userData.TicketAssets.some(
-                            (selectedAsset) =>
-                              selectedAsset.AssetId === asset.AssetId
-                          )}
-                          onChange={() => handleAssetCheckboxChange(asset)}
-                        />
-                        <label>{asset.AssetName}</label>
-                        <span>{asset.AssetName}</span>
-                      </div>
-                    ))}
-                  </div>
+               {locations.length > 0 ? (
+  <div className="assetsContainerInSteps">
+    {locations
+      .find(
+        (location) =>
+          parseInt(location.value) ===
+          parseInt(userData.TicketLocation.LocationId)
+      )
+      ?.assetCategory.find(
+        (category) =>
+          parseInt(category.CategoryId) ===
+          parseInt(
+            userData.TicketCategoryOfWork.CategoryOfWorkId
+          )
+      )
+      ?.Assets.map((asset) => (
+        <div key={parseInt(asset.AssetId)} className="checkBox">
+          <Checkbox
+            style={{ color: "orange" }}
+            checked={userData.TicketAssets.some(
+              (selectedAsset) =>
+                selectedAsset.AssetId === asset.AssetId
+            )}
+            onChange={() => handleAssetCheckboxChange(asset)}
+          />
+          <label>{asset.AssetName}</label>
+          <span>{asset.AssetName}</span>
+        </div>
+      ))}
+  </div>
+) : (
+  // This is the "else" block
+  <div className="emptyLocationsMessage">No locations available.</div>
+)}
+
+
                 </span>
               </div>
             </div>

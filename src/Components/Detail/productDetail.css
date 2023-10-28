@@ -105,7 +105,7 @@
 }
 
 .extendWOtable{
-    height: 250px;
+    height: 210px;
 }
 
 .woDownDispalyNone{
@@ -147,9 +147,14 @@
     padding: 25px 20px;
 }
 
-.woRight{
-    height: fit-content;
-}
+/* .woRight{
+    width: 60%;
+    background-color: white;
+    border-radius: 12px;
+    min-height: 109vh;
+    max-height: 162vh;
+    overflow: auto;
+} */
 
 .woFiles{
     display: flex;
@@ -253,4 +258,30 @@
     font-size: 14px;
     font-weight: 400;
     margin-top: 30px;
+  }
+
+
+  .returnChecklist{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .workOrderDetailChecklist{
+    height: 180px;
+    padding-bottom: 30px;
+    position: relative;
+    margin-bottom: 20px;
+    margin-top: 30px;
+  }
+
+  .workOrderDetailContainer .left{
+    margin-top: 40px;
+  }
+
+  .workOrderDetailChecklist .allLinks{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 13px;
   }

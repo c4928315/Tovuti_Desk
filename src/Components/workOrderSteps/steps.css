@@ -1,3 +1,7 @@
+.WORKorderContainerMAIN {
+  padding-top: 40px;
+}
+
 .stepInput {
   background-color: lightgray;
   width: 320px !important;
@@ -14,7 +18,7 @@
   padding-left: 20px;
   width: 350px !important;
   height: 35px !important;
-  background-color: #e7e7e7 !important;
+  background: #ebebeb !important;
   margin-top: 4%;
   margin-bottom: -9%;
 }
@@ -118,12 +122,17 @@ Work Order
   margin-top: 30px;
   justify-content: space-between;
   gap: 15%;
+  width: 100%;
 }
 
 .assetNextBtn {
   float: right;
   margin-top: 20% !important;
   background-color: orange !important;
+  width: 102px;
+  height: 33px;
+  flex-shrink: 0;
+  font-size: 14px;
 }
 
 .assetPrevBtn {
@@ -132,7 +141,13 @@ Work Order
   background-color: white !important;
   color: orange !important;
   border: 1px solid orange !important;
+  width: 102px;
+  height: 33px;
+  flex-shrink: 0;
+  font-size: 14px;
 }
+
+.newWoBtn
 
 .wOTabContainer {
   display: flex;
@@ -154,12 +169,14 @@ Work Order
 .newWorkOrderCells {
   display: flex;
   gap: 50px;
+  margin-bottom: 20px;
 }
 
 .newWorkOrderCellsCheckBox {
   display: flex;
   gap: 2px;
   margin-top: 20px;
+  width: 100%;
 }
 
 .newWorkOrderCellsCheckBox .checkbox-button {
@@ -196,7 +213,10 @@ Work Order
   border: 1px solid #ccc;
 }
 
-.newWorkOrderCellsCheckBox .checkbox-button .checkmark:after {
+.newWorkOrderCellsAssetCategory
+  .newWorkOrderCellsCheckBox
+  .checkbox-button
+  .checkmark:after {
   content: "";
   position: absolute;
   display: none;
@@ -222,6 +242,10 @@ Work Order
 
 .newWorkOrderSelectStep2 {
   width: 350px !important;
+  display: flex !important;
+  align-items: center !important;
+  height: 34px !important;
+  position: relative;
 }
 
 .first-option {
@@ -250,12 +274,13 @@ Work Order
   margin-top: 20px;
 }
 
-.form-label-newWO {
+.form-label-newWO,
+.additionalTeamHeader {
   margin-top: 10px;
   margin-top: 10px;
 
   color: #000;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -279,6 +304,17 @@ Work Order
   padding: 30px 20px;
   padding-top: 0;
   width: 90%;
+  border-radius: 8px;
+  margin-top: 20px;
+  height: 180px;
+  position: relative;
+}
+
+.newWorkOrderSingleCell .partTableConatainer {
+  border: 1px solid rgba(91, 91, 91, 0.1);
+  padding: 30px 20px;
+  padding-top: 0;
+  width: 95.6%;
   border-radius: 8px;
   margin-top: 20px;
   height: 180px;
@@ -329,7 +365,7 @@ Work Order
 
 .newWorkOrder hr {
   margin: 30px 0;
-  width: 90%;
+  width: 100%;
 }
 
 .newWOTabs {
@@ -354,7 +390,7 @@ Work Order
 }
 
 .newWoBtn {
-  width: 90%;
+  width: 95.6%;
   display: flex;
   justify-content: space-between;
 }
@@ -462,25 +498,39 @@ Work Order
   justify-content: left !important;
   background-color: #f1efef !important;
   transition: all 0.3s ease-in-out;
-  color: black !important;
+  color: #c5c7cd;
   margin-top: 20px !important;
+  height: 35px !important;
+  font-size: 1rem !important;
 }
+
 
 .dropdown-toggle-add-team:hover {
   border: none !important;
   background-color: #f1efef !important;
+  color: #c5c7cd !important;
+  border: none !important;
 }
 
-.dropdownAdditionalTeam .header p {
-  color: rgb(91, 91, 91) !important;
-}
 .newWOflex .checkListDropdown {
   margin-bottom: 20px;
 }
 
+.WORKorderContainerMAINH4Top {
+  color: #000;
+  font-family: Mulish;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.333px;
+  margin-bottom: 20px;
+}
+
 .newWOTabs span {
-  font-size: 15px;
-  color: rgb(91, 91, 91);
+  font-size: 14px;
+  color: black;
+  font-weight: 500;
 }
 
 .tBodyTd span {
@@ -491,7 +541,7 @@ Work Order
 }
 
 .WoFade {
-  color: black !important;
+  color: #aaabb0 !important;
   font-size: 14px !important;
 }
 
@@ -527,10 +577,6 @@ Work Order
 
 .dropdownAdditionalTeam .dropdown-toggle::after {
   display: none;
-}
-
-.dropdownAdditionalTeam {
-  margin-top: 10px;
 }
 
 .dropdownAdditionalTeam .dropdown-menu {
@@ -685,21 +731,36 @@ Work Order
 
 .priorities .unselected-button {
   background-color: #d8d8d8;
+  transition: all 0.3s ease-in-out;
+  box-shadow: none;
+}
+
+.dropdown-toggle-add-team
+
+.priorities .unselected-button:hover {
+  background-color: orange !important;
 }
 
 .priorities .selected-button {
   background-color: orange;
+  box-shadow: none;
 }
 
 .priorities {
   display: flex;
   gap: 4px;
-  width: 100%;
+  width: 91%;
 }
 
-.priorities button {
+.assetNextBtn .newWorkOrderCells .priorities button {
   width: calc(100% / 4);
-  font-size: 14px;
+  font-size: 12.5px !important;
+  height: 34px;
+  box-shadow: none;
+}
+
+.priorityMain {
+  width: 100% !important;
 }
 
 .addChecklist {
@@ -723,64 +784,80 @@ Work Order
   display: none;
 }
 
-.checklistSearch{
+.checklistSearch {
   height: 30px;
   padding: 0 5px;
 }
 
-.checklistToggle .dropdown-menu.show{
+.checklistToggle .dropdown-menu.show {
   padding: 0 12px !important;
   padding-bottom: 12px !important;
 }
 
-.checklistList{
+.checklistList {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 0 2px;
 }
 
-.checklistList p{
+.checklistList p {
   margin-top: 20px;
   color: #000;
-font-family: Mulish;
-font-size: 15px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-letter-spacing: -0.333px;
+  font-family: Mulish;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.333px;
 }
 
-.checklistTable{
+.checklistTable {
   width: 100% !important;
 }
 
-.checklistTableContainer{
+.checklistTableContainer {
   padding-left: 0;
   padding-right: 0;
   border-radius: 12px;
 }
 
-.checklistTable thead tr th{
+.pointerChecklistContainer{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checklistPointer{
+  width: 10px;
+  height: 10px;
+  border: #c5c7cd 1px solid;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.checklistTable thead tr th {
   background-color: white !important;
   width: 100% !important;
   border-bottom: 1px solid rgba(91, 91, 91, 0.1) !important;
   padding: 10px 20px;
   transition: all 0.3s ease-in-out;
   color: rgba(88, 69, 57, 0.87);
-font-family: Mulish;
-font-size: 15px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-letter-spacing: 0.4px;
+  font-family: Mulish;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.4px;
 }
 
-.checklistTable thead tr th:hover, .checklistTable tbody tr td:hover{
+.checklistTable thead tr th:hover,
+.checklistTable tbody tr td:hover {
   background-color: white !important;
 }
 
-.checklistTable tbody tr td{
+.checklistTable tbody tr td {
   background-color: white !important;
   width: 100% !important;
   display: flex;
@@ -790,12 +867,9 @@ letter-spacing: 0.4px;
   transition: all 0.3s ease-in-out;
 }
 
-.checklistTable tbody tr td li{
+.checklistTable tbody tr td li {
   list-style: square;
 }
-
-
-
 
 /* 
 font-weight: 500;
@@ -840,3 +914,62 @@ font-weight: 500;
 */
 
 /* SUMMARY*/
+
+.selectNewContainerWO {
+  width: 50%;
+  margin-top: 20px;
+}
+
+.selectNewContainerWOHalf {
+  width: 354px;
+}
+
+.newWorkOrderCellsAssetCategory {
+  margin-top: 40px;
+}
+
+.newWorkOrderCells select {
+  height: 34px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.newWOTabs span .newWorkOrder select,
+.newWorkOrder input {
+  height: 34px !important;
+  border: none !important;
+  color: #c5c7cd;
+}
+
+.newWorkOrderCells div .selectNewContainerWO2 select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: none;
+  display: flex;
+  align-items: center;
+  border: none !important;
+  color: #c5c7cd !important;
+}
+
+.selectNewContainerWO2 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 34px;
+}
+
+.additionalTeamHeader {
+  color: black;
+}
+
+.selectNewIconWO {
+  top: 50%;
+  transform: translateY(50%);
+  right: 10px !important;
+}
+
+.newWorkOrder .workOrderHRmain {
+  width: 95.6%;
+}

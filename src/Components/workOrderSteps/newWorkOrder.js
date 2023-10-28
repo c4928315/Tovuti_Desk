@@ -4,91 +4,13 @@ import { Button, Checkbox, TextField } from "@material-ui/core";
 import { MultiStepContext } from "../Context";
 import customIcons from "../../Icons/icons";
 import "./steps.css";
-import { act } from "react-dom/test-utils";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
-const assetCategory = [
-  {
-    value: 1,
-    label: "Asset category 1",
-  },
-  {
-    value: 2,
-    label: "Asset category 2",
-  },
-  {
-    value: 3,
-    label: "Asset category 3",
-  },
-  {
-    value: 4,
-    label: "Asset category 4",
-  },
-];
-
-const locations = [
-  {
-    value: 1,
-    label: "Kenya",
-  },
-  {
-    value: 2,
-    label: "Uganda",
-  },
-  {
-    value: 3,
-    label: "Tanzania",
-  },
-  {
-    value: 4,
-    label: "Rwanda",
-  },
-];
-
-const assets = [
-  {
-    value: 1,
-    label: "Asset 1",
-  },
-  {
-    value: 2,
-    label: "Asset 2",
-  },
-  {
-    value: 3,
-    label: "Asset 3",
-  },
-  {
-    value: 4,
-    label: "Asset 4",
-  },
-];
-
-const ticketList = [
-  {
-    value: 1,
-    label: "ticket 1",
-  },
-  {
-    value: 2,
-    label: "ticket 2",
-  },
-  {
-    value: 3,
-    label: "ticket 3",
-  },
-  {
-    value: 4,
-    label: "ticket 4",
-  },
-];
 
 const teamOptions = [
   { TeamId: 1, TeamName: "One" },
   { TeamId: 2, TeamName: "Two" },
   { TeamId: 3, TeamName: "Three" },
-  // Add more teams as needed
 ];
 
 const priorities = [
@@ -109,8 +31,6 @@ const priorities = [
     TicketPriorityName: "Criticle",
   },
 ];
-
-const features = ["Scales", "Horns", "Claws", "Wings"];
 
 const checklists = [
   {
@@ -172,10 +92,6 @@ function NewWorkOrder() {
 
     fetchData();
   }, [partData]);
-
-  //   const handleTicketCurrentTeamChange = (e) => {
-  //     setUserData({ ...userData, TicketCurrentTeam: e.target.value });
-  //   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -323,7 +239,8 @@ function NewWorkOrder() {
   };
 
   return (
-    <div>
+    <div className="WORKorderContainerMAIN">
+      <h4 className="WORKorderContainerMAINH4Top">Work Order Details</h4>
       <nav>
         <div
           className="nav nav-tabs nav-tabs-newWo"
@@ -380,7 +297,7 @@ function NewWorkOrder() {
           </button>
         </div>
       </nav>
-      <div className="tab-content" id="nav-tabContent">
+      <div className="tab-content " id="nav-tabContent">
         <div
           className="tab-pane fade show active"
           id="nav-home"
@@ -422,24 +339,35 @@ function NewWorkOrder() {
             <div className="newWorkOrderCells">
               <div>
                 <p className="form-label-newWO">Category Of Work</p>
-                <select
-                  className="form-select newWorkOrderSelectStep2"
-                  aria-label="Default select example"
-                  value={userData.categoryOfWork}
-                  onChange={(e) =>
-                    setUserData({ ...userData, categoryOfWork: e.target.value })
-                  }
-                >
-                  <option selected>select</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
+                <div className="selectNewContainerWO2">
+                  <select
+                    className="form-select newWorkOrderSelectStep2"
+                    aria-label="Default select example"
+                    value={userData.categoryOfWork}
+                    onChange={(e) =>
+                      setUserData({
+                        ...userData,
+                        categoryOfWork: e.target.value,
+                      })
+                    }
+
+                    style={{
+                      color: "#C5C7CD"
+                    }}
+                  >
+                    <option selected>select</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                  <customIcons.down className="selectNewIcon selectNewIconWO" size={13} />
+                </div>
               </div>
 
-              <div>
+              <div className="priorityMain">
                 <p className="form-label-newWO">Priority</p>
-                <div className="newWorkOrderCellsCheckBox">
+                <div className="selectNewContainerWO2">
+                   <div className="newWorkOrderCellsCheckBox">
                   {/* fbu4hfu4hi */}
                   <div className="priorities">
                     {priorities.map((priority) => (
@@ -460,13 +388,15 @@ function NewWorkOrder() {
                     ))}
                   </div>
                 </div>
+                </div>
+               
               </div>
             </div>
 
-            <div>
-              <div className="newWorkOrderCells newWorkOrderCellsAssetCategory">
+              <div className="newWorkOrderCells newWorkOrderCellsAssetCategory allTopWO ">
                 <div>
                   <p className="form-label-newWO">Assign Team(primary)</p>
+                  <div className="selectNewContainerWO2">
                   <select
                     className="form-select newWorkOrderSelectStep2"
                     aria-label="Default select example"
@@ -478,14 +408,20 @@ function NewWorkOrder() {
                     <option value="2">Two</option>
                     <option value="3">Three</option>
                   </select>
+                  <customIcons.down className="selectNewIcon selectNewIconWO" size={13} />
+
+                  </div>
                 </div>
 
                 <div>
                   <div class="dropdown actionDropdown dropdownAdditionalTeam">
                     <div className="header">
-                      <p>Assign Additional Team</p>
+                      <p className="additionalTeamHeader">
+                        Assign Additional Team
+                      </p>
                     </div>
-                    <p
+                    <div className="selectNewContainerWO2">
+                      <p
                       className="form-label-newWO btn btn-light dropdown-toggle dropdown-toggle-add-team"
                       type="button"
                       data-bs-toggle="dropdown"
@@ -493,7 +429,6 @@ function NewWorkOrder() {
                     >
                       select
                     </p>
-
                     <ul class="dropdown-menu">
                       {teamOptions.map((team) => (
                         <div
@@ -515,11 +450,13 @@ function NewWorkOrder() {
                         </div>
                       ))}
                     </ul>
+                    </div>
+                    
                   </div>
                 </div>
               </div>
 
-              <hr />
+              <hr className="workOrderHRmain"/>
 
               <div className="newWorkOrderSingleCellHolder">
                 <div className="newWorkOrderSingleCell">
@@ -564,7 +501,7 @@ function NewWorkOrder() {
                   </div>
                 </div>
               </div>
-              <hr />
+              <hr  className="workOrderHRmain"/>
               <div className="newWorkOrderSingleCell">
                 <div className="partsTop">
                   <p className="form-label-newWO">Projected Parts</p>
@@ -681,7 +618,7 @@ function NewWorkOrder() {
                   </div>
                 </form> */}
               </div>
-              <hr />
+              <hr className="workOrderHRmain"/>
               <div className="newWorkOrderSingleCell checklistToggle">
                 <p className="form-label-newWO">Tasks and Checklists</p>
 
@@ -733,10 +670,6 @@ function NewWorkOrder() {
                           </p>
                         </div>
                       ))}
-                      {/* <Link class="dropdown-item action-dropdown-item" to="/request-form">
-                  <customIcons.add style={{color: "green"}}/>
-                  <span>New Request</span>
-                </Link> */}
                     </li>
                   </ul>
                 </div>
@@ -752,8 +685,13 @@ function NewWorkOrder() {
                         {userData.TicketChecklistForms.map((item, i) => (
                           <tr key={i}>
                             <td>
-                              <li>{item.FormsAndSectionsName}</li>
-                              <customIcons.delete style={{color: "rgba(88, 69, 57, 0.87)"}}/>
+                              <div className="pointerChecklistContainer">
+                                <span className="checklistPointer"></span>
+                                {item.FormsAndSectionsName}
+                              </div>
+                              <customIcons.delete
+                                style={{ color: "rgba(88, 69, 57, 0.87)" }}
+                              />
                             </td>
                           </tr>
                         ))}
@@ -780,235 +718,8 @@ function NewWorkOrder() {
                   Next
                 </Button>
               </div>
-            </div>
+       
           </div>
-          {/* <div
-            className="tab-pane fade"
-            id="nav-profile"
-            role="tabpanel"
-            aria-labelledby="nav-profile-tab"
-            tabIndex="0"
-          >
-            <div className="newWorkOrder">
-              <div className="newWorkOrderCells">
-                <div className="mb-3">
-                  <p className="form-label-newWO">Work Order Title</p>
-                  <input
-                    type="text"
-                    className="form-control newWorkOrderInput"
-                    id="formGroupExampleInput"
-                    placeholder="Example input placeholder"
-                    value={userData.title}
-                    onChange={(e) =>
-                      setUserData({ ...userData, title: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="mb-3">
-                  <p className="form-label-newWO">Description</p>
-                  <input
-                    type="text"
-                    className="form-control newWorkOrderInput"
-                    id="formGroupExampleInput2"
-                    placeholder="Another input placeholder"
-                    value={userData.description}
-                    onChange={(e) =>
-                      setUserData({ ...userData, description: e.target.value })
-                    }
-                  />
-                </div>
-              </div>
-
-              <div className="newWorkOrderCells">
-                <div>
-                  <p className="form-label-newWO">Category Of Work</p>
-                  <select
-                    className="form-select newWorkOrderSelectStep2"
-                    aria-label="Default select example"
-                    value={userData.categoryOfWork}
-                    onChange={(e) =>
-                      setUserData({
-                        ...userData,
-                        categoryOfWork: e.target.value,
-                      })
-                    }
-                  >
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-
-                <div>
-                  <p className="form-label-newWO">Priority</p>
-                  <div className="newWorkOrderCellsCheckBox">
-                    {options.map((option, index) => (
-                      <label
-                        key={option}
-                        className={`checkbox-button ${
-                          checkedItems[option] ? "checked" : ""
-                        } ${index === 0 ? "first-option" : ""} ${
-                          index === options.length - 1 ? "last-option" : ""
-                        }`}
-                        onClick={() => handleCheckboxChange(option)}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={checkedItems[option]}
-                          onChange={() => {}}
-                        />
-                        {option}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="newWorkOrderCells">
-                <div>
-                  <p className="form-label-newWO">Assign Team(primary)</p>
-                  <select
-                    className="form-select newWorkOrderSelectStep2"
-                    aria-label="Default select example"
-                    value={userData.primaryTeam}
-                    onChange={(e) =>
-                      setUserData({ ...userData, primaryTeam: e.target.value })
-                    }
-                  >
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-
-                <div>
-                  <p className="form-label-newWO">Assign Additional Team</p>
-                  <select
-                    className="form-select newWorkOrderSelectStep2"
-                    aria-label="Default select example"
-                    value={userData.additionalTeam}
-                    onChange={(e) =>
-                      setUserData({
-                        ...userData,
-                        additionalTeam: e.target.value,
-                      })
-                    }
-                  >
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-              </div>
-
-              <hr />
-
-              <div className="newWorkOrderSingleCellHolder">
-                <div className="newWorkOrderSingleCell">
-                  <h3 className="form-label-newWO">Completion</h3>
-
-                  <div className="newWOflex">
-                    <input
-                      type="checkbox"
-                      id="vehicle2"
-                      name="vehicle2"
-                      value="Car"
-                      checked={userData.signatureRequired}
-                      onChange={() =>
-                        setUserData({
-                          ...userData,
-                          signatureRequired: !userData.signatureRequired,
-                        })
-                      }
-                    />
-                    <label htmlFor="vehicle">
-                      Technician Signature Required
-                    </label>
-                  </div>
-                </div>
-
-                <div className="newWorkOrderSingleCell">
-                  <div className="mb-3">
-                    <p className="form-label-newWO">Estimated Hours</p>
-                    <input
-                      type="text"
-                      className="form-control newWorkOrderInput"
-                      id="formGroupExampleInput"
-                      placeholder="hours"
-                      value={userData.estimatedHours}
-                      onChange={(e) =>
-                        setUserData({
-                          ...userData,
-                          estimatedHours: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
-              <hr />
-              <div className="newWorkOrderSingleCell">
-                <p className="form-label-newWO">Projected Parts</p>
-                <table className="partsTable">
-                  <thead>
-                    <tr>
-                      <th>Parts</th>
-                      <th>Quantity</th>
-                      <th>Ammount(ks)</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="tBodyTd"></td>
-                      <td className="tBodyTd"></td>
-                      <td className="tBodyTd"></td>
-                      <td className="tBodyTd"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <hr />
-              <div className="newWorkOrderSingleCell">
-                <p className="form-label-newWO">Tasks and Checklists</p>
-                {features.map((feature) => (
-                  <div key={feature}>
-                    <input
-                      type="checkbox"
-                      id={feature.toLowerCase()}
-                      name={feature.toLowerCase()}
-                      checked={
-                        userData.features && userData.features.includes(feature)
-                      }
-                      onChange={() => handleCheckboxChange(feature)}
-                    />
-                    <p htmlFor={feature.toLowerCase()}>{feature}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="newWoBtn">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setStep(1)}
-                  className="nextBtn assetPrevBtn"
-                >
-                  Back
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setStep(3)}
-                  className="nextBtn assetNextBtn"
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

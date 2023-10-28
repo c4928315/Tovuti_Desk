@@ -65,7 +65,7 @@ function StepSummary() {
 
   return (
     <div className="summarryStep">
-      <h3 className="summaryMainHeader">Other Infomation</h3>
+      <h3 className="summaryMainHeader">Summary</h3>
       <div>
         <div className="summaryHeaderContainer">
           <h3 className="summaryHeader">Assets</h3>
