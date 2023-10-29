@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import customIcons from "../../../Icons/icons";
 import useFetch from "../../../Hooks/useFetch";
 import { Link, useNavigate } from "react-router-dom";
@@ -225,55 +225,52 @@ const handleShowFaultFilter = () => {
     }
   };
 
+  const handleToggleFilter = (filterName) => {
+    const filterState = {
+      location: showLocationFilter,
+      asset: showAssetFilter,
+      fault: showFaultFilter,
+    };
+
+    for (const key in filterState) {
+      filterState[key] = false;
+    }
+
+    filterState[filterName] = true;
+
+    setShowLocationFilter(filterState.location);
+    setShowAssetFilter(filterState.asset);
+    setShowFaultFilter(filterState.fault);
+  };
+
+  const filterContainerRef = useRef();
+
+  const handleClearFilters = (e) => {
+    if (!filterContainerRef.current.contains(e.target)) {
+      // Click occurred outside of filter controls
+     
+      setShowLocationFilter(false);
+      setShowAssetFilter(false);
+      setShowFaultFilter(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClearFilters);
+
+    return () => {
+      document.removeEventListener("click", handleClearFilters);
+    };
+  }, []);
+
 
   return (
     <div className="requestTable">
-      <div className="topFilterContainer">
+      <div className="topFilterContainer" ref={filterContainerRef}>
       <div className="filterInputContainer">
-        {/* <div className="allFiltersContainer">
-          <div onClick={handleShowStatusFilter} className="filterIconStatement">
-            <span>status</span>
-            <span>
-              <customIcons.down
-                className={showStatusFilter ? "filterIconDropDown" : ""}
-                size={14}
-              />
-            </span>
-          </div>
-
-          <div
-            className={`statusFilter ${
-              showStatusFilter ? "statusFilterNoShow" : "statusFilterShow"
-            }`}
-          >
-            <input
-              type="text"
-              placeholder="Search Status"
-              value={statusSearch}
-              onChange={handleStatusSearch}
-            />
-            <br />
-            <div className="statusFilterAbsolute">
-              {statusSearch && filteredStatusOptions.length > 0
-                ? filteredStatusOptions.map((status) => (
-                    <label key={status} className="statusFilterBlock">
-                      <input
-                        type="checkbox"
-                        value={status}
-                        checked={selectedStatuses.includes(status)}
-                        onChange={handleStatusChange}
-                      />
-                      {status}
-                    </label>
-                  ))
-                : null}
-              <br />
-            </div>
-          </div>
-        </div> */}
 
         <div className="allFiltersContainer">
-          <div onClick={handleShowLocationFilter} className="filterIconStatement">
+          <div onClick={() => handleToggleFilter('location')} className="filterIconStatement">
             <span>location</span>
             <span>
               <customIcons.down
@@ -317,7 +314,7 @@ const handleShowFaultFilter = () => {
 
         {/* Asset filter */}
         <div className="allFiltersContainer">
-          <div onClick={handleShowAssetFilter} className="filterIconStatement">
+          <div onClick={() => handleToggleFilter('asset')} className="filterIconStatement">
             <span>asset</span>
             <span>
               <customIcons.down
@@ -356,7 +353,7 @@ const handleShowFaultFilter = () => {
         </div>
 
         <div className="allFiltersContainer">
-          <div onClick={handleShowFaultFilter} className="filterIconStatement">
+          <div onClick={() => handleToggleFilter('fault')} className="filterIconStatement">
             <span>fault</span>
             <span>
               <customIcons.down
