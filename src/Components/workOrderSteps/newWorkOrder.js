@@ -119,6 +119,7 @@ function NewWorkOrder() {
 
         // Clear the form
         setFormData({ part: "", quantity: "", amount: "" });
+        setShowParts(!showParts);
       } else {
         console.error("Failed to add data");
       }
@@ -610,51 +611,59 @@ function NewWorkOrder() {
                 </table>
                 <Link onClick={handleShowParts}>Add Part</Link>
               </div>
-
-              <form
-                onSubmit={handleFormSubmit}
-                className={`partsForm ${!showParts ? "partsFormHide" : ""}`}
+              <div
+                className={`fixedPartsContainer ${
+                  !showParts ? "partsFormHide" : ""
+                }`}
               >
-                <div className="partsFormInner">
-                  <h3 className="partsHeader">Add Part</h3>
-
-                  <p className="partFormHeader">Selected Part</p>
-                  <select
-                    value={formData.part}
-                    onChange={(e) =>
-                      setFormData({ ...formData, part: e.target.value })
-                    }
-                  >
-                    <option value="">Select</option>
-                    <option value="Part 1">Part 1</option>
-                    <option value="Part 2">Part 2</option>
-                    <option value="Part 3">Part 3</option>
-                  </select>
-
-                  <p className="partFormHeader">Selected Quantity</p>
-                  <input
-                    type="number"
-                    placeholder="Quantity"
-                    value={formData.quantity}
-                    onChange={(e) =>
-                      setFormData({ ...formData, quantity: e.target.value })
-                    }
-                  />
-                  <p className="partFormHeader">Add Ammount</p>
-                  <input
-                    type="number"
-                    placeholder="Amount"
-                    value={formData.amount}
-                    onChange={(e) =>
-                      setFormData({ ...formData, amount: e.target.value })
-                    }
-                  />
-
-                  <button type="submit">Submit</button>
+                <div className="closePartTable" onClick={handleShowParts}>
+                  X
                 </div>
-              </form>
+                <form
+                  onSubmit={handleFormSubmit}
+                  className={`partsForm partsFormOne ${
+                    !showParts ? "partsFormHide" : ""
+                  }`}
+                >
+                  <div className="partsFormInner">
+                    <h3 className="partsHeader">Add Part</h3>
 
-              
+                    <p className="partFormHeader">Selected Part</p>
+                    <select
+                      value={formData.part}
+                      onChange={(e) =>
+                        setFormData({ ...formData, part: e.target.value })
+                      }
+                    >
+                      <option value="">Select</option>
+                      <option value="Part 1">Part 1</option>
+                      <option value="Part 2">Part 2</option>
+                      <option value="Part 3">Part 3</option>
+                    </select>
+
+                    <p className="partFormHeader">Selected Quantity</p>
+                    <input
+                      type="number"
+                      placeholder="Quantity"
+                      value={formData.quantity}
+                      onChange={(e) =>
+                        setFormData({ ...formData, quantity: e.target.value })
+                      }
+                    />
+                    <p className="partFormHeader">Add Ammount</p>
+                    <input
+                      type="number"
+                      placeholder="Amount"
+                      value={formData.amount}
+                      onChange={(e) =>
+                        setFormData({ ...formData, amount: e.target.value })
+                      }
+                    />
+
+                    <button type="submit">Submit</button>
+                  </div>
+                </form>
+              </div>
 
               {/* <form onSubmit={handleFormSubmit} className="partsForm">
                   <div className="partsFormInner">
@@ -690,7 +699,6 @@ function NewWorkOrder() {
                 </form> */}
             </div>
 
-           
             <hr className="workOrderHRmain" />
             <div className="newWorkOrderSingleCell checklistToggle">
               <p className="form-label-newWO">Tasks and Checklists</p>
@@ -794,53 +802,53 @@ function NewWorkOrder() {
         </div>
       </div>
       {editData && (
-                <div className="partsForm partsFormEdit">
-                  <div className="partsFormEditForm">
-                    <div className="partsFormEditFormHolder">
-                    <h2>Edit Parts</h2>
-                    <div className="partsFormInner">
-                      <h5>Edit Part</h5>
-                      <input
-                        className="partsFormInner"
-                        type="text"
-                        name="part"
-                        value={editData.part}
-                        onChange={(e) =>
-                          setEditData({ ...editData, part: e.target.value })
-                        }
-                      />
-                      <br />
+        <div className="partsForm partsFormEdit">
+          <div className="partsFormEditForm">
+            <div className="partsFormEditFormHolder">
+              <h2>Edit Parts</h2>
+              <div className="partsFormInner">
+                <h5>Edit Part</h5>
+                <input
+                  className="partsFormInner"
+                  type="text"
+                  name="part"
+                  value={editData.part}
+                  onChange={(e) =>
+                    setEditData({ ...editData, part: e.target.value })
+                  }
+                />
+                <br />
 
-                      <h5>Edit Quatity</h5>
-                      <input
-                        type="text"
-                        name="quantity"
-                        value={editData.quantity}
-                        onChange={(e) =>
-                          setEditData({ ...editData, quantity: e.target.value })
-                        }
-                      />
-                      <br />
+                <h5>Edit Quatity</h5>
+                <input
+                  type="text"
+                  name="quantity"
+                  value={editData.quantity}
+                  onChange={(e) =>
+                    setEditData({ ...editData, quantity: e.target.value })
+                  }
+                />
+                <br />
 
-                      <h5>Edit Amount</h5>
-                      <input
-                        type="text"
-                        name="amount"
-                        value={editData.amount}
-                        onChange={(e) =>
-                          setEditData({ ...editData, amount: e.target.value })
-                        }
-                      />
-                      <br />
-                      <div className="editPartsBtn">
-                      <button onClick={handleUpdate}>Update</button>
-                      <button onClick={() => setEditData(null)}>Cancel</button>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
+                <h5>Edit Amount</h5>
+                <input
+                  type="text"
+                  name="amount"
+                  value={editData.amount}
+                  onChange={(e) =>
+                    setEditData({ ...editData, amount: e.target.value })
+                  }
+                />
+                <br />
+                <div className="editPartsBtn">
+                  <button onClick={handleUpdate}>Update</button>
+                  <button onClick={() => setEditData(null)}>Cancel</button>
                 </div>
-              )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

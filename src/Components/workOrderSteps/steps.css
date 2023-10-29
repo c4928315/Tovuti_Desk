@@ -453,6 +453,22 @@ Work Order
   z-index: 20;
 }
 
+.partsFormOne{
+  position: absolute;
+  top: 10%;
+  right: 33%;
+  z-index: 100;
+  display: flex;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  height: 500px;
+  width: 500px;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  border-radius: 12px;
+}
+
 .partsFormInner {
   height: 80%;
   width: 80%;
@@ -985,6 +1001,17 @@ font-weight: 500;
   background: linear-gradient(rgb(0, 0, 0, 0.3), rgb(0, 0, 0,0.3));
 }
 
+.fixedPartsContainer{
+  width: 100%;
+  right: 0;
+  top: 0;
+  padding: 25% 0;
+  position: fixed;
+  border-radius: 12px;
+  background: linear-gradient(rgb(0, 0, 0, 0.3), rgb(0, 0, 0,0.3));
+  z-index: 121;
+}
+
 .partsFormEditForm{
   width: 50%;
   background-color: white;
@@ -1003,7 +1030,7 @@ font-weight: 500;
   height: 100%;
 }
 
-.partsFormInner input{
+.partsFormEditFormHolder .partsFormInner input{
   width: 70%;
   transform: translateX(20%);
   background: #F1EFEF;
@@ -1011,8 +1038,16 @@ font-weight: 500;
   font-size: 12px;
 }
 
+.partsFormOne .partsFormInner input, .partsFormOne .partsFormInner select{
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
-.partsFormInner h5{
+.partsFormOne .partsFormInner select{
+  color: #85868b !important;
+}
+
+.partsFormEditFormHolder .partsFormInner h5{
   padding-left: 29%;
   width: fit-content;
   margin-top: 20px;
@@ -1026,4 +1061,19 @@ font-weight: 500;
   transform: translateX(42%);
   margin: 20px 0;
   font-size: 14px;
+}
+
+.closePartTable{
+  position: absolute;
+  right: 32.5%;
+  top: 8%;
+  cursor: pointer;
+  z-index: 101;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: orange;
 }
