@@ -27,8 +27,9 @@ function Grid() {
         <div className="item1 items123">
         <Card
             data={data}
-            text="Assets"
+            text="Corrective Maintenance"
             link="work-order"
+            number="60"
             dropdownText="Period"
             dropdownClassName="gridStatusSelect"
             itemProperty="status"
@@ -39,7 +40,8 @@ function Grid() {
           <Card
             data={data}
             link="/requests"
-            text="Incidents"
+            number="16"
+            text="Preventative Maintenance"
             dropdownText="Period"
             dropdownClassName="gridStatusSelect"
             itemProperty="status"
@@ -53,7 +55,7 @@ function Grid() {
             dropdownText="Period"
             dropdownClassName="gridStatusSelect"
             itemProperty="status"
-            dropdownComp={<Dropdown gridStatusSelect="gridStatusSelectChart" />}
+            dropdownComp={<Dropdown text="Period" gridStatusSelect="gridStatusSelectChart" />}
           />
         </div>
         <div className="item4">

@@ -24,9 +24,11 @@ function App() {
         <Nav/>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/work-order" element={<WorkOrder/>} />
           <Route path="/work-order2" element={<WorkOrder2/>} />
+
+          <Route path="/work-order" element={<WorkOrder/>} />
           <Route path="/requests" element={<Requests/>} />
+         
           <Route path="/work-order-form" element={<WorkOrderForm/>} />
           <Route path="/request-form" element={<Request/>} />
           <Route path="/work-order-detail-form" element={<WorkOrderDetail/>} />

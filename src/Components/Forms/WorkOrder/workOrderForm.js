@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import NewWorkOrder from "../../workOrderSteps/newWorkOrder";
 
 function WorkOrderForm() {
-  const { currentStep, finalData } = useContext(MultiStepContext);
+  const { currentStep, finalData, setStep } = useContext(MultiStepContext);
 
   function showStep(step) {
     switch (step) {
@@ -58,7 +58,7 @@ function WorkOrderForm() {
             <div className="stepFlex">
               <div className="center-stepper">
                 <h3 className="stepHeader">ADD WORK ORDER</h3>
-                <Stepper activeStep={currentStep - 1} orientation="vertical" >
+                <Stepper activeStep={currentStep - 1} orientation="vertical">
                   <StepLabel className="stepLabel">
                     <span className={`stepLabelPointer ${currentStep - 1 === 0 ? "backgroundOrange" : ""}`}>
                       <customIcons.check className={`stepIconAbsolute ${currentStep - 1 === 0 ? "hiddenPointer" : ""}`} size={16}/>

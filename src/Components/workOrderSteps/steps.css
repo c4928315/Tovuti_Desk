@@ -973,3 +973,57 @@ font-weight: 500;
 .newWorkOrder .workOrderHRmain {
   width: 95.6%;
 }
+
+
+.partsFormEdit{
+  width: 100%;
+  right: 0;
+  top: 0;
+  padding: 25% 0;
+  position: fixed;
+  border-radius: 12px;
+  background: linear-gradient(rgb(0, 0, 0, 0.3), rgb(0, 0, 0,0.3));
+}
+
+.partsFormEditForm{
+  width: 50%;
+  background-color: white;
+  display: flex;
+  height: fit-content;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 0;
+  border-radius: 12px;
+}
+
+.partsFormEditFormHolder{
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.partsFormInner input{
+  width: 70%;
+  transform: translateX(20%);
+  background: #F1EFEF;
+  padding: 0 20px;
+  font-size: 12px;
+}
+
+
+.partsFormInner h5{
+  padding-left: 29%;
+  width: fit-content;
+  margin-top: 20px;
+}
+
+.editPartsBtn{
+  width: 70%;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  transform: translateX(42%);
+  margin: 20px 0;
+  font-size: 14px;
+}

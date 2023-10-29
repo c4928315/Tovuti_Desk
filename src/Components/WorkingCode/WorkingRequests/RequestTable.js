@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import customIcons from "../../../Icons/icons";
 import useFetch from "../../../Hooks/useFetch";
 import "./RequestTable.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 function RequestTable() {
   const navigate = useNavigate();
   const [selectedStatuses, setSelectedStatuses] = useState([]);
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [selectedAssets, setSelectedAssets] = useState([]);
+  const [selectedCreatedBy, setSelectedCreatedBy] = useState([]);
+  const [selectedDateCreated, setSelectedDateCreated] = useState([]);
   const [selectedFaults, setSelectedFaults] = useState([]);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,44 +25,59 @@ function RequestTable() {
   const [locationSearch, setLocationSearch] = useState("");
   const [assetSearch, setAssetSearch] = useState("");
   const [faultSearch, setFaultSearch] = useState("");
-
+  const [createdBySearch, setCreatedBySearch] = useState("");
+  const [dateCreatedSearch, setDateCreatedSearch] = useState("");
 
   const [showStatusFilter, setShowStatusFilter] = useState(false);
-const [showLocationFilter, setShowLocationFilter] = useState(false);
-const [showAssetFilter, setShowAssetFilter] = useState(false);
-const [showFaultFilter, setShowFaultFilter] = useState(false);
+  const [showCreatedByFilter, setShowCreatedByFilter] = useState(false);
+  const [showDateCreatedFilter, setShowDateCreatedFilter] = useState(false);
+  const [showLocationFilter, setShowLocationFilter] = useState(false);
+  const [showAssetFilter, setShowAssetFilter] = useState(false);
+  const [showFaultFilter, setShowFaultFilter] = useState(false);
 
-useEffect(() => {
-  async function fetchData() {
-    try {
-      const response = await axios.get("https://intra-deco.onrender.com/requests");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
-      setData(response.data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsLoading(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          "https://intra-deco.onrender.com/requests"
+        );
+
+        setData(response.data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }
 
-  fetchData();
-}, [data]);
+    fetchData();
+  }, [data]);
 
-const handleShowStatusFilter = () => {
-  setShowStatusFilter(!showStatusFilter);
-};
+  const handleShowStatusFilter = () => {
+    setShowStatusFilter(!showStatusFilter);
+  };
 
-const handleShowLocationFilter = () => {
-  setShowLocationFilter(!showLocationFilter);
-};
+  const handleShowLocationFilter = () => {
+    setShowLocationFilter(!showLocationFilter);
+  };
+  const handleShowCreatedByFilter = () => {
+    setShowCreatedByFilter(!showCreatedByFilter);
+  };
+  const handleShowDateCreatedFilter = () => {
+    setShowDateCreatedFilter(!showDateCreatedFilter);
+  };
 
-const handleShowAssetFilter = () => {
-  setShowAssetFilter(!showAssetFilter);
-};
+  const handleShowAssetFilter = () => {
+    setShowAssetFilter(!showAssetFilter);
+  };
 
-const handleShowFaultFilter = () => {
-  setShowFaultFilter(!showFaultFilter);
-};
+  const handleShowFaultFilter = () => {
+    setShowFaultFilter(!showFaultFilter);
+  };
 
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnFilters, setColumnFilters] = useState({
@@ -79,6 +99,22 @@ const handleShowFaultFilter = () => {
 
   const statusOptions = ["Completed", "In Progress", "Pending", "Cancelled"];
   const locationOptions = ["nairobi", "Kisumu", "eldoret", "mombasa"];
+  const createdByOptions = [
+    "Chris Smith",
+    "John Doe",
+    "Alice Johnson",
+    "Emily White",
+    "Sarah Davis",
+  ];
+  const dateCreatedOptions = [
+    "18/10/2023",
+    "19/10/2023",
+    "20/10/2023",
+    "21/10/2023",
+    "22/10/2023",
+    "23/10/2023",
+    "24/10/2023",
+  ];
   const assetOptions = [
     "forklift",
     "pump",
@@ -99,28 +135,39 @@ const handleShowFaultFilter = () => {
       (item.RequestRef.toLowerCase().includes(globalFilter.toLowerCase()) ||
         item.Location.Name.toLowerCase().includes(globalFilter.toLowerCase()) ||
         item.Description.toLowerCase().includes(globalFilter.toLowerCase())) &&
-
-        ///remember to work on this change status to service for both lower an capitalised
       (selectedStatuses.length === 0 ||
         selectedStatuses.includes(item.Status.Name)) &&
-        (selectedFaults.length === 0 ||
-          selectedFaults.some((fault) =>
-            item.Fault.some((f) => f.Name.toLowerCase() === fault.toLowerCase())
-          )) &&
-        (selectedLocations.length === 0 ||
-          selectedLocations.some((location) =>
+      (selectedFaults.length === 0 ||
+        selectedFaults.some((fault) =>
+          item.Fault.some((f) => f.Name.toLowerCase() === fault.toLowerCase())
+        )) &&
+      (selectedLocations.length === 0 ||
+        selectedLocations.some(
+          (location) =>
             item.Location.Name.toLowerCase() === location.toLowerCase()
-          )) &&
-        (selectedAssets.length === 0 ||
-          selectedAssets.some((asset) =>
-            item.Asset.some((a) => a.Name.toLowerCase() === asset.toLowerCase())
-          ))
+        )) &&
+      (selectedAssets.length === 0 ||
+        selectedAssets.some((asset) =>
+          item.Asset.some((a) => a.Name.toLowerCase() === asset.toLowerCase())
+        )) &&
+      (selectedCreatedBy.length === 0 ||
+        selectedCreatedBy.includes(item.CreatedBy)) && // Filter for CreatedBy
+      (selectedDateCreated.length === 0 ||
+        selectedDateCreated.includes(item.DateCreated))
     );
   });
 
   const handleStatusSearch = (e) => {
     const searchValue = e.target.value;
     setStatusSearch(searchValue);
+  };
+  const handleCreatedBySearch = (e) => {
+    const searchValue = e.target.value;
+    setCreatedBySearch(searchValue);
+  };
+  const handleDateCreatedSearch = (e) => {
+    const searchValue = e.target.value;
+    setDateCreatedSearch(searchValue);
   };
 
   const handleLocationSearch = (e) => {
@@ -159,6 +206,26 @@ const handleShowFaultFilter = () => {
       );
     }
   };
+  const handleCreatedByChange = (e) => {
+    const by = e.target.value;
+    if (e.target.checked) {
+      setSelectedCreatedBy([...selectedCreatedBy, by]);
+    } else {
+      setSelectedCreatedBy(
+        selectedCreatedBy.filter((selected) => selected !== by)
+      );
+    }
+  };
+  const handleDateCreatedChange = (e) => {
+    const date = e.target.value;
+    if (e.target.checked) {
+      setSelectedDateCreated([...selectedDateCreated, date]);
+    } else {
+      setSelectedDateCreated(
+        selectedDateCreated.filter((selected) => selected !== date)
+      );
+    }
+  };
 
   const handleAssetChange = (e) => {
     const asset = e.target.value;
@@ -188,6 +255,12 @@ const handleShowFaultFilter = () => {
 
   const filteredLocationOptions = locationOptions.filter((location) =>
     location.toLowerCase().includes(locationSearch.toLowerCase())
+  );
+  const filteredCreatedByOptions = createdByOptions.filter((by) =>
+    by.toLowerCase().includes(createdBySearch.toLowerCase())
+  );
+  const filteredDateCreatedOptions = dateCreatedOptions.filter((created) =>
+    created.toLowerCase().includes(dateCreatedSearch.toLowerCase())
   );
 
   const filteredAssetOptions = assetOptions.filter((asset) =>
@@ -226,45 +299,316 @@ const handleShowFaultFilter = () => {
     }
   };
 
+  const handleToggleFilter = (filterName) => {
+    const filterState = {
+      status: showStatusFilter,
+      location: showLocationFilter,
+      createdBy: showCreatedByFilter,
+      dateCreated: showDateCreatedFilter,
+      asset: showAssetFilter,
+      fault: showFaultFilter,
+    };
+
+    for (const key in filterState) {
+      filterState[key] = false;
+    }
+
+    filterState[filterName] = true;
+
+    setShowStatusFilter(filterState.status);
+    setShowLocationFilter(filterState.location);
+    setShowCreatedByFilter(filterState.createdBy);
+    setShowDateCreatedFilter(filterState.dateCreated);
+    setShowAssetFilter(filterState.asset);
+    setShowFaultFilter(filterState.fault);
+  };
+
+  const filterContainerRef = useRef();
+
+  const handleClearFilters = (e) => {
+    if (!filterContainerRef.current.contains(e.target)) {
+      // Click occurred outside of filter controls
+      setShowStatusFilter(false);
+      setShowLocationFilter(false);
+      setShowCreatedByFilter(false);
+      setShowDateCreatedFilter(false);
+      setShowAssetFilter(false);
+      setShowFaultFilter(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClearFilters);
+
+    return () => {
+      document.removeEventListener("click", handleClearFilters);
+    };
+  }, []);
+
 
   return (
     <div className="requestTable">
-      <div className="topFilterContainer">
-      <div className="filterInputContainer">
-        <div className="allFiltersContainer">
-          <div onClick={handleShowStatusFilter} className="filterIconStatement">
-            <span>status</span>
-            <span>
-              <customIcons.down
-                className={showStatusFilter ? "filterIconDropDown" : ""}
-                size={14}
+      <div className="topFilterContainer" ref={filterContainerRef}>
+        <div className="filterInputContainer">
+          <div className="allFiltersContainer">
+            <div
+              className="filterIconStatement"
+              onClick={() => handleToggleFilter('status')}
+            >
+              <span>status</span>
+              <span>
+                <customIcons.down
+                  className={showStatusFilter ? "filterIconDropDown" : ""}
+                  size={14}
+                />
+              </span>
+            </div>
+
+            <div
+              className={`statusFilter ${
+                showStatusFilter ? "statusFilterNoShow" : "statusFilterShow"
+              }`}
+            >
+              <input
+                type="text"
+                placeholder="Search Status"
+                value={statusSearch}
+                onChange={handleStatusSearch}
               />
-            </span>
+              <br />
+              <div className="statusFilterAbsolute">
+                {statusSearch && filteredStatusOptions.length > 0
+                  ? filteredStatusOptions.map((status) => (
+                      <label key={status} className="statusFilterBlock">
+                        <input
+                          type="checkbox"
+                          value={status}
+                          checked={selectedStatuses.includes(status)}
+                          onChange={handleStatusChange}
+                        />
+                        {status}
+                      </label>
+                    ))
+                  : null}
+                <br />
+              </div>
+            </div>
           </div>
 
-          <div
-            className={`statusFilter ${
-              showStatusFilter ? "statusFilterNoShow" : "statusFilterShow"
-            }`}
-          >
-            <input
-              type="text"
-              placeholder="Search Status"
-              value={statusSearch}
-              onChange={handleStatusSearch}
-            />
-            <br />
-            <div className="statusFilterAbsolute">
-              {statusSearch && filteredStatusOptions.length > 0
-                ? filteredStatusOptions.map((status) => (
-                    <label key={status} className="statusFilterBlock">
+
+          <div className="allFiltersContainer">
+            <div
+              onClick={() => handleToggleFilter('dateCreated')}
+              className="filterIconStatement"
+            >
+              <span>date created</span>
+              <span>
+                <customIcons.down
+                  className={showDateCreatedFilter ? "filterIconDropDown" : ""}
+                  size={14}
+                />
+              </span>
+            </div>
+            <div
+              className={`statusFilter ${
+                showDateCreatedFilter ? "statusFilterNoShow" : "statusFilterShow"
+              }`}
+            >
+              <input
+                type="text"
+                placeholder="Search Location"
+                value={dateCreatedSearch}
+                onChange={handleDateCreatedSearch}
+              />
+
+              <br />
+              <div className="statusFilterAbsolute">
+                {dateCreatedSearch && filteredDateCreatedOptions.length > 0
+                  ? filteredDateCreatedOptions.map((date) => (
+                      <label key={date}>
+                        <input
+                          type="checkbox"
+                          value={date}
+                          checked={selectedDateCreated.includes(date)}
+                          onChange={handleDateCreatedChange}
+                        />
+                        {date}
+                      </label>
+                    ))
+                  : null}
+              </div>
+              <br />
+            </div>
+          </div>
+
+          <div className="allFiltersContainer">
+            <div
+              onClick={() => handleToggleFilter('createdBy')}
+              className="filterIconStatement"
+            >
+              <span>created by</span>
+              <span>
+                <customIcons.down
+                  className={showCreatedByFilter ? "filterIconDropDown" : ""}
+                  size={14}
+                />
+              </span>
+            </div>
+            <div
+              className={`statusFilter ${
+                showCreatedByFilter ? "statusFilterNoShow" : "statusFilterShow"
+              }`}
+            >
+              <input
+                type="text"
+                placeholder="Search Location"
+                value={createdBySearch}
+                onChange={handleCreatedBySearch}
+              />
+
+              <br />
+              <div className="statusFilterAbsolute">
+                {createdBySearch && filteredCreatedByOptions.length > 0
+                  ? filteredCreatedByOptions.map((by) => (
+                      <label key={by}>
+                        <input
+                          type="checkbox"
+                          value={by}
+                          checked={selectedCreatedBy.includes(by)}
+                          onChange={handleCreatedByChange}
+                        />
+                        {by}
+                      </label>
+                    ))
+                  : null}
+              </div>
+              <br />
+            </div>
+          </div>
+
+          <div className="allFiltersContainer">
+            <div
+              onClick={() => handleToggleFilter('location')}
+              className="filterIconStatement"
+            >
+              <span>location</span>
+              <span>
+                <customIcons.down
+                  className={showLocationFilter ? "filterIconDropDown" : ""}
+                  size={14}
+                />
+              </span>
+            </div>
+            <div
+              className={`statusFilter ${
+                showLocationFilter ? "statusFilterNoShow" : "statusFilterShow"
+              }`}
+            >
+              <input
+                type="text"
+                placeholder="Search Location"
+                value={locationSearch}
+                onChange={handleLocationSearch}
+              />
+
+              <br />
+              <div className="statusFilterAbsolute">
+                {locationSearch && filteredLocationOptions.length > 0
+                  ? filteredLocationOptions.map((location) => (
+                      <label key={location}>
+                        <input
+                          type="checkbox"
+                          value={location}
+                          checked={selectedLocations.includes(location)}
+                          onChange={handleLocationChange}
+                        />
+                        {location}
+                      </label>
+                    ))
+                  : null}
+              </div>
+              <br />
+            </div>
+          </div>
+
+          {/* Asset filter */}
+          <div className="allFiltersContainer">
+            <div
+              onClick={() => handleToggleFilter('asset')}
+              className="filterIconStatement"
+            >
+              <span>asset</span>
+              <span>
+                <customIcons.down
+                  className={showAssetFilter ? "filterIconDropDown" : ""}
+                  size={14}
+                />
+              </span>
+            </div>
+            <div
+              className={`statusFilter ${
+                showAssetFilter ? "statusFilterNoShow" : "statusFilterShow"
+              }`}
+            >
+              <input
+                type="text"
+                placeholder="Search Asset"
+                value={assetSearch}
+                onChange={handleAssetSearch}
+              />
+              <br />
+              {assetSearch && filteredAssetOptions.length > 0
+                ? filteredAssetOptions.map((asset) => (
+                    <label key={asset}>
                       <input
                         type="checkbox"
-                        value={status}
-                        checked={selectedStatuses.includes(status)}
-                        onChange={handleStatusChange}
+                        value={asset}
+                        checked={selectedAssets.includes(asset)}
+                        onChange={handleAssetChange}
                       />
-                      {status}
+                      {asset}
+                    </label>
+                  ))
+                : null}
+              <br />
+            </div>
+          </div>
+
+          <div className="allFiltersContainer">
+            <div
+              onClick={() => handleToggleFilter('fault')}
+              className="filterIconStatement"
+            >
+              <span>fault</span>
+              <span>
+                <customIcons.down
+                  className={showFaultFilter ? "filterIconDropDown" : ""}
+                  size={14}
+                />
+              </span>
+            </div>
+            <div
+              className={`statusFilter ${
+                showFaultFilter ? "statusFilterNoShow" : "statusFilterShow"
+              }`}
+            >
+              <input
+                type="text"
+                placeholder="Search Fault"
+                value={faultSearch}
+                onChange={handleFaultSearch}
+              />
+              <br />
+              {faultSearch && filteredFaultOptions.length > 0
+                ? filteredFaultOptions.map((fault) => (
+                    <label key={fault}>
+                      <input
+                        type="checkbox"
+                        value={fault}
+                        checked={selectedFaults.includes(fault)}
+                        onChange={handleFaultChange}
+                      />
+                      {fault}
                     </label>
                   ))
                 : null}
@@ -273,139 +617,16 @@ const handleShowFaultFilter = () => {
           </div>
         </div>
 
-        <div className="allFiltersContainer">
-          <div onClick={handleShowLocationFilter} className="filterIconStatement">
-            <span>location</span>
-            <span>
-              <customIcons.down
-                className={showLocationFilter ? "filterIconDropDown" : ""}
-                size={14}
-              />
-            </span>
-          </div>
-          <div
-            className={`statusFilter ${
-              showLocationFilter ? "statusFilterNoShow" : "statusFilterShow"
-            }`}
-          >
-            <input
-              type="text"
-              placeholder="Search Location"
-              value={locationSearch}
-              onChange={handleLocationSearch}
-            />
-
-            <br/>
-            <div className="statusFilterAbsolute">
-            {locationSearch && filteredLocationOptions.length > 0
-              ? filteredLocationOptions.map((location) => (
-                  <label key={location}>
-                    <input
-                      type="checkbox"
-                      value={location}
-                      checked={selectedLocations.includes(location)}
-                      onChange={handleLocationChange}
-                    />
-                    {location}
-                  </label>
-                  
-                ))
-              : null}
-              </div>
-              <br />
-          </div>
-        </div>
-
-        {/* Asset filter */}
-        <div className="allFiltersContainer">
-          <div onClick={handleShowAssetFilter} className="filterIconStatement">
-            <span>asset</span>
-            <span>
-              <customIcons.down
-                className={showAssetFilter ? "filterIconDropDown" : ""}
-                size={14}
-              />
-            </span>
-          </div>
-          <div
-            className={`statusFilter ${
-              showAssetFilter ? "statusFilterNoShow" : "statusFilterShow"
-            }`}
-          >
-            <input
-              type="text"
-              placeholder="Search Asset"
-              value={assetSearch}
-              onChange={handleAssetSearch}
-            />
-            <br/>
-            {assetSearch && filteredAssetOptions.length > 0
-              ? filteredAssetOptions.map((asset) => (
-                  <label key={asset}>
-                    <input
-                      type="checkbox"
-                      value={asset}
-                      checked={selectedAssets.includes(asset)}
-                      onChange={handleAssetChange}
-                    />
-                    {asset}
-                  </label>
-                ))
-              : null}
-              <br/>
-          </div>
-        </div>
-
-        <div className="allFiltersContainer">
-          <div onClick={handleShowFaultFilter} className="filterIconStatement">
-            <span>fault</span>
-            <span>
-              <customIcons.down
-                className={showFaultFilter ? "filterIconDropDown" : ""}
-                size={14}
-              />
-            </span>
-          </div>
-          <div
-            className={`statusFilter ${
-              showFaultFilter ? "statusFilterNoShow" : "statusFilterShow"
-            }`}
-          >
-            <input
-              type="text"
-              placeholder="Search Fault"
-              value={faultSearch}
-              onChange={handleFaultSearch}
-            />
-            <br/>
-            {faultSearch && filteredFaultOptions.length > 0
-              ? filteredFaultOptions.map((fault) => (
-                  <label key={fault}>
-                    <input
-                      type="checkbox"
-                      value={fault}
-                      checked={selectedFaults.includes(fault)}
-                      onChange={handleFaultChange}
-                    />
-                    {fault}
-                  </label>
-                ))
-              : null}
-              <br/>
-          </div>
-        </div>
+        <input
+          type="text"
+          placeholder="Search..."
+          className="globalSearch"
+          value={globalFilter}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+        />
       </div>
 
-      <input
-        type="text"
-        placeholder="Search..."
-        className="globalSearch"
-        value={globalFilter}
-        onChange={(e) => setGlobalFilter(e.target.value)}
-      />
-      </div>
-
-      <table>
+      <table onClick={handleClearFilters}>
         <thead>
           <tr>
             <th>Request Ref</th>
