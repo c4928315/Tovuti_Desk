@@ -1,143 +1,172 @@
-.formRow{
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    margin-bottom: 30px;
+.formRow {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 30px;
 }
 
-.formRowRight{
-    width: 50%;
+.formRowRight {
+  width: 50%;
 }
 
-
-.formRowLeft{
-    width: 50%;
+.formRowLeft {
+  width: 50%;
 }
 
-.faultsLableContainer label{
-    max-width: 100px !important;
-    min-width: 100px !important;
-    font-size: 12px !important;
-    border-radius: var(--border-radius-small) !important;
-    height: 38px !important;
-    text-align: center !important;
-    background-color: #D4D4D8 !important;
-    border: 1px solid #D4D4D8 !important;
-    color: black !important;
-    border: none !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+.faultsLableContainer label {
+  max-width: 100px !important;
+  min-width: 100px !important;
+  font-size: 12px !important;
+  border-radius: var(--border-radius-small) !important;
+  height: 38px !important;
+  text-align: center !important;
+  background-color: #d4d4d8 !important;
+  border: 1px solid #d4d4d8 !important;
+  color: black !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-.faultsLableContainer .selectedFault{
-    background: var(--orange) !important;
-    color: var(--angel) !important;
-    border: var(--see-through);
+.faultsLableContainer .selectedFault {
+  background: var(--orange) !important;
+  color: var(--angel) !important;
+  border: var(--see-through);
 }
 
-.faults{
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important;
-    width: 94% !important;
-    margin: 0 !important;
+.faults {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  width: 94% !important;
+  margin: 0 !important;
 }
 
-.recurrences{
-    display: flex;
-    height: 35px !important;
-    align-items: center;
-    gap: 10px;
+.recurrences {
+  display: flex;
+  height: 35px !important;
+  align-items: center;
+  gap: 10px;
 }
 
-.requestSelect{
-    width: 94% !important;
-    height: 35px !important;
-    background: #ebebeb !important;
+.requestSelect {
+  width: 94% !important;
+  height: 34px !important;
+  background: #ebebeb !important;
+  padding: 0 10px !important;
+  border-radius: 6px !important;
+
+  color: #aaabb0 !important;
+  font-family: Mulish !important;
+  font-size: 15px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: normal !important;
+  letter-spacing: -0.333px !important;
 }
 
-.faultTextArea{
-    height: 92px !important;
-    width: 94% !important;
-    background: #e9e9e9 !important;
-    border: none;
+.requestSelect:focus {
+  outline: none !important;
 }
 
-.faultFile{
-    display: flex !important;
-    width: 94% !important;
+select {
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-.requestHeader{
-    text-transform: capitalize;
-    font-size: 14px;
-    font-weight: 400;
-    margin-bottom: 20px;
+.selectNewContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
 }
 
-.textareaLable{
-    background: var(--see-through) !important;
-    font-size: 14px !important;
+.selectNewIcon {
+  position: absolute;
+  right: 30px;
+  color: #aaabb0 !important;
+}
+.paddig {
+  padding: 0 10px !important;
 }
 
-.requestTab{
-    background-color: white !important;
-    border-radius: var(--border-radius-big);
-    padding: 20px 30px;
+.faultTextArea {
+  height: 92px !important;
+  width: 94% !important;
+  background: #e9e9e9 !important;
+  border: none;
 }
 
-.faultHomeTab{
-    text-align: start !important;
-    width: 200px !important;
+.faultFile {
+  display: flex !important;
+  width: 94% !important;
 }
 
-.checkRequest{
-    background-color: var(--orange);
-    color: var(--angel);
-    border-radius: 50%;
-    padding: 1px;
+.requestHeader {
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 20px;
 }
 
-.bulletPointRequest{
-    border: 1px solid var(--orange) !important;
-    border-radius: 50%;
+.textareaLable {
+  background: var(--see-through) !important;
+  font-size: 14px !important;
 }
 
-.recurrences .recurrenceRadio{
-    position: relative !important;
-    display: flex;
-    align-items: center;
+.requestTab {
+  background-color: white !important;
+  border-radius: var(--border-radius-big);
+  padding: 20px 30px;
 }
 
-.checkRequestPosition{
-    position: absolute;
-    bottom: 5px;
-    left: 1px;
+.faultHomeTab {
+  text-align: start !important;
+  width: 200px !important;
 }
 
-.stepFlex{
-    background-color: white;
+.checkRequest {
+  background-color: var(--orange);
+  color: var(--angel);
+  border-radius: 50%;
+  padding: 1px;
 }
 
-
-
-.requestSubmit{
-    background-color: var(--orange);
-    padding: 10px 20px;
-    border-radius: var(--border-radius-small);
-    text-transform: capitalize;
-    font-weight: 500;
-    float: right;
-    margin-left: 20px;
+.bulletPointRequest {
+  border: 1px solid var(--orange) !important;
+  border-radius: 50%;
 }
 
-
-.optionButtons{
-    background-color: var(--orange) !important;
-    width: 50px !important;
+.recurrences .recurrenceRadio {
+  position: relative !important;
+  display: flex;
+  align-items: center;
 }
 
+.checkRequestPosition {
+  position: absolute;
+  bottom: 5px;
+  left: 1px;
+}
+
+.stepFlex {
+  background-color: white;
+}
+
+.requestSubmit {
+  background-color: var(--orange);
+  padding: 10px 20px;
+  border-radius: var(--border-radius-small);
+  text-transform: capitalize;
+  font-weight: 500;
+  float: right;
+  margin-left: 20px;
+}
+
+.optionButtons {
+  background-color: var(--orange) !important;
+  width: 50px !important;
+}
 
 /* Default style for unchecked checkboxes */
 .checkboxLabel {
@@ -155,52 +184,55 @@
   transition: background-color 0.3s;
 }
 
-#ck-button{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3px;
-    width: 100%;
+#ck-button {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  width: 100%;
 }
 
-
 .checkboxLabel.checked {
-    background-color: var(--orange); 
-    color: #fff;
-  }
+  background-color: var(--orange);
+  color: #fff;
+}
 
 .checkboxLabel input {
-    position: absolute;
-    margin-left: -1000px;
+  position: absolute;
+  margin-left: -1000px;
 }
 
 /* CSS */
 /* Style radio buttons */
 .recurrenceRadio input[type="radio"] {
-    /* Hide the default radio button */
-    display: none;
-    margin-top: 5px;
-  }
-  
-  /* Style the custom radio button appearance */
-  .recurrenceRadio input[type="radio"] + label::before {
-    content: '';
-    display: inline-block;
-    width: 17px; /* Adjust size as needed */
-    height: 17px; /* Adjust size as needed */
-    border: 2px solid #e9e9e9; /* Set the border color to orange */
-    border-radius: 50%; /* Makes it circular */
-    margin-right: 10px; /* Adjust spacing as needed */
-    vertical-align: middle;
-  }
+  /* Hide the default radio button */
+  display: none;
+  margin-top: 5px;
+}
 
-  .recurrenceRadio label {
-    display: inline-block; /* Ensures the label and radio button are in the same line */
-    vertical-align: middle; /* Align with the radio button vertically */
-  }
-  
-  /* Style the custom radio button when selected */
-  .recurrenceRadio input[type="radio"]:checked + label::before {
-    background-color: orange; /* Set the background color to orange when selected */
-    border: 1px solid transparent;
-  }
-  
+.recurrenceRadio {
+  padding-left: 0 !important;
+}
+
+/* Style the custom radio button appearance */
+.recurrenceRadio input[type="radio"] + label::before {
+  content: "";
+  display: inline-block;
+  width: 17px; /* Adjust size as needed */
+  height: 17px; /* Adjust size as needed */
+  border: 2px solid #e9e9e9; /* Set the border color to orange */
+  border-radius: 50%; /* Makes it circular */
+  margin-right: 10px; /* Adjust spacing as needed */
+  vertical-align: middle;
+}
+
+.recurrenceRadio label {
+  display: inline-block; /* Ensures the label and radio button are in the same line */
+  vertical-align: middle; /* Align with the radio button vertically */
+  font-size: 15px;
+}
+
+/* Style the custom radio button when selected */
+.recurrenceRadio input[type="radio"]:checked + label::before {
+  background-color: orange; /* Set the background color to orange when selected */
+  border: 1px solid transparent;
+}

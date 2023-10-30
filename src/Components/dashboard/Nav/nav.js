@@ -9,7 +9,7 @@ function Nav() {
       <nav className="navbar navbar-expand-lg bg-body-tertiary  mainNav">
         <div className="innerMainNav">
           <Link className="navbar-brand logo" to="/">
-          Sahara Desk
+            Sahara Desk
             {/* <div className="navLogoContainer">
               <img
                 src="https://149862670.v2.pressablecdn.com/wp-content/uploads/2022/11/SaharaDesk-Logo.png"
@@ -31,23 +31,86 @@ function Nav() {
           </button>
           <div className=" navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav navLinksContainer">
-              <Link
-                className="nav-link navLinks active navHover"
-                aria-current="page"
-                to="/Requsts"
-              >
-                Home
-              </Link>
-              <Link
-                className="nav-link navLinks navHover"
-                to="/requests"
-              >
-                Requests
+              <div class="dropdown actionDropdown navDropdownContainer">
+                <p
+                  class="btn dropdown-toggle navDropdown"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span>Work Orders</span>
+                  <span>
+                    <customIcons.down size={12} />
+                  </span>
+                </p>
+                <ul class="dropdown-menu">
+                  <Link
+                    class="dropdown-item action-dropdown-item"
+                    to="/requests"
+                  >
+                    <span>Requests</span>
+                  </Link>
+                  <Link
+                    class="dropdown-item action-dropdown-item"
+                    to="/work-order"
+                  >
+                    <span>Work Order</span>
+                  </Link>
+                  <Link
+                    class="dropdown-item action-dropdown-item navLast"
+                    to="/request-form"
+                  >
+                    <span>Schedules</span>
+                  </Link>
+                </ul>
+              </div>
+              <Link className="nav-link navLinks navHover" to="/requests">
+                Assets
               </Link>
               <Link className="nav-link navLinks navHover" href="#">
-                Incidents
+                parts
               </Link>
-              <Link className="nav-link navLinks navHover">Contractors</Link>
+              <Link className="nav-link navLinks navHover">Schedules</Link>
+
+              <div class="dropdown actionDropdown navDropdownContainer">
+                <p
+                  class="btn dropdown-toggle navDropdown"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span>More</span>
+                  <span>
+                    <customIcons.down size={12} />
+                  </span>
+                </p>
+                <ul class="dropdown-menu">
+                  <Link
+                    class="dropdown-item action-dropdown-item"
+                    to=""
+                  >
+                    <span>Checklist</span>
+                  </Link>
+                  <Link
+                    class="dropdown-item action-dropdown-item"
+                    to=""
+                  >
+                    <span>Locations</span>
+                  </Link>
+                  <Link
+                    class="dropdown-item action-dropdown-item"
+                    to=""
+                  >
+                    <span>People</span>
+                  </Link>
+                  <Link
+                    class="dropdown-item action-dropdown-item navLast"
+                    to=""
+                  >
+                    <span>Vendors</span>
+                  </Link>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -85,5 +148,3 @@ function Nav() {
 }
 
 export default Nav;
-
-

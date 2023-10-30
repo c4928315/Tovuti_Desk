@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import customIcons from "../../../Icons/icons";
 import useFetch from "../../../Hooks/useFetch";
 import "./workOrderTable.css";
@@ -293,13 +293,59 @@ function WorkOrderTable() {
       navigate(`/WOdetails/${item.id}`);
   };
 
+  const handleToggleFilter = (filterName) => {
+    const filterState = {
+      status: showStatusFilter,
+      location: showLocationFilter,
+      asset: showAssetFilter,
+      fault: showFaultFilter,
+      stage: showStageFilter,
+      type: showTicketTypeFilter,
+    };
+
+    for (const key in filterState) {
+      filterState[key] = false;
+    }
+
+    filterState[filterName] = true;
+
+    setShowStatusFilter(filterState.status);
+    setShowLocationFilter(filterState.location);
+    setShowAssetFilter(filterState.asset);
+    setShowFaultFilter(filterState.fault);
+    setTicketTypeFilter(filterState.type);
+    setShowStageFilter(filterState.stage);
+  };
+
+  const filterContainerRef = useRef();
+
+  const handleClearFilters = (e) => {
+    if (!filterContainerRef.current.contains(e.target)) {
+      // Click occurred outside of filter controls
+      setShowStatusFilter(false);
+      setShowLocationFilter(false);
+      setShowAssetFilter(false);
+      setShowFaultFilter(false);
+      setShowStageFilter(false);
+      setTicketTypeFilter(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClearFilters);
+
+    return () => {
+      document.removeEventListener("click", handleClearFilters);
+    };
+  }, []);
+
   return (
     <div className="requestTable">
-      <div className="topFilterContainer">
+      <div className="topFilterContainer" ref={filterContainerRef}>
         <div className="filterInputContainer">
           <div className="allFiltersContainer">
             <div
-              onClick={handleShowStatusFilter}
+              onClick={() => handleToggleFilter('status')}
               className="filterIconStatement"
             >
               <span>status</span>
@@ -344,7 +390,7 @@ function WorkOrderTable() {
 
           <div className="allFiltersContainer">
             <div
-              onClick={handleShowLocationFilter}
+              onClick={() => handleToggleFilter('location')}
               className="filterIconStatement"
             >
               <span>location</span>
@@ -391,13 +437,13 @@ function WorkOrderTable() {
 
           <div className="allFiltersContainer">
             <div
-              onClick={handleTicketTypeFilter}
+             onClick={() => handleToggleFilter('type')}
               className="filterIconStatement"
             >
               <span>Type</span>
               <span>
                 <customIcons.down
-                  className={showStageFilter ? "filterIconDropDown" : ""}
+                  className={showTicketTypeFilter ? "filterIconDropDown" : ""}
                   size={14}
                 />
               </span>
@@ -409,7 +455,7 @@ function WorkOrderTable() {
             >
               <input
                 type="text"
-                placeholder="Search Stage"
+                placeholder="Search Type"
                 value={ticketTypeSearch}
                 onChange={handleTicketTypeSearch}
               />
@@ -435,7 +481,7 @@ function WorkOrderTable() {
 
           <div className="allFiltersContainer">
             <div
-              onClick={handleShowStageFilter}
+              onClick={() => handleToggleFilter('stage')}
               className="filterIconStatement"
             >
               <span>stage</span>
@@ -481,7 +527,7 @@ function WorkOrderTable() {
           {/* Asset filter */}
           <div className="allFiltersContainer">
             <div
-              onClick={handleShowAssetFilter}
+              onClick={() => handleToggleFilter('asset')}
               className="filterIconStatement"
             >
               <span>asset</span>
@@ -523,7 +569,7 @@ function WorkOrderTable() {
 
           <div className="allFiltersContainer">
             <div
-              onClick={handleShowFaultFilter}
+              onClick={() => handleToggleFilter('fault')}
               className="filterIconStatement"
             >
               <span>fault</span>

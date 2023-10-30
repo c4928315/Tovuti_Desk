@@ -18,8 +18,9 @@
     width: 60%;
     background-color: white;
     border-radius: 12px;
-    min-height: 100vh;
-    min-height: 132vh;
+    min-height: 109vh;
+    max-height: 132vh;
+    overflow: auto;
 }
 
 .requestDetailTitle{

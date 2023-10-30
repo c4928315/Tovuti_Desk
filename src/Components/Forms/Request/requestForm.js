@@ -6,6 +6,10 @@ import "./requestForm.css";
 
 const assetCategory = [
   {
+    id: 0,
+    Name: "Select"
+  },
+  {
     id: 1,
     Name: "Asset category 1",
   },
@@ -310,34 +314,13 @@ function Request() {
       <div className="">
         <div className="commonPageTop">
           <h3 className="pageTitle">New Request</h3>
-          <div class="dropdown actionDropdown">
-            <button
-              class="btn btn-light dropdown-toggle actionBtn"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Actions
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <Link
-                  class="dropdown-item action-dropdown-item"
-                  to="/request-form"
-                >
-                  <customIcons.add style={{ color: "green" }} />
-                  <span>New Request</span>
-                </Link>
-              </li>
-            </ul>
-          </div>
         </div>
         <div className="commonPageMiddle">
           <Link to="/">home</Link>
           <div className="dividerCommonPage"></div>
-          <Link to="/requests">New Request</Link>
+          <Link to="/requests">Request</Link>
           <div className="dividerCommonPage"></div>
-          <Link>Add New Request</Link>
+          <Link>New Request</Link>
         </div>
         <div className="commonPageBottom container">
           <h3 className="workOrderTitle">New Request</h3>
@@ -375,8 +358,9 @@ function Request() {
                   <div className="formRow">
 
                   <div className="formRowRight">
-                      <h3 className="requestHeader">where are you located</h3>
-                      <select
+                      <h3 className="requestHeader">Where are you located?</h3>
+                      <div className="selectNewContainer">
+                        <select
                         data-te-select-init
                         data-te-select-clear-button="true"
                         className="requestSelect"
@@ -393,16 +377,21 @@ function Request() {
                           </option>
                         ))}
                       </select>
+                      <customIcons.down className="selectNewIcon" size={13}/>
+                      </div>
+                      
                     </div>
 
                     <div className="formRowLeft">
-                      <h3 className="requestHeader">select faulty asset</h3>
+                      <h3 className="requestHeader">Select faulty Asset</h3>
+                      <div className="selectNewContainer">
                       <select
                         data-te-select-init
                         data-te-select-clear-button="true"
-                        className="requestSelect"
+                        className="requestSelect paddig"
                         value={selectedAsset.id}
                         onChange={handleAssetChange}
+                        placeholder="Select"
                       >
                         {assetCategory.map((option) => (
                           <option key={option.id} value={option.id}>
@@ -410,11 +399,13 @@ function Request() {
                           </option>
                         ))}
                       </select>
+                      <customIcons.down className="selectNewIcon" size={13}/>
+                      </div>
                     </div>
                   </div>
                   <div className="formRow">
                       <div className="formRowLeft">
-                        <h3 className="requestHeader">select fault(s)</h3>
+                        <h3 className="requestHeader">Select Fault(s)</h3>
                         <div id="ck-button">
                           {options.map((option) => (
                             <label
@@ -442,7 +433,7 @@ function Request() {
                       </div>
 
                     <div className="formRowRight">
-                      <h3 className="requestHeader">describe fault</h3>
+                      <h3 className="requestHeader">Describe Fault</h3>
                       <div class="form-floating">
                         <textarea
                           class="form-control faultTextArea"
@@ -450,19 +441,13 @@ function Request() {
                           value={Description}
                           onChange={handleDescriptionChange}
                         ></textarea>
-                        <label
-                          for="floatingTextarea2"
-                          className="textareaLabel"
-                        >
-                          Describe
-                        </label>
                       </div>
                     </div>
                   </div>
 
                   <div className="formRow">
                     <div className="formRowLeft">
-                      <h3 className="requestHeader">recurrence</h3>
+                      <h3 className="requestHeader">Recurrence</h3>
                       <div className="recurrences">
                         <div class="form-check recurrenceRadio">
                           <input
@@ -478,7 +463,7 @@ function Request() {
                             class="form-check-label"
                             for="flexRadioDefault1"
                           >
-                            First Time Fault
+                            First Time Fault?
                           </label>
                         </div>
                         <div class="form-check recurrenceRadio">
@@ -495,14 +480,14 @@ function Request() {
                             class="form-check-label"
                             for="flexRadioDefault2"
                           >
-                            Recurrent Fault
+                            Recurrent Fault?
                           </label>
                         </div>
                       </div>
                     </div>
 
                     <div className="formRowRight">
-                      <h3 className="requestHeader">upload file</h3>
+                      <h3 className="requestHeader">Upload Files</h3>
                       <div class="input-group mb-3 faultFile">
                         <label
                           class="input-group-text attachFileLabel"
