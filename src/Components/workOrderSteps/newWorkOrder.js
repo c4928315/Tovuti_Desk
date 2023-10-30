@@ -303,6 +303,39 @@ function NewWorkOrder() {
     });
   };
 
+  //CHECKLIST SEARCH
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredChecklists, setFilteredChecklists] = useState(checklists);
+
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+    const filteredList = checklists.filter((checklist) => {
+      return checklist.FormsAndSectionsName.toLowerCase().includes(
+        searchTerm.toLowerCase()
+      );
+    });
+    setFilteredChecklists(filteredList);
+  };
+
+  //CHECKLIST SEARCH
+
+  //ADDITIONAL TEAMS SEARCH
+
+  // const [filteredTeamOptions, setFilteredTeamOptions] = useState(teamOptions);
+
+  // const handleAdditionalSearch = (e) => {
+  //   const searchTerm = e.target.value;
+  //   setSearchTerm(searchTerm);
+  //   const filteredList = teamOptions.filter((team) => {
+  //     return team.TeamName.toLowerCase().includes(searchTerm.toLowerCase());
+  //   });
+  //   setFilteredTeamOptions(filteredList);
+  // };
+
+  //ADDITIONAL TEAMS SEARCH
+
   return (
     <div className="WORKorderContainerMAIN">
       <h4 className="WORKorderContainerMAINH4Top">Work Order Details</h4>
@@ -722,10 +755,12 @@ function NewWorkOrder() {
                       type="text"
                       class="form-control search-input"
                       placeholder="Search..."
+                      value={searchTerm}
+                      onChange={handleSearch}
                     />
                   </div>
                   <li>
-                    {checklists.map((checklist) => (
+                    {filteredChecklists.map((checklist) => (
                       <div
                         key={checklist.FormsAndSectionsId}
                         className="checklistList"
@@ -742,11 +777,11 @@ function NewWorkOrder() {
                             handleChecklistChange(checklist.FormsAndSectionsId)
                           }
                         />
-                        <p
+                        <lable
                           htmlFor={`checklist-${checklist.FormsAndSectionsId}`}
                         >
                           {checklist.FormsAndSectionsName}
-                        </p>
+                        </lable>
                       </div>
                     ))}
                   </li>

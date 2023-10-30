@@ -77,7 +77,7 @@ function RequestDetailsPage() {
         </div>
         {/*  */}
 
-        <div className="request-details-page">
+        <div className="request-details-page onlyRequests">
           <div className="left">
             <h3 className="request-details-page-main">Request Details</h3>
 
@@ -160,7 +160,7 @@ function RequestDetailsPage() {
                 <customIcons.down size={14} />
               </div>
               <div className="workOrderDetailContainer">
-                <div className="left">
+                <div className="minLeft">
                   <h5 className="workOrderDetailContainerH5">
                     work order title:
                   </h5>
@@ -168,22 +168,22 @@ function RequestDetailsPage() {
                     {itemDetails.WorkOrder.Title}
                   </p>
                 </div>
-                <div className="right">
+                <div className="minRight">
                   <h5 className="workOrderDetailContainerH5">description:</h5>
-                  <p className="workOrderDetailContainerP">
+                  <p className="workOrderDetailContainerP workOrderDetailContainerH5Description">
                     {itemDetails.WorkOrder.Description}
                   </p>
                 </div>
               </div>
 
               <div className="workOrderDetailContainer">
-                <div className="left">
+                <div className="minLeft">
                   <h5 className="workOrderDetailContainerH5">
                     {itemDetails.WorkOrder.CategoryOfWork.Name}
                   </h5>
                   <p className="workOrderDetailContainerP">Engineering</p>
                 </div>
-                <div className="right">
+                <div className="minRight">
                   <h5 className="workOrderDetailContainerH5">Priority:</h5>
                   <button
                     className={`workOrderDetailContainerButton ${
@@ -200,13 +200,13 @@ function RequestDetailsPage() {
               </div>
 
               <div className="workOrderDetailContainer">
-                <div className="left">
+                <div className="minLeft">
                   <h5 className="workOrderDetailContainerH5">team:</h5>
                   <p className="workOrderDetailContainerP">
                     {itemDetails.WorkOrder.AssignTeam.Name}
                   </p>
                 </div>
-                <div className="right">
+                <div className="minRight">
                   <h5 className="workOrderDetailContainerH5">
                     Additional Team:
                   </h5>
@@ -217,7 +217,7 @@ function RequestDetailsPage() {
               </div>
 
               <div className="workOrderDetailContainer">
-                <div className="left">
+                <div className="minLeft">
                   <h5 className="workOrderDetailContainerH5">
                     Technician Signature Required?
                   </h5>
@@ -225,7 +225,7 @@ function RequestDetailsPage() {
                     {itemDetails === "True" ? <p>Yes</p> : <p>No</p>}
                   </p>
                 </div>
-                <div className="right">
+                <div className="minRight">
                   <h5 className="workOrderDetailContainerH5">
                     Estimated Hours
                   </h5>

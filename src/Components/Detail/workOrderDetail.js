@@ -12,6 +12,7 @@ function WorkOrderDetailsPage() {
   const [showParts, setShowParts] = useState(false);
   const [showPartsForm, setShowPartsForm] = useState(false);
   const [showPartsRequested, setShowPartsRequested] = useState(false);
+  const [showPartsUsed, setShowPartsUsed] = useState(false);
   const [showPartsRecieved, setShowPartsRecieved] = useState(false);
   const [showPartsReturned, setShowPartsReturned] = useState(false);
   const [showOtherInfo, setShowOtherInfo] = useState(false);
@@ -38,6 +39,10 @@ function WorkOrderDetailsPage() {
 
   const handlePartFormRequested = () => {
     setShowPartsRequested(!showPartsRequested);
+  };
+
+  const handlePartFormUsed = () => {
+    setShowPartsUsed(!showPartsUsed);
   };
 
   const handlePartFormRecieved = () => {
@@ -469,6 +474,20 @@ function WorkOrderDetailsPage() {
                       USED
                     </button>
                   </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link tabs-WODets-btn"
+                      id="returned"
+                      data-bs-toggle="tab"
+                      data-bs-target="#returned-tab-pane"
+                      type="button"
+                      role="tab"
+                      aria-controls="returned-tab-pane"
+                      aria-selected="false"
+                    >
+                      RETURNED
+                    </button>
+                  </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                   <div
@@ -537,6 +556,7 @@ function WorkOrderDetailsPage() {
                           <th>Parts</th>
                           <th>Quantity</th>
                           <th>Amount(ks)</th>
+                          <th>Location</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -546,6 +566,7 @@ function WorkOrderDetailsPage() {
                             <td className="tBodyTd">{item.part}</td>
                             <td className="tBodyTd">{item.quantity}</td>
                             <td className="tBodyTd">{item.amount}</td>
+                            <td className="tBodyTd">Forecourt</td>
                             <td className="tBodyTd">
                               <span>
                                 <customIcons.edit
@@ -645,6 +666,7 @@ function WorkOrderDetailsPage() {
                           <th>Parts</th>
                           <th>Quantity</th>
                           <th>Amount(ks)</th>
+                          <th>Location</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -654,6 +676,62 @@ function WorkOrderDetailsPage() {
                             <td className="tBodyTd">{item.part}</td>
                             <td className="tBodyTd">{item.quantity}</td>
                             <td className="tBodyTd">{item.amount}</td>
+                            <td className="tBodyTd">Forecourt</td>
+                            <td className="tBodyTd">
+                              <span>
+                                <customIcons.edit
+                                  size={17}
+                                  style={{
+                                    color: "#584539",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                                <customIcons.delete
+                                  size={17}
+                                  style={{
+                                    color: "#584539",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                      <Link
+                        onClick={handlePartFormUsed}
+                        className={` newAddPartLink ${
+                          !extendPartTable ? "woDownDispalyNone" : ""
+                        } `}
+                      >
+                        Add Part
+                      </Link>
+                    </table>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="returned-tab-pane"
+                    role="tabpanel"
+                    aria-labelledby="returned"
+                    tabindex="0"
+                  >
+                    <table className="partsTable partsTableWO">
+                      <thead>
+                        <tr>
+                          <th>Parts</th>
+                          <th>Quantity</th>
+                          <th>Amount(ks)</th>
+                          <th>Location</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {partData.map((item, i) => (
+                          <tr key={i}>
+                            <td className="tBodyTd">{item.part}</td>
+                            <td className="tBodyTd">{item.quantity}</td>
+                            <td className="tBodyTd">{item.amount}</td>
+                            <td className="tBodyTd">Forecourt</td>
                             <td className="tBodyTd">
                               <span>
                                 <customIcons.edit
@@ -979,15 +1057,6 @@ function WorkOrderDetailsPage() {
                   setFormData({ ...formData, amount: e.target.value })
                 }
               />
-              <div className="detailAddCostCheck">
-                <label>
-                  <input type="checkbox" id="btncheck1" autoComplete="off" />
-                  <span class="checkmark">
-                    <customIcons.check style={{ color: "white" }} />
-                  </span>
-                  <p>Add cost to total</p>
-                </label>
-              </div>
               <button type="submit">Submit</button>
             </div>
           </form>
@@ -1038,24 +1107,18 @@ function WorkOrderDetailsPage() {
                   setFormData({ ...formData, quantity: e.target.value })
                 }
               />
-              <p className="partFormHeader">Add Ammount</p>
-              <input
-                type="number"
-                placeholder="Amount"
-                value={formData.amount}
+              <p className="partFormHeader">Selected Location </p>
+              <select
+                value={formData.part}
                 onChange={(e) =>
-                  setFormData({ ...formData, amount: e.target.value })
+                  setFormData({ ...formData, part: e.target.value })
                 }
-              />
-              <div className="detailAddCostCheck">
-                <label>
-                  <input type="checkbox" id="btncheck1" autoComplete="off" />
-                  <span class="checkmark">
-                    <customIcons.check style={{ color: "white" }} />
-                  </span>
-                  <p>Add cost to total</p>
-                </label>
-              </div>
+              >
+                <option value="">Select</option>
+                <option value="Part 1">Narok</option>
+                <option value="Part 2">Gigiri</option>
+                <option value="Part 3">Wasabi</option>
+              </select>
               <button type="submit">Submit</button>
             </div>
           </form>
@@ -1116,15 +1179,6 @@ function WorkOrderDetailsPage() {
                 <option value="Part 2">Gigiri</option>
                 <option value="Part 3">Wasabi</option>
               </select>
-              <div className="detailAddCostCheck">
-                <label>
-                  <input type="checkbox" id="btncheck1" autoComplete="off" />
-                  <span class="checkmark">
-                    <customIcons.check style={{ color: "white" }} />
-                  </span>
-                  <p>Add cost to total</p>
-                </label>
-              </div>
               <button type="submit">Submit</button>
             </div>
           </form>
@@ -1169,16 +1223,19 @@ function WorkOrderDetailsPage() {
                   setFormData({ ...formData, quantity: e.target.value })
                 }
               />
-              <p className="partFormHeader">Add Ammount</p>
-              <input
-                type="number"
-                placeholder="Amount"
-                value={formData.amount}
+              <p className="partFormHeader">Selected Location </p>
+              <select
+                value={formData.part}
                 onChange={(e) =>
-                  setFormData({ ...formData, amount: e.target.value })
+                  setFormData({ ...formData, part: e.target.value })
                 }
-              />
-              <div className="detailAddCostCheck">
+              >
+                <option value="">Select</option>
+                <option value="Part 1">Narok</option>
+                <option value="Part 2">Gigiri</option>
+                <option value="Part 3">Wasabi</option>
+              </select>
+              {/* <div className="detailAddCostCheck">
                 <label>
                   <input type="checkbox" id="btncheck1" autoComplete="off" />
                   <span class="checkmark">
@@ -1186,13 +1243,75 @@ function WorkOrderDetailsPage() {
                   </span>
                   <p>Add cost to total</p>
                 </label>
-              </div>
+              </div> */}
               <button type="submit">Submit</button>
             </div>
           </form>
         </div>
       </div>
       {/* PART INFO RETURNED*/}
+
+      {/** PARTS INFO USED **/}
+      <div
+        className={`formContainer ${
+          !showPartsUsed ? "partsFormHide" : ""
+        }`}
+      >
+        <div className="formCloseContainer">
+          <div
+            className="closeForm"
+            onClick={() => setShowPartsUsed(!showPartsUsed)}
+          >
+            X
+          </div>
+
+          <form
+            onSubmit={handleFormSubmit} //change this later to submit requested parts
+            className="partsFormWO"
+          >
+            <div className="partsFormInner">
+              <h3 className="partsHeader">Add Requested Part</h3>
+
+              <p className="partFormHeader">Selected Part </p>
+              <select
+                value={formData.part}
+                onChange={(e) =>
+                  setFormData({ ...formData, part: e.target.value })
+                }
+              >
+                <option value="">Select</option>
+                <option value="Part 1">Part 1</option>
+                <option value="Part 2">Part 2</option>
+                <option value="Part 3">Part 3</option>
+              </select>
+
+              <p className="partFormHeader">Selected Quantity</p>
+              <input
+                type="number"
+                placeholder="Quantity used"
+                value={formData.quantity}
+                onChange={(e) =>
+                  setFormData({ ...formData, quantity: e.target.value })
+                }
+              />
+              <p className="partFormHeader">Selected Location </p>
+              <select
+                value={formData.part}
+                onChange={(e) =>
+                  setFormData({ ...formData, part: e.target.value })
+                }
+              >
+                <option value="">Select</option>
+                <option value="Part 1">Narok</option>
+                <option value="Part 2">Gigiri</option>
+                <option value="Part 3">Wasabi</option>
+              </select>
+              <button type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      {/** PARTS INFO USED **/}
 
       {/* OTHER INFO */}
       <div className={`formContainer ${!showOtherInfo ? "partsFormHide" : ""}`}>
