@@ -111,3 +111,9 @@ tr:hover{
     overflow: hidden !important;
     text-overflow: ellipsis !important;
   }
+
+  .requestTableDashboard{
+    padding: 20px 30px;
+  }
+
+  

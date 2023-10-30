@@ -265,7 +265,8 @@ const handleShowFaultFilter = () => {
 
 
   return (
-    <div className="requestTable">
+    <div className="requestTable requestTableDashboard" style={{paddingTop: "20px"}}>
+       <h3 className="gridTitleBlack" style={{marginBottom: "30px"}}>Requests</h3>
       <div className="topFilterContainer" ref={filterContainerRef}>
       <div className="filterInputContainer">
 
