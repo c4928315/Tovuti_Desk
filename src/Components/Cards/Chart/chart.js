@@ -8,7 +8,7 @@ function Chart({ data, text, dropdownComp}) {
     <div className="cardContainer">
       <span className="itemTop">
         <span className="gridTitle">{text}</span>
-        {dropdownComp}
+        <div className="chartDropdownComp">{dropdownComp}</div>
       </span>
       <div className="itemBottomChart">
         <DoughnutChart />

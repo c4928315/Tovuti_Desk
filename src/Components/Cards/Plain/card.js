@@ -5,7 +5,7 @@ import customIcons from "../../../Icons/icons";
 import { Link } from "react-router-dom";
 
 
-function Card({ data, text, dropdownComp, link, itemProperty, navigate }) {
+function Card({ data, text, dropdownComp, link, itemProperty, number }) {
 
   // weeds out duplicate elements ************(NOT DONE WITH THIS)************
   const filteredData = data.filter(
@@ -19,39 +19,40 @@ function Card({ data, text, dropdownComp, link, itemProperty, navigate }) {
     <Link to={link} className="cardContainer">
       <span className="itemTop">
         <span className="gridTitle">{text}</span>
-        <customIcons.kebab />
+       
       </span>
       <div className="itemBottom">
-        <p className="gridData">{data.length}</p>
+        <p className="gridData">{number}</p>
         {dropdownComp}
       </div>
       <div className="cardItemsContainer">
-        {filteredData.map((item, i) => {
+        <div className="colorsHolder">
+          <div className="colorsHolderRed">
+            <div className="colors red">
 
-            const classNameID = () => {
-                if(item[itemProperty] === "Closed"){
-                    return (
-                        <div className="Complete">
-                          {item[itemProperty]}
-                          <li className="completeList"></li>
-                        </div>
-                    )
-                } else if(item[itemProperty] === "Open"){
-                    return (
-                        <div className="New">
-                          {item[itemProperty]}
-                          <li className="newList"></li>
-                        </div>
-                    )
-                }
-            }
-
-          return (
-            <div className="cardItems" key={i}>
-              <>{classNameID()}</>
             </div>
-          );
-        })}
+            <p>New</p>
+          </div>
+          <p className="textAll">12</p>
+        </div>
+        <div className="colorsHolder">
+          <div className="colorsHolderRed">
+            <div className="colors orange">
+
+            </div>
+            <p>in Progress</p>
+          </div>
+          <p className="textAll">29</p>
+        </div>
+        <div className="colorsHolder">
+          <div className="colorsHolderRed">
+            <div className="colors green">
+
+            </div>
+            <p>Closed</p>
+          </div>
+          <p className="textAll">40</p>
+        </div>
       </div>
     </Link>
   );
@@ -63,6 +64,7 @@ Card.propTypes = {
   dropdownText: PropTypes.string.isRequired,
   dropdownClassName: PropTypes.string,
   itemProperty: PropTypes.string,
+  number: PropTypes.string,
 };
 
 export default Card;
