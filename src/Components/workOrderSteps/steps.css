@@ -128,11 +128,11 @@ Work Order
 .assetNextBtn {
   float: right;
   margin-top: 20% !important;
-  background-color: orange !important;
   width: 102px;
   height: 33px;
   flex-shrink: 0;
-  font-size: 14px;
+  font-size: 13px !important;
+  background-color: #D57D2ADE !important;
 }
 
 .assetPrevBtn {

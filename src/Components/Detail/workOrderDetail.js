@@ -979,7 +979,15 @@ function WorkOrderDetailsPage() {
                   setFormData({ ...formData, amount: e.target.value })
                 }
               />
-
+              <div className="detailAddCostCheck">
+                <label>
+                  <input type="checkbox" id="btncheck1" autoComplete="off" />
+                  <span class="checkmark">
+                    <customIcons.check style={{ color: "white" }} />
+                  </span>
+                  <p>Add cost to total</p>
+                </label>
+              </div>
               <button type="submit">Submit</button>
             </div>
           </form>
@@ -1039,7 +1047,15 @@ function WorkOrderDetailsPage() {
                   setFormData({ ...formData, amount: e.target.value })
                 }
               />
-
+              <div className="detailAddCostCheck">
+                <label>
+                  <input type="checkbox" id="btncheck1" autoComplete="off" />
+                  <span class="checkmark">
+                    <customIcons.check style={{ color: "white" }} />
+                  </span>
+                  <p>Add cost to total</p>
+                </label>
+              </div>
               <button type="submit">Submit</button>
             </div>
           </form>
@@ -1100,7 +1116,15 @@ function WorkOrderDetailsPage() {
                 <option value="Part 2">Gigiri</option>
                 <option value="Part 3">Wasabi</option>
               </select>
-
+              <div className="detailAddCostCheck">
+                <label>
+                  <input type="checkbox" id="btncheck1" autoComplete="off" />
+                  <span class="checkmark">
+                    <customIcons.check style={{ color: "white" }} />
+                  </span>
+                  <p>Add cost to total</p>
+                </label>
+              </div>
               <button type="submit">Submit</button>
             </div>
           </form>
@@ -1154,7 +1178,15 @@ function WorkOrderDetailsPage() {
                   setFormData({ ...formData, amount: e.target.value })
                 }
               />
-
+              <div className="detailAddCostCheck">
+                <label>
+                  <input type="checkbox" id="btncheck1" autoComplete="off" />
+                  <span class="checkmark">
+                    <customIcons.check style={{ color: "white" }} />
+                  </span>
+                  <p>Add cost to total</p>
+                </label>
+              </div>
               <button type="submit">Submit</button>
             </div>
           </form>
@@ -1175,7 +1207,16 @@ function WorkOrderDetailsPage() {
             <div className="partsFormInner">
               <h3 className="partsHeader">Add Cost</h3>
 
-              <p className="partFormHeader">Selected Part</p>
+              <p className="partFormHeader">Cost Description</p>
+              <input
+                type="text"
+                value={formData.quantity}
+                onChange={(e) =>
+                  setFormData({ ...formData, quantity: e.target.value })
+                }
+              />
+
+              <p className="partFormHeader">Cost Category</p>
               <select
                 value={formData.part}
                 onChange={(e) =>
@@ -1188,26 +1229,25 @@ function WorkOrderDetailsPage() {
                 <option value="Part 3">Part 3</option>
               </select>
 
-              <p className="partFormHeader">Selected Quantity</p>
+              <p className="partFormHeader">Ammount(Ksh)</p>
               <input
-                type="number"
-                placeholder="Quantity"
-                value={formData.quantity}
-                onChange={(e) =>
-                  setFormData({ ...formData, quantity: e.target.value })
-                }
-              />
-              <p className="partFormHeader">Add Ammount</p>
-              <input
-                type="number"
-                placeholder="Amount"
+                type="text"
                 value={formData.amount}
                 onChange={(e) =>
                   setFormData({ ...formData, amount: e.target.value })
                 }
               />
+              <div className="detailAddCostCheck">
+                <label>
+                  <input type="checkbox" id="btncheck1" autoComplete="off" />
+                  <span class="checkmark">
+                    <customIcons.check style={{ color: "white" }} />
+                  </span>
+                  <p>Add cost to total</p>
+                </label>
+              </div>
 
-              <button type="submit">Submit</button>
+              <button type="submit">Save</button>
             </div>
           </form>
         </div>
@@ -1229,7 +1269,7 @@ function WorkOrderDetailsPage() {
             <div className="partsFormInner">
               <h3 className="partsHeader">Add Labour</h3>
 
-              <p className="partFormHeader">Selected Part</p>
+              <p className="partFormHeader">Selected Team</p>
               <select
                 value={formData.part}
                 onChange={(e) =>
@@ -1237,31 +1277,43 @@ function WorkOrderDetailsPage() {
                 }
               >
                 <option value="">Select</option>
-                <option value="Part 1">Part 1</option>
-                <option value="Part 2">Part 2</option>
-                <option value="Part 3">Part 3</option>
+                <option value="Part 1">Team 1</option>
+                <option value="Part 2">Team 2</option>
+                <option value="Part 3">Team 3</option>
               </select>
 
-              <p className="partFormHeader">Selected Quantity</p>
+              <p className="partFormHeader">Selected Technician</p>
+              <select
+                value={formData.part}
+                onChange={(e) =>
+                  setFormData({ ...formData, part: e.target.value })
+                }
+              >
+                <option value="">Select</option>
+                <option value="Part 1">Technician 1</option>
+                <option value="Part 2">Technician 2</option>
+                <option value="Part 3">Technician 3</option>
+              </select>
+
+              <p className="partFormHeader">Rate Per Hour (Ksh)</p>
               <input
                 type="number"
-                placeholder="Quantity"
+                placeholder="0"
                 value={formData.quantity}
                 onChange={(e) =>
                   setFormData({ ...formData, quantity: e.target.value })
                 }
               />
-              <p className="partFormHeader">Add Ammount</p>
-              <input
-                type="number"
-                placeholder="Amount"
-                value={formData.amount}
-                onChange={(e) =>
-                  setFormData({ ...formData, amount: e.target.value })
-                }
-              />
-
-              <button type="submit">Submit</button>
+              <div className="detailAddCostCheck">
+                <label>
+                  <input type="checkbox" id="btncheck1" autoComplete="off" />
+                  <span class="checkmark">
+                    <customIcons.check style={{ color: "white" }} />
+                  </span>
+                  <p>Add cost to total</p>
+                </label>
+              </div>
+              <button type="submit">Add</button>
             </div>
           </form>
         </div>
@@ -1296,26 +1348,19 @@ function WorkOrderDetailsPage() {
                 <option value="Part 3">Part 3</option>
               </select>
 
-              <p className="partFormHeader">Selected Quantity</p>
+              <p className="partFormHeader">Diagnosis</p>
               <input
-                type="number"
-                placeholder="Quantity"
+                type="text"
                 value={formData.quantity}
                 onChange={(e) =>
                   setFormData({ ...formData, quantity: e.target.value })
                 }
               />
-              <p className="partFormHeader">Add Ammount</p>
-              <input
-                type="number"
-                placeholder="Amount"
-                value={formData.amount}
-                onChange={(e) =>
-                  setFormData({ ...formData, amount: e.target.value })
-                }
-              />
-
-              <button type="submit">Submit</button>
+              <p className="partFormHeader">Describe Diagnosi</p>
+              <textarea style={{ height: "100px" }}></textarea>
+              <p className="partFormHeader">Describe Solution</p>
+              <textarea style={{ height: "100px" }}></textarea>
+              <button type="submit">Save</button>
             </div>
           </form>
         </div>
