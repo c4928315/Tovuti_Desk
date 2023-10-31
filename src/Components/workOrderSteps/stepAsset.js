@@ -271,42 +271,45 @@ function StepAsset() {
                 <span className="assetsSpan">
                   <h4>Asset(s)</h4>
                   <h4 className="notHeader WoFade">Select</h4>
-               {locations.length > 0 ? (
-  <div className="assetsContainerInSteps">
-    {locations
-      .find(
-        (location) =>
-          parseInt(location.value) ===
-          parseInt(userData.TicketLocation.LocationId)
-      )
-      ?.assetCategory.find(
-        (category) =>
-          parseInt(category.CategoryId) ===
-          parseInt(
-            userData.TicketCategoryOfWork.CategoryOfWorkId
-          )
-      )
-      ?.Assets.map((asset) => (
-        <div key={parseInt(asset.AssetId)} className="checkBox">
-          <Checkbox
-            style={{ color: "orange" }}
-            checked={userData.TicketAssets.some(
-              (selectedAsset) =>
-                selectedAsset.AssetId === asset.AssetId
-            )}
-            onChange={() => handleAssetCheckboxChange(asset)}
-          />
-          <label>{asset.AssetName}</label>
-          <span>{asset.AssetName}</span>
-        </div>
-      ))}
-  </div>
-) : (
-  // This is the "else" block
-  <div className="emptyLocationsMessage">No locations available.</div>
-)}
-
-
+                  {locations.length > 0 ? (
+                    <div className="assetsContainerInSteps">
+                      {locations
+                        .find(
+                          (location) =>
+                            parseInt(location.value) ===
+                            parseInt(userData.TicketLocation.LocationId)
+                        )
+                        ?.assetCategory.find(
+                          (category) =>
+                            parseInt(category.CategoryId) ===
+                            parseInt(
+                              userData.TicketCategoryOfWork.CategoryOfWorkId
+                            )
+                        )
+                        ?.Assets.map((asset) => (
+                          <div
+                            key={parseInt(asset.AssetId)}
+                            className="checkBox"
+                          >
+                            <Checkbox
+                              style={{ color: "orange" }}
+                              checked={userData.TicketAssets.some(
+                                (selectedAsset) =>
+                                  selectedAsset.AssetId === asset.AssetId
+                              )}
+                              onChange={() => handleAssetCheckboxChange(asset)}
+                            />
+                            <label>{asset.AssetName}</label>
+                            <span>{asset.AssetName}</span>
+                          </div>
+                        ))}
+                    </div>
+                  ) : (
+                    // This is the "else" block
+                    <div className="emptyLocationsMessage">
+                      No locations available.
+                    </div>
+                  )}
                 </span>
               </div>
             </div>

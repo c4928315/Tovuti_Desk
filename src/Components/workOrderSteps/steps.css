@@ -1047,6 +1047,10 @@ font-weight: 500;
   color: #85868b !important;
 }
 
+.search-container{
+  width: 250px !important;
+}
+
 .partsFormEditFormHolder .partsFormInner h5{
   padding-left: 29%;
   width: fit-content;
@@ -1076,4 +1080,12 @@ font-weight: 500;
   align-items: center;
   justify-content: center;
   background-color: orange;
+}
+
+.addPartsLink{
+  color: orange;
+  text-decoration: underline;
+  font-size: 13px;
+  float: right;
+  margin: 10px 35px;
 }

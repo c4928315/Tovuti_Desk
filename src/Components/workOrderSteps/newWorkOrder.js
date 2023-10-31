@@ -305,6 +305,16 @@ function NewWorkOrder() {
 
   //CHECKLIST SEARCH
 
+  const handleChecklistRadioChange = (checklistId) => {
+    const selectedChecklist = checklists.find(
+      (checklist) => checklist.FormsAndSectionsId === checklistId
+    );
+    setUserData({
+      ...userData,
+      TicketChecklistForms: [selectedChecklist], // Use an array to hold the selected checklist
+    });
+  };
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredChecklists, setFilteredChecklists] = useState(checklists);
 
@@ -323,16 +333,16 @@ function NewWorkOrder() {
 
   //ADDITIONAL TEAMS SEARCH
 
-  // const [filteredTeamOptions, setFilteredTeamOptions] = useState(teamOptions);
+  const [filteredTeamOptions, setFilteredTeamOptions] = useState(teamOptions);
 
-  // const handleAdditionalSearch = (e) => {
-  //   const searchTerm = e.target.value;
-  //   setSearchTerm(searchTerm);
-  //   const filteredList = teamOptions.filter((team) => {
-  //     return team.TeamName.toLowerCase().includes(searchTerm.toLowerCase());
-  //   });
-  //   setFilteredTeamOptions(filteredList);
-  // };
+  const handleAdditionalSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+    const filteredList = teamOptions.filter((team) => {
+      return team.TeamName.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+    setFilteredTeamOptions(filteredList);
+  };
 
   //ADDITIONAL TEAMS SEARCH
 
@@ -531,25 +541,39 @@ function NewWorkOrder() {
                       select
                     </p>
                     <ul class="dropdown-menu">
-                      {teamOptions.map((team) => (
-                        <div
-                          key={team.TeamId}
-                          className="checkbox-item checkListDropdown"
-                        >
-                          <input
-                            type="checkbox"
-                            id={`team-${team.TeamId}`}
-                            name={`team-${team.TeamId}`}
-                            checked={userData.TicketAdditionalTeams.some(
-                              (t) => t.TeamId === team.TeamId
-                            )}
-                            onChange={() =>
-                              handleTeamCheckboxChange(team.TeamId)
-                            }
-                          />
-                          <p htmlFor={`team-${team.TeamId}`}>{team.TeamName}</p>
-                        </div>
-                      ))}
+                      <div class="search-container">
+                        {/* <customIcons.search/> */}
+                        <input
+                          type="text"
+                          class="form-control search-input"
+                          placeholder="Search..."
+                          value={searchTerm}
+                          onChange={handleAdditionalSearch}
+                        />
+                      </div>
+                      <li>
+                        {filteredTeamOptions.map((team) => (
+                          <div
+                            key={team.TeamId}
+                            className="checkbox-item checkListDropdown"
+                          >
+                            <input
+                              type="checkbox"
+                              id={`team-${team.TeamId}`}
+                              name={`team-${team.TeamId}`}
+                              checked={userData.TicketAdditionalTeams.some(
+                                (t) => t.TeamId === team.TeamId
+                              )}
+                              onChange={() =>
+                                handleTeamCheckboxChange(team.TeamId)
+                              }
+                            />
+                            <lable htmlFor={`team-${team.TeamId}`}>
+                              {team.TeamName}
+                            </lable>
+                          </div>
+                        ))}
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -607,7 +631,7 @@ function NewWorkOrder() {
                 <p className="form-label-newWO">Projected Parts</p>
               </div>
 
-              <div className="partTableConatainer">
+              <div className="partTableConatainer" style={{ maxHeight: '200px', overflowY: 'auto' }}>
                 <table className="partsTable">
                   <thead>
                     <tr>
@@ -642,8 +666,8 @@ function NewWorkOrder() {
                       ))}
                   </tbody>
                 </table>
-                <Link onClick={handleShowParts}>Add Part</Link>
               </div>
+              <Link onClick={handleShowParts} className="addPartsLink">Add Part</Link>
               <div
                 className={`fixedPartsContainer ${
                   !showParts ? "partsFormHide" : ""
@@ -749,43 +773,43 @@ function NewWorkOrder() {
                   </span>
                 </button>
                 <ul class="dropdown-menu">
-                  <div class="search-container">
-                    {/* <customIcons.search/> */}
-                    <input
-                      type="text"
-                      class="form-control search-input"
-                      placeholder="Search..."
-                      value={searchTerm}
-                      onChange={handleSearch}
-                    />
-                  </div>
-                  <li>
-                    {filteredChecklists.map((checklist) => (
-                      <div
-                        key={checklist.FormsAndSectionsId}
-                        className="checklistList"
-                      >
-                        <input
-                          type="checkbox"
-                          id={`checklist-${checklist.FormsAndSectionsId}`}
-                          checked={userData.TicketChecklistForms.some(
-                            (form) =>
-                              form.FormsAndSectionsId ===
-                              checklist.FormsAndSectionsId
-                          )}
-                          onChange={() =>
-                            handleChecklistChange(checklist.FormsAndSectionsId)
-                          }
-                        />
-                        <lable
-                          htmlFor={`checklist-${checklist.FormsAndSectionsId}`}
-                        >
-                          {checklist.FormsAndSectionsName}
-                        </lable>
-                      </div>
-                    ))}
-                  </li>
-                </ul>
+            <div class="search-container">
+              {/* <customIcons.search/> */}
+              <input
+                type="text"
+                class="form-control search-input"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </div>
+            <li>
+              {checklists.map((checklist) => (
+                <div
+                  key={checklist.FormsAndSectionsId}
+                  className="checklistList"
+                >
+                  <input
+                    type="radio"
+                    id={`checklist-${checklist.FormsAndSectionsId}`}
+                    checked={
+                      userData.TicketChecklistForms.length > 0 &&
+                      userData.TicketChecklistForms[0].FormsAndSectionsId ===
+                        checklist.FormsAndSectionsId
+                    }
+                    onChange={() =>
+                      handleChecklistRadioChange(checklist.FormsAndSectionsId)
+                    }
+                  />
+                  <label
+                    htmlFor={`checklist-${checklist.FormsAndSectionsId}`}
+                  >
+                    {checklist.FormsAndSectionsName}
+                  </label>
+                </div>
+              ))}
+            </li>
+          </ul>
               </div>
               {userData.TicketChecklistForms.length > 0 && (
                 <div className="partTableConatainer checklistTableContainer">
@@ -889,3 +913,11 @@ function NewWorkOrder() {
 }
 
 export default NewWorkOrder;
+
+
+
+
+
+
+
+

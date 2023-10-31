@@ -3,73 +3,134 @@ import { Link, useNavigate } from "react-router-dom";
 import customIcons from "../../../Icons/icons";
 import { BiCheck } from "react-icons/bi";
 import "./requestForm.css";
+import useFetch from "../../../Hooks/useFetch";
 
-const assetCategory = [
-  {
-    id: 0,
-    Name: "Select"
-  },
+const Locs = [
   {
     id: 1,
-    Name: "Asset category 1",
+    LocationName: "Kenya",
   },
   {
     id: 2,
-    Name: "Asset category 2",
+    LocationName: "Uganda",
   },
   {
     id: 3,
-    Name: "Asset category 3",
-  },
-  {
-    id: 4,
-    Name: "Asset category 4",
+    LocationName: "Tanzania",
   },
 ];
 
-const options = [
+const assts = [
   {
     id: 1,
-    Name: "Asset category 1",
+    AsstName: "pump",
+    assetLocationId: 2,
   },
   {
     id: 2,
-    Name: "Asset category 2",
+    AsstName: "cooler",
+    assetLocationId: 1,
   },
   {
     id: 3,
-    Name: "Asset category 3",
+    AsstName: "regulator",
+    assetLocationId: 2,
+  },
+];
+
+const fault = [
+  {
+    id: 1,
+    FaultName: "broken noozel",
+    assetFaultId: 2,
   },
   {
-    id: 4,
-    Name: "Asset category 4",
-  },
-  {
-    id: 5,
-    Name: "Asset category 5",
+    id: 2,
+    FaultName: "busted regulator",
+    assetFaultId: 1,
   },
 ];
 
 function Request() {
   const [colors, setColors] = useState([false, false, false, false, false]);
 
-  const navigate = useNavigate()
+  const { data: locations } = useFetch(
+    "https://saharadeskrestapi.azurewebsites.net/api/Locations"
+  );
 
-  const [selectedAsset, setSelectedAsset] = useState(assetCategory[0]);
-  const [selectedLocation, setSelectedLocation] = useState(assetCategory[0]);
-  const [selectedFault, setSelectedFault] = useState([]);
+  console.log(locations);
+
+  const navigate = useNavigate();
+
+  const [selectedLocationId, setSelectedLocationId] = useState(null);
+  const [selectedAssetId, setSelectedAssetId] = useState(null);
+  const [selectedFaultIds, setSelectedFaultIds] = useState([]);
+
   const [Description, setDescription] = useState("");
   const [Recurrence, setRecurrence] = useState("notDefault");
   const [AttachedFiles, setAttachedFiles] = useState([]);
+  const [assets, setAssets] = useState([]);
+  const [faults, setFaults] = useState([]);
 
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    if (selectedLocationId !== null) {
+
+      // Fetch assets for the default location
+      fetchAssetsForLocation(selectedLocationId);
+    }
+  }, [selectedLocationId]);
+
+  console.log(assets)
+
+  const fetchAssetsForLocation = (locationId) => {
+    // Fetch assets based on the selected location
+    fetch(`https://saharadeskrestapi.azurewebsites.net/api/Assets/GetAssetsByLocation/${locationId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setAssets(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching assets:", error);
+      });
+  };
+
+  const fetchFaultsForAsset = (assetId) => {
+    // Fetch faults based on the selected asset
+    fetch(`https://saharadeskrestapi.azurewebsites.net/api/Assets/GetFaultsByAsset/${assetId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setFaults(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching faults:", error);
+      });
+  };
+
+
+  const handleAssetChange = (e) => {
+    const assetId = parseInt(e.target.value);
+    setSelectedAssetId(assetId);
+  };
+
+  useEffect(() => {
+    if( selectedAssetId !== null){
+      fetchFaultsForAsset(selectedAssetId);
+    }
+  }, [selectedAssetId])
+
+  console.log(selectedAssetId)
+
+  console.log(faults)
+  
+  
+  useEffect(() => {
     const storedFormData = JSON.parse(localStorage.getItem("formData"));
     if (storedFormData) {
-      setSelectedAsset(storedFormData.Asset);
-      setSelectedLocation(storedFormData.Location);
-      setSelectedFault(storedFormData.Fault);
+      setSelectedAssetId(storedFormData.Asset);
+      setSelectedLocationId(storedFormData.Location);
+      setSelectedFaultIds(storedFormData.Fault);
       setDescription(storedFormData.Description);
       setRecurrence(storedFormData.Recurrence);
       setAttachedFiles(storedFormData.AttachedFiles);
@@ -78,18 +139,18 @@ function Request() {
 
   useEffect(() => {
     const formData = {
-      Asset: selectedAsset,
-      Location: selectedLocation,
-      Fault: selectedFault,
+      Asset: selectedAssetId,
+      Location: selectedLocationId,
+      Fault: selectedFaultIds,
       Description,
       Recurrence,
       AttachedFiles,
     };
     localStorage.setItem("formData", JSON.stringify(formData));
   }, [
-    selectedAsset,
-    selectedLocation,
-    selectedFault,
+    selectedAssetId,
+    selectedLocationId,
+    selectedFaultIds,
     Description,
     Recurrence,
     AttachedFiles,
@@ -101,34 +162,6 @@ function Request() {
     // Add other properties here
   });
 
-  const updateWorkOrder = (updatedData) => {
-    // Update the work order data in the local state
-    setWorkOrderData(updatedData);
-
-    // Send an API request to update the work order data on the server
-    fetch(`http://your-api-url/work-orders/${updatedData.id}`, {
-      method: "PUT", // Use the appropriate HTTP method (e.g., PUT)
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Work Order updated successfully:", data);
-        // Handle success, e.g., show a success message
-        navigate("requests")
-      })
-      .catch((error) => {
-        console.error("There was a problem with the network request:", error);
-        // Handle errors, e.g., show an error message
-      });
-  };
 
   const changeColor = (index) => {
     const newColors = [...colors];
@@ -136,43 +169,33 @@ function Request() {
     setColors(newColors);
   };
 
-  const handleAssetChange = (e) => {
-    const selectedId = parseInt(e.target.value);
-    const selectedAssetData = assetCategory.find(
-      (option) => option.id === selectedId
-    );
-    setSelectedAsset(selectedAssetData);
-  };
-
   const handleLocationChange = (e) => {
-    const selectedId = parseInt(e.target.value);
-    const selectedLocationData = assetCategory.find(
-      (option) => option.id === selectedId
-    );
-    setSelectedLocation(selectedLocationData);
+    const locationId = parseInt(e.target.value);
+    setSelectedLocationId(locationId);
+
+    // Reset the selected asset to the first one available in the new location
+    // const assetsInNewLocation = assts.filter(
+    //   (asset) => asset.assetLocationId === locationId
+    // );
+
+    // if (assetsInNewLocation.length > 0) {
+    //   setSelectedAssetId(assetsInNewLocation[0].id);
+    // } else {
+    //   setSelectedAssetId(null); 
+    // }
   };
 
-  // const handleFaultChange = (e) => {
-  //   const selectedValues = Array.from(e.target.selectedOptions, (option) => ({
-  //     id: parseInt(option.value),
-  //     Name: option.label,
-  //   }));
-  //   setSelectedFault(selectedValues);
-  // };
 
   const handleFaultChange = (e) => {
-    const selectedId = parseInt(e.target.value);
-    const isSelected = selectedFault.some((fault) => fault.id === selectedId);
+    const selectedFaultId = parseInt(e.target.value);
+    const isChecked = e.target.checked;
 
-    if (isSelected) {
-      // If the option is already selected, remove it from the array
-      setSelectedFault(
-        selectedFault.filter((fault) => fault.id !== selectedId)
-      );
+    if (isChecked) {
+      setSelectedFaultIds([...selectedFaultIds, selectedFaultId]);
     } else {
-      // If the option is not selected, add it to the array
-      const selectedOption = options.find((option) => option.id === selectedId);
-      setSelectedFault([...selectedFault, selectedOption]);
+      setSelectedFaultIds(
+        selectedFaultIds.filter((id) => id !== selectedFaultId)
+      );
     }
   };
 
@@ -286,27 +309,55 @@ function Request() {
       })
       .then((data) => {
         console.log("Data posted successfully:", data);
-        setData(data)
+        setData(data);
       })
       .catch((error) => {
         console.error("There was a problem with the network request:", error);
       });
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit  = async (event) => {
     event.preventDefault();
 
     const formData = {
-      Asset: selectedAsset,
-      Location: selectedLocation,
-      Fault: selectedFault,
-      Description,
-      Recurrence,
-      AttachedFiles,
+      assetId: [selectedAssetId],
+      locationId: selectedLocationId,
+      selectedFaults: selectedFaultIds,
+      requesrDetails: Description,
+      recurrence: Recurrence,
+      images: [],
+      createdBy: 6
     };
 
-    postDataToAPI(formData);
-    navigate("/requests")
+    // postDataToAPI(formData);
+
+    const response = await fetch('https://saharadeskrestapi.azurewebsites.net/api/Requests/New', {
+
+      method: 'POST',
+
+      headers: {
+
+        'Content-Type': 'application/json',
+
+      },      body: JSON.stringify(formData),
+
+    });
+
+    if (response.ok) {
+
+      console.log('Post request was successful');
+
+      // Handle success, reset the form, or perform any necessary actions
+
+    } else {
+
+      console.error('Error making the POST request');
+
+      // Handle the error, such as displaying an error message
+
+    }
+
+    navigate("/requests");
   };
 
   return (
@@ -356,81 +407,78 @@ function Request() {
 
                 <form onSubmit={handleFormSubmit}>
                   <div className="formRow">
-
-                  <div className="formRowRight">
+                    <div className="formRowRight">
                       <h3 className="requestHeader">Where are you located?</h3>
                       <div className="selectNewContainer">
                         <select
-                        data-te-select-init
-                        data-te-select-clear-button="true"
-                        className="requestSelect"
-                        value={selectedLocation.id}
-                        onChange={handleLocationChange}
-                      >
-                        {assetCategory.map((option) => (
-                          <option
-                            key={option.id}
-                            value={option.id}
-                            className="optionButtons"
-                          >
-                            {option.Name}
-                          </option>
-                        ))}
-                      </select>
-                      <customIcons.down className="selectNewIcon" size={13}/>
+                          data-te-select-init
+                          data-te-select-clear-button="true"
+                          className="requestSelect"
+                          value={selectedLocationId}
+                          onChange={handleLocationChange}
+                        >
+                          {locations.map((location) => (
+                            <option
+                              key={location.id}
+                              value={location.id}
+                              className="optionButtons"
+                            >
+                              {location.locationName}
+                            </option>
+                          ))}
+                        </select>
+                        <customIcons.down className="selectNewIcon" size={13} />
                       </div>
-                      
                     </div>
 
                     <div className="formRowLeft">
                       <h3 className="requestHeader">Select faulty Asset</h3>
                       <div className="selectNewContainer">
                       <select
-                        data-te-select-init
-                        data-te-select-clear-button="true"
-                        className="requestSelect paddig"
-                        value={selectedAsset.id}
-                        onChange={handleAssetChange}
-                        placeholder="Select"
-                      >
-                        {assetCategory.map((option) => (
-                          <option key={option.id} value={option.id}>
-                            {option.Name}
-                          </option>
-                        ))}
-                      </select>
-                      <customIcons.down className="selectNewIcon" size={13}/>
+                          data-te-select-init
+                          data-te-select-clear-button="true"
+                          className="requestSelect"
+                          value={selectedAssetId}
+                          onChange={handleAssetChange}
+                        >
+                          {assets.map((location) => (
+                            <option
+                              key={location.id}
+                              value={location.id}
+                              className="optionButtons"
+                            >
+                              {location.assetName}
+                            </option>
+                          ))}
+                        </select>
+                        <customIcons.down className="selectNewIcon" size={13} />
                       </div>
                     </div>
                   </div>
                   <div className="formRow">
-                      <div className="formRowLeft">
-                        <h3 className="requestHeader">Select Fault(s)</h3>
-                        <div id="ck-button">
-                          {options.map((option) => (
-                            <label
-                              key={option.id}
-                              className={`checkboxLabel ${
-                                selectedFault.some(
-                                  (fault) => fault.id === option.id
-                                )
-                                  ? "checked"
-                                  : ""
-                              }`}
-                            >
-                              <input
-                                type="checkbox"
-                                value={option.id}
-                                checked={selectedFault.some(
-                                  (fault) => fault.id === option.id
-                                )}
-                                onChange={handleFaultChange}
-                              />
-                              <span>{option.Name}</span>
-                            </label>
-                          ))}
-                        </div>
+                    <div className="formRowLeft">
+                      <h3 className="requestHeader">Select Fault(s)</h3>
+                      <div id="ck-button">
+                        {faults.map((fault) => (
+                          <label
+                            key={fault.id}
+                            className={`checkboxLabel ${
+                              selectedFaultIds.includes(fault.id)
+                                ? "checked"
+                                : ""
+                            }`}
+                          >
+                            <input
+                              type="checkbox"
+                              value={fault.id}
+                              checked={selectedFaultIds.includes(fault.id)}
+                              onChange={handleFaultChange}
+                            />
+                            <span>{fault.faultName}</span>
+                          </label>
+                        ))}
                       </div>
+                    </div>
 
                     <div className="formRowRight">
                       <h3 className="requestHeader">Describe Fault</h3>
