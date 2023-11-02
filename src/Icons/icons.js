@@ -4,7 +4,7 @@ import { CiMenuKebab } from "react-icons/ci"
 import { MdOutlineFilterList, MdDelete, MdEdit, MdOutlineAttachFile } from "react-icons/md"
 import { CgAttachment } from "react-icons/cg"
 import { GoCheckCircle } from "react-icons/go"
-import { BiCheck } from "react-icons/bi"
+import { BiCheck, BiSolidUserCircle } from "react-icons/bi"
 import { BsChevronDown, BsCardList, BsFillShareFill } from "react-icons/bs"
 import { GrFormNext, GrFormPrevious, GrActions, GrAddCircle, GrFormAdd } from "react-icons/gr"
 
@@ -26,7 +26,8 @@ const customIcons = {
     attach: MdOutlineAttachFile,
     card: BsCardList,
     share: BsFillShareFill,
-    plus: IoMdAdd
+    plus: IoMdAdd,
+    user: BiSolidUserCircle
 
 }
 

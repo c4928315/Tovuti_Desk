@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import { Button, Checkbox, TextField } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { MultiStepContext } from "../Context";
 import customIcons from "../../Icons/icons";
 import "./steps.css";
@@ -61,6 +60,10 @@ function NewWorkOrder() {
   const [activeTab, setActiveTab] = useState(true);
   const [activeTab2, setActiveTab2] = useState(false);
   const [showParts, setShowParts] = useState(false);
+  const [ticketProjectedParts, setTicketProjectedParts] = useState([]);
+
+  const [selectedCategoryOfWork, setSelectedCategoryOfWork] = useState(null);
+  const [categoryOfWorkData, setCategoryOfWorkData] = useState([]);
 
   const [editData, setEditData] = useState(null);
   const [partData, setPartData] = useState([]);
@@ -76,15 +79,15 @@ function NewWorkOrder() {
     setShowParts(!showParts);
   };
 
-  const handleEdit = (item) => {
-    setEditData(item); // Store the data being edited
-  };
+ 
+
+  console.log(userData);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get(
-          "https://intra-deco.onrender.com/Parts"
+          "https://saharadeskrestapi.azurewebsites.net/api/Parts/GetAllParts"
         );
 
         setPartData(response.data);
@@ -98,76 +101,115 @@ function NewWorkOrder() {
     fetchData();
   }, [partData]);
 
-  const handleFormSubmit = async (e) => {
+  useEffect(() => {
+    async function fetchCategoryOfWorkData() {
+      try {
+        const response = await axios.get(
+          "https://saharadeskrestapi.azurewebsites.net/api/CategoryOfWorks"
+        );
+
+        // Assuming the response data is an array of category of work objects
+        setCategoryOfWorkData(response.data);
+      } catch (error) {
+        console.error("Error fetching category of work data:", error);
+      }
+    }
+
+    fetchCategoryOfWorkData();
+  }, []);
+
+  const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    // Perform a POST request to your server to add the data
-    try {
-      const response = await fetch("https://intra-deco.onrender.com/Parts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+    // Create a new part object with the form data
+    const newPart = {
+      part: formData.part,
+      quantity: formData.quantity,
+      amount: formData.amount,
+    };
 
-      if (response.ok) {
-        const newData = await response.json();
+    // Add the newPart to the projectedParts array
+    setTicketProjectedParts((prevProjectedParts) => [
+      ...prevProjectedParts,
+      newPart,
+    ]);
 
-        // Update the state with the new data
-        setPartData([...partData, newData]);
+    // Update the userData with the new projectedParts array
+    setUserData({
+      ...userData,
+      TicketProjectedParts: [...ticketProjectedParts, newPart],
+    });
 
-        // Clear the form
-        setFormData({ part: "", quantity: "", amount: "" });
-        setShowParts(!showParts);
-      } else {
-        console.error("Failed to add data");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    // Clear the form
+    setFormData({ part: "", quantity: "", amount: "" });
+    setShowParts(!showParts);
   };
+
+  const handleUpdate = () => {
+  // Check if editData has a valid 'id' (in this case, 'part')
+  if (editData && editData.id) {
+    // Create a new array with updated part data
+    const updatedProjectedParts = userData.TicketProjectedParts.map((item) => {
+      if (item.part === editData.id) {
+        return { part: editData.part, quantity: editData.quantity, amount: editData.amount };
+      }
+      return item;
+    });
+
+    // Update the userData with the updated projectedParts array
+    setUserData({ ...userData, TicketProjectedParts: updatedProjectedParts });
+    // Clear the edit data
+    setEditData(null);
+  }
+};
+
+
+  const handleEdit = (item) => {
+    // Include the 'part' property as the 'id'
+    setEditData({ ...item, id: item.part });
+  };
+  
 
   const handleTabState = () => {
     setActiveTab(!activeTab);
     setActiveTab2(!activeTab2);
   };
 
-  const handleCheckboxChanges = (option) => {
-    setCheckedItems((prevItems) => ({
-      ...prevItems,
-      [option]: !prevItems[option],
-    }));
-  };
+  // const handleCheckboxChanges = (option) => {
+  //   setCheckedItems((prevItems) => ({
+  //     ...prevItems,
+  //     [option]: !prevItems[option],
+  //   }));
+  // };
 
-  const handleAssetCheckboxChange = (assets) => {
-    const { asset } = userData;
+  // const handleAssetCheckboxChange = (assets) => {
+  //   const { asset } = userData;
 
-    const updatedasset = asset.includes(assets)
-      ? asset.filter((selectedAsset) => selectedAsset !== assets)
-      : [...asset, assets];
+  //   const updatedasset = asset.includes(assets)
+  //     ? asset.filter((selectedAsset) => selectedAsset !== assets)
+  //     : [...asset, assets];
 
-    setUserData({ ...userData, asset: updatedasset });
-  };
+  //   setUserData({ ...userData, asset: updatedasset });
+  // };
 
-  const handleCheckboxChange = (option) => {
-    console.log("Clicked option:", option);
+  // const handleCheckboxChange = (option) => {
+  //   console.log("Clicked option:", option);
 
-    const selectedFeatures = userData.features || [];
-    if (selectedFeatures.includes(option)) {
-      setUserData({
-        ...userData,
-        features: selectedFeatures.filter(
-          (selectedFeature) => selectedFeature !== option
-        ),
-      });
-    } else {
-      setUserData({
-        ...userData,
-        features: [...selectedFeatures, option],
-      });
-    }
-  };
+  //   const selectedFeatures = userData.features || [];
+  //   if (selectedFeatures.includes(option)) {
+  //     setUserData({
+  //       ...userData,
+  //       features: selectedFeatures.filter(
+  //         (selectedFeature) => selectedFeature !== option
+  //       ),
+  //     });
+  //   } else {
+  //     setUserData({
+  //       ...userData,
+  //       features: [...selectedFeatures, option],
+  //     });
+  //   }
+  // };
 
   const handleTicketCurrentTeamChange = (e) => {
     const teamName = e.target.options[e.target.selectedIndex].text;
@@ -212,83 +254,49 @@ function NewWorkOrder() {
     });
   };
 
-  const handleChecklistChange = (checklistId) => {
-    // Check if the checklistId is already in the array
-    const isChecked = userData.TicketChecklistForms.some(
-      (form) => form.FormsAndSectionsId === checklistId
-    );
+  // const handleChecklistChange = (checklistId) => {
+  //   // Check if the checklistId is already in the array
+  //   const isChecked = userData.TicketChecklistForms.some(
+  //     (form) => form.FormsAndSectionsId === checklistId
+  //   );
 
-    if (isChecked) {
-      // Remove the checklist if already checked
-      const updatedChecklist = userData.TicketChecklistForms.filter(
-        (form) => form.FormsAndSectionsId !== checklistId
-      );
+  //   if (isChecked) {
+  //     // Remove the checklist if already checked
+  //     const updatedChecklist = userData.TicketChecklistForms.filter(
+  //       (form) => form.FormsAndSectionsId !== checklistId
+  //     );
 
-      setUserData({
-        ...userData,
-        TicketChecklistForms: updatedChecklist,
-      });
-    } else {
-      // Add the checklist if not checked
-      const selectedChecklist = checklists.find(
-        (checklist) => checklist.FormsAndSectionsId === checklistId
-      );
+  //     setUserData({
+  //       ...userData,
+  //       TicketChecklistForms: updatedChecklist,
+  //     });
+  //   } else {
+  //     // Add the checklist if not checked
+  //     const selectedChecklist = checklists.find(
+  //       (checklist) => checklist.FormsAndSectionsId === checklistId
+  //     );
 
-      setUserData({
-        ...userData,
-        TicketChecklistForms: [
-          ...userData.TicketChecklistForms,
-          selectedChecklist,
-        ],
-      });
-    }
+  //     setUserData({
+  //       ...userData,
+  //       TicketChecklistForms: [
+  //         ...userData.TicketChecklistForms,
+  //         selectedChecklist,
+  //       ],
+  //     });
+  //   }
+  // };
+
+ 
+  
+  
+
+  const handleDeleteProjectedPart = (index) => {
+    const updatedProjectedParts = [...userData.TicketProjectedParts];
+    updatedProjectedParts.splice(index, 1); // Remove the item at the specified index
+    setUserData({ ...userData, TicketProjectedParts: updatedProjectedParts });
   };
 
-  const handleDeletePart = async (partToDelete) => {
-    try {
-      // Make an API request to delete the item
-      await axios.delete(
-        `https://intra-deco.onrender.com/Parts/${partToDelete.id}`
-      );
-
-      // If the API request is successful, remove the part from the local state
-      const updatedPartData = partData.filter(
-        (item) => item.id !== partToDelete.id
-      );
-      setPartData(updatedPartData);
-    } catch (error) {
-      console.error("Error deleting part:", error);
-      // Handle the error, e.g., show an error message to the user
-    }
-  };
-
-  const handleUpdate = async () => {
-    // Send an HTTP PUT request to update the data on the API
-    try {
-      const response = await axios.put(
-        `https://intra-deco.onrender.com/Parts/${editData.id}`,
-        {
-          part: editData.part,
-          quantity: editData.quantity,
-          amount: editData.amount,
-          // Include other fields as needed
-        }
-      );
-
-      if (response.status === 200) {
-        // Update the data in your component's state if the API update was successful
-        setPartData((prevData) =>
-          prevData.map((item) => (item.id === editData.id ? editData : item))
-        );
-        // Clear the edit data
-        setEditData(null);
-      } else {
-        console.error("Failed to update data.");
-      }
-    } catch (error) {
-      console.error("Error updating data:", error);
-    }
-  };
+ 
 
   const handleChecklistItemDelete = (item) => {
     // Filter out the item to be deleted
@@ -451,21 +459,32 @@ function NewWorkOrder() {
                   <select
                     className="form-select newWorkOrderSelectStep2"
                     aria-label="Default select example"
-                    value={userData.categoryOfWork}
-                    onChange={(e) =>
+                    value={
+                      selectedCategoryOfWork ? selectedCategoryOfWork.id : ""
+                    }
+                    onChange={(e) => {
+                      const selectedCategoryId = e.target.value;
+                      const selectedCategory = categoryOfWorkData.find(
+                        (category) => category.id === Number(selectedCategoryId)
+                      );
+                      setSelectedCategoryOfWork(selectedCategory);
+
+                      // Update userData with the selected category of work
                       setUserData({
                         ...userData,
-                        categoryOfWork: e.target.value,
-                      })
-                    }
+                        categoryOfWork: selectedCategory,
+                      });
+                    }}
                     style={{
                       color: "#C5C7CD",
                     }}
                   >
-                    <option selected>select</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="">select</option>
+                    {categoryOfWorkData.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.categoryOfWorkName}
+                      </option>
+                    ))}
                   </select>
                   <customIcons.down
                     className="selectNewIcon selectNewIconWO"
@@ -631,7 +650,10 @@ function NewWorkOrder() {
                 <p className="form-label-newWO">Projected Parts</p>
               </div>
 
-              <div className="partTableConatainer" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+              <div
+                className="partsTableConatainer"
+                style={{ maxHeight: "200px", overflowY: "auto" }}
+              >
                 <table className="partsTable">
                   <thead>
                     <tr>
@@ -642,32 +664,33 @@ function NewWorkOrder() {
                     </tr>
                   </thead>
                   <tbody>
-                    {partData.length > 0 &&
-                      partData.map((item, i) => (
-                        <tr key={i}>
-                          <td className="tBodyTd">{item.part}</td>
-                          <td className="tBodyTd">{item.quantity}</td>
-                          <td className="tBodyTd">{item.amount}</td>
-                          <td className="tBodyTd">
-                            <span>
-                              <customIcons.edit
-                                size={17}
-                                style={{ color: "#584539", cursor: "pointer" }}
-                                onClick={() => handleEdit(item)}
-                              />
-                              <customIcons.delete
-                                size={17}
-                                style={{ color: "#584539", cursor: "pointer" }}
-                                onClick={() => handleDeletePart(item)}
-                              />
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
+                    {userData.TicketProjectedParts.map((item, i) => (
+                      <tr key={i}>
+                        <td className="tBodyTd">{item.part}</td>
+                        <td className="tBodyTd">{item.quantity}</td>
+                        <td className="tBodyTd">{item.amount}</td>
+                        <td className="tBodyTd">
+                          <span>
+                            <customIcons.edit
+                              size={17}
+                              style={{ color: "#584539", cursor: "pointer" }}
+                              onClick={() => handleEdit(item)}
+                            />
+                            <customIcons.delete
+                              size={17}
+                              style={{ color: "#584539", cursor: "pointer" }}
+                              onClick={() => handleDeleteProjectedPart(i)}
+                            />
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
-              <Link onClick={handleShowParts} className="addPartsLink">Add Part</Link>
+              <Link onClick={handleShowParts} className="addPartsLink">
+                Add Part
+              </Link>
               <div
                 className={`fixedPartsContainer ${
                   !showParts ? "partsFormHide" : ""
@@ -693,9 +716,13 @@ function NewWorkOrder() {
                       }
                     >
                       <option value="">Select</option>
-                      <option value="Part 1">Part 1</option>
-                      <option value="Part 2">Part 2</option>
-                      <option value="Part 3">Part 3</option>
+                      {partData.map((item) => {
+                        return (
+                          <option key={item.id} value={item.id}>
+                            {item.partName}
+                          </option>
+                        );
+                      })}
                     </select>
 
                     <p className="partFormHeader">Selected Quantity</p>
@@ -721,39 +748,6 @@ function NewWorkOrder() {
                   </div>
                 </form>
               </div>
-
-              {/* <form onSubmit={handleFormSubmit} className="partsForm">
-                  <div className="partsFormInner">
-                  <input
-                    type="text"
-                    placeholder="Part"
-                    value={formData.part}
-                    onChange={(e) =>
-                      setFormData({ ...formData, part: e.target.value })
-                    }
-                  />
-                  <br/>
-                  <input
-                    type="text"
-                    placeholder="Quantity"
-                    value={formData.quantity}
-                    onChange={(e) =>
-                      setFormData({ ...formData, quantity: e.target.value })
-                    }
-                  />
-                  <br/>
-                  <input
-                    type="text"
-                    placeholder="Amount"
-                    value={formData.amount}
-                    onChange={(e) =>
-                      setFormData({ ...formData, amount: e.target.value })
-                    }
-                  />
-                  <br/>
-                  <button type="submit">Submit</button>
-                  </div>
-                </form> */}
             </div>
 
             <hr className="workOrderHRmain" />
@@ -773,43 +767,46 @@ function NewWorkOrder() {
                   </span>
                 </button>
                 <ul class="dropdown-menu">
-            <div class="search-container">
-              {/* <customIcons.search/> */}
-              <input
-                type="text"
-                class="form-control search-input"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearch}
-              />
-            </div>
-            <li>
-              {checklists.map((checklist) => (
-                <div
-                  key={checklist.FormsAndSectionsId}
-                  className="checklistList"
-                >
-                  <input
-                    type="radio"
-                    id={`checklist-${checklist.FormsAndSectionsId}`}
-                    checked={
-                      userData.TicketChecklistForms.length > 0 &&
-                      userData.TicketChecklistForms[0].FormsAndSectionsId ===
-                        checklist.FormsAndSectionsId
-                    }
-                    onChange={() =>
-                      handleChecklistRadioChange(checklist.FormsAndSectionsId)
-                    }
-                  />
-                  <label
-                    htmlFor={`checklist-${checklist.FormsAndSectionsId}`}
-                  >
-                    {checklist.FormsAndSectionsName}
-                  </label>
-                </div>
-              ))}
-            </li>
-          </ul>
+                  <div class="search-container">
+                    {/* <customIcons.search/> */}
+                    <input
+                      type="text"
+                      class="form-control search-input"
+                      placeholder="Search..."
+                      value={searchTerm}
+                      onChange={handleSearch}
+                    />
+                  </div>
+                  <li>
+                    {checklists.map((checklist) => (
+                      <div
+                        key={checklist.FormsAndSectionsId}
+                        className="checklistList"
+                      >
+                        <input
+                          type="radio"
+                          id={`checklist-${checklist.FormsAndSectionsId}`}
+                          checked={
+                            userData.TicketChecklistForms.length > 0 &&
+                            userData.TicketChecklistForms[0]
+                              .FormsAndSectionsId ===
+                              checklist.FormsAndSectionsId
+                          }
+                          onChange={() =>
+                            handleChecklistRadioChange(
+                              checklist.FormsAndSectionsId
+                            )
+                          }
+                        />
+                        <label
+                          htmlFor={`checklist-${checklist.FormsAndSectionsId}`}
+                        >
+                          {checklist.FormsAndSectionsName}
+                        </label>
+                      </div>
+                    ))}
+                  </li>
+                </ul>
               </div>
               {userData.TicketChecklistForms.length > 0 && (
                 <div className="partTableConatainer checklistTableContainer">
@@ -861,63 +858,49 @@ function NewWorkOrder() {
         </div>
       </div>
       {editData && (
-        <div className="partsForm partsFormEdit">
-          <div className="partsFormEditForm">
-            <div className="partsFormEditFormHolder">
-              <h2>Edit Parts</h2>
-              <div className="partsFormInner">
-                <h5>Edit Part</h5>
-                <input
-                  className="partsFormInner"
-                  type="text"
-                  name="part"
-                  value={editData.part}
-                  onChange={(e) =>
-                    setEditData({ ...editData, part: e.target.value })
-                  }
-                />
-                <br />
+  <div className="partsForm partsFormEdit">
+    <div className="partsFormEditForm">
+      <div className="partsFormEditFormHolder">
+        <h2>Edit Parts</h2>
+        <div className="partsFormInner">
+          <h5>Edit Part</h5>
+          <input
+            className="partsFormInner"
+            type="text"
+            name="part"
+            value={editData.part}
+            onChange={(e) => setEditData({ ...editData, part: e.target.value })}
+          />
+          <br />
 
-                <h5>Edit Quatity</h5>
-                <input
-                  type="text"
-                  name="quantity"
-                  value={editData.quantity}
-                  onChange={(e) =>
-                    setEditData({ ...editData, quantity: e.target.value })
-                  }
-                />
-                <br />
+          <h5>Edit Quantity</h5>
+          <input
+            type="text"
+            name="quantity"
+            value={editData.quantity}
+            onChange={(e) => setEditData({ ...editData, quantity: e.target.value })}
+          />
+          <br />
 
-                <h5>Edit Amount</h5>
-                <input
-                  type="text"
-                  name="amount"
-                  value={editData.amount}
-                  onChange={(e) =>
-                    setEditData({ ...editData, amount: e.target.value })
-                  }
-                />
-                <br />
-                <div className="editPartsBtn">
-                  <button onClick={handleUpdate}>Update</button>
-                  <button onClick={() => setEditData(null)}>Cancel</button>
-                </div>
-              </div>
-            </div>
+          <h5>Edit Amount</h5>
+          <input
+            type="text"
+            name="amount"
+            value={editData.amount}
+            onChange={(e) => setEditData({ ...editData, amount: e.target.value })}
+          />
+          <br />
+          <div className="editPartsBtn">
+            <button onClick={handleUpdate}>Update</button>
+            <button onClick={() => setEditData(null)}>Cancel</button>
           </div>
         </div>
-      )}
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }
 
 export default NewWorkOrder;
-
-
-
-
-
-
-
-

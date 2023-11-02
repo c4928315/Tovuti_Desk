@@ -50,9 +50,9 @@ function RequestDetailsPage() {
           <h3 className="pageTitle requestDetailTitle">
             <p>Requests</p>
             <p>-</p>
-            <p>{nameAtIndex0}</p>
+            <p>{itemDetails.requestDetails}</p>
             <p>-</p>
-            <p> {itemDetails.RequestRef}</p>
+            <p> {itemDetails.requestRef}</p>
           </h3>
 
           <span className="requestNotice">
@@ -70,9 +70,9 @@ function RequestDetailsPage() {
           <Link to="/requests">Requests</Link>
           <div className="dividerCommonPage"></div>
           <Link className="flex" style={{ gap: "4px" }}>
-            <p> {nameAtIndex0}</p>
+            <p>{itemDetails.requestDetails}</p>
             <p>-</p>
-            <p> {itemDetails.RequestRef}</p>
+            <p> {itemDetails.requestRef}</p>
           </Link>
         </div>
         {/*  */}
@@ -85,8 +85,8 @@ function RequestDetailsPage() {
               <div className="requestKeyValue requestKeyValue2">
                 <div>
                   <h5>faulty asset:</h5>
-                  {itemDetails.Asset.map((item) => {
-                    return <p>{item.Name}</p>;
+                  {itemDetails.requestAsset.map((item) => {
+                    return <p>{item.assetName}</p>;
                   })}
                 </div>
 
@@ -123,7 +123,7 @@ function RequestDetailsPage() {
               </div>
               <div className="requestKeyValue">
                 <h5>location:</h5>
-                <p>{itemDetails.Location.Name}</p>
+                <p>{itemDetails.locaction.locationName}</p>
               </div>
               <div className="requestKeyValue">
                 <h5>fault:</h5>
@@ -238,7 +238,6 @@ function RequestDetailsPage() {
                 <h3 className="request-details-page-main">
                   tasks and checklists
                 </h3>
-
                 <customIcons.down size={14} />
               </div>
               <div className="innerTaskChecklist">

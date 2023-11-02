@@ -76,17 +76,18 @@ function Request() {
 
   useEffect(() => {
     if (selectedLocationId !== null) {
-
       // Fetch assets for the default location
       fetchAssetsForLocation(selectedLocationId);
     }
   }, [selectedLocationId]);
 
-  console.log(assets)
+  console.log(assets);
 
   const fetchAssetsForLocation = (locationId) => {
     // Fetch assets based on the selected location
-    fetch(`https://saharadeskrestapi.azurewebsites.net/api/Assets/GetAssetsByLocation/${locationId}`)
+    fetch(
+      `https://saharadeskrestapi.azurewebsites.net/api/Assets/GetAssetsByLocation/${locationId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setAssets(data);
@@ -98,7 +99,9 @@ function Request() {
 
   const fetchFaultsForAsset = (assetId) => {
     // Fetch faults based on the selected asset
-    fetch(`https://saharadeskrestapi.azurewebsites.net/api/Assets/GetFaultsByAsset/${assetId}`)
+    fetch(
+      `https://saharadeskrestapi.azurewebsites.net/api/Assets/GetFaultsByAsset/${assetId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setFaults(data);
@@ -108,23 +111,21 @@ function Request() {
       });
   };
 
-
   const handleAssetChange = (e) => {
     const assetId = parseInt(e.target.value);
     setSelectedAssetId(assetId);
   };
 
   useEffect(() => {
-    if( selectedAssetId !== null){
+    if (selectedAssetId !== null) {
       fetchFaultsForAsset(selectedAssetId);
     }
-  }, [selectedAssetId])
+  }, [selectedAssetId]);
 
-  console.log(selectedAssetId)
+  console.log(selectedAssetId);
 
-  console.log(faults)
-  
-  
+  console.log(faults);
+
   useEffect(() => {
     const storedFormData = JSON.parse(localStorage.getItem("formData"));
     if (storedFormData) {
@@ -162,7 +163,6 @@ function Request() {
     // Add other properties here
   });
 
-
   const changeColor = (index) => {
     const newColors = [...colors];
     newColors[index] = !newColors[index];
@@ -181,10 +181,9 @@ function Request() {
     // if (assetsInNewLocation.length > 0) {
     //   setSelectedAssetId(assetsInNewLocation[0].id);
     // } else {
-    //   setSelectedAssetId(null); 
+    //   setSelectedAssetId(null);
     // }
   };
-
 
   const handleFaultChange = (e) => {
     const selectedFaultId = parseInt(e.target.value);
@@ -316,7 +315,7 @@ function Request() {
       });
   };
 
-  const handleFormSubmit  = async (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     const formData = {
@@ -326,35 +325,31 @@ function Request() {
       requesrDetails: Description,
       recurrence: Recurrence,
       images: [],
-      createdBy: 6
+      createdBy: 6,
     };
 
     // postDataToAPI(formData);
 
-    const response = await fetch('https://saharadeskrestapi.azurewebsites.net/api/Requests/New', {
+    const response = await fetch(
+      "https://saharadeskrestapi.azurewebsites.net/api/Requests/New",
+      {
+        method: "POST",
 
-      method: 'POST',
-
-      headers: {
-
-        'Content-Type': 'application/json',
-
-      },      body: JSON.stringify(formData),
-
-    });
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
 
     if (response.ok) {
-
-      console.log('Post request was successful');
+      console.log("Post request was successful");
 
       // Handle success, reset the form, or perform any necessary actions
-
     } else {
-
-      console.error('Error making the POST request');
+      console.error("Error making the POST request");
 
       // Handle the error, such as displaying an error message
-
     }
 
     navigate("/requests");
@@ -434,13 +429,16 @@ function Request() {
                     <div className="formRowLeft">
                       <h3 className="requestHeader">Select faulty Asset</h3>
                       <div className="selectNewContainer">
-                      <select
+                        <select
                           data-te-select-init
                           data-te-select-clear-button="true"
                           className="requestSelect"
                           value={selectedAssetId}
                           onChange={handleAssetChange}
                         >
+                          <option value="" className="WoFade">
+                            Select
+                          </option>
                           {assets.map((location) => (
                             <option
                               key={location.id}

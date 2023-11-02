@@ -18,10 +18,13 @@ function Grid() {
   const recordsPerPage = 5
   const keys = ["status"]
 
+  
+
   return (
     <div className="containers">
       <div className="greetings angels container">
         <h3>Welcome back, <b>Peter</b> </h3>
+        <button>logout</button>
       </div>
       <div className="grid-container container">
         <div className="item1 items123">

@@ -1,0 +1,105 @@
+.mainLoginContainer{
+    width: 100%;
+    height: 100vh;
+    background-color: var(--main-bgcolor);
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.saharaLogo{
+    position: absolute;
+    left: 30px;
+    top: 20px;
+    width: 120px;
+}
+
+
+.mainLogin{
+    width: 50%;
+    margin: 30px auto;
+    background-color: var(--main-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0;
+    border-radius: 10px;
+}
+
+.mainLoginSubmit{
+    width: 100%;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    background-color: orange;
+    height: 40px;
+    color: var(--main-bgcolor);
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+
+.mainLoginUserIcon{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainLoginInputContainer input{
+    text-align: center;
+    width: 330px;
+    height: 48px;
+    border-radius: 4px;
+    margin-bottom: 25px;
+    background-color: var(--main-bgcolor);
+}
+
+.mainLoginRememberAccess{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: capitalize;
+    font-size: 13px;
+    margin: 10px auto;
+    color: var(--main-bgcolor);
+}
+
+.mainLoginRememberAccess .remember{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.mainLoginRememberAccess input[type="checkbox"]:checked{
+    background-color: orange !important;
+}
+
+.mainLoginRememberAccess a{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.mainLoginCreate{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mainLoginCreate p{
+    color: var(--main-bgcolor);
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.mainLoginCreate button{
+    cursor: pointer;
+    width: 100%;
+    border: 1px solid var(--main-bgcolor);
+    border-radius: 13px;
+    color: var(--main-bgcolor);
+    padding: 1px 5px;
+    font-size: 14px;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+}

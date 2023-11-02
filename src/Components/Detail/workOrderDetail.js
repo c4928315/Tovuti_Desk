@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import customIcons from "../../Icons/icons";
 import "./productDetail.css";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import { MultiStepContext } from "../Context";
 
 function WorkOrderDetailsPage() {
   const { itemId } = useParams();
@@ -24,6 +25,16 @@ function WorkOrderDetailsPage() {
   const [extendLabourTable, setExtendLabourTable] = useState(false);
   const [extendDiagnosisTable, setExtendDiagnosisTable] = useState(false);
   const [extendFilesTable, setExtendFilesTable] = useState(false);
+
+  
+
+  //claims
+  const { userClaims, userData, setUserData } = useContext(MultiStepContext);
+
+  const canRaiseTicket = userClaims.some(
+    (claim) => claim.claimType === "Can_Raise_A_Ticket"
+  );
+  //claims
 
   const [formData, setFormData] = useState({
     part: "",
@@ -83,14 +94,12 @@ function WorkOrderDetailsPage() {
     fetchData();
   }, [partData]);
 
-  //   const handleTicketCurrentTeamChange = (e) => {
-  //     setUserData({ ...userData, TicketCurrentTeam: e.target.value });
-  //   };
+
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    // Perform a POST request to your server to add the data
+   
     try {
       const response = await fetch("https://intra-deco.onrender.com/Parts", {
         method: "POST",
@@ -177,6 +186,61 @@ function WorkOrderDetailsPage() {
     setExtendFilesTable(!extendFilesTable);
   };
 
+  const [partNames, setPartNames] = useState([]);
+  const [requestedPartForm, setRequestedPartForm] = useState({
+    partId: "",
+    quantity: "",
+    location: "",
+  });
+
+  useEffect(() => {
+    async function fetchPartNames() {
+      try {
+        const response = await axios.get("https://saharadeskrestapi.azurewebsites.net/api/Parts/GetAllParts");
+        setPartNames(response.data);
+      } catch (error) {
+        console.error("Error fetching part names:", error);
+      }
+    }
+
+    fetchPartNames();
+  }, []);
+
+  const handleRequestedPartSubmit = (e) => {
+    e.preventDefault();
+
+    const { part, quantity, location } = requestedPartForm;
+
+    // Create a new part object in the required format
+    const newPart = {
+      id: new Date().getTime(), // You can use a better method to generate an ID
+      partName: part,
+      quantity: parseInt(quantity, 10),
+      amount: 0, // Update this as needed
+    };
+
+    // Construct a copy of userData.TicketRequestedParts with the new part
+    const updatedReturnedParts = [...userData.TicketRequestedParts, newPart];
+
+    // Update the userData state with the new data
+    setUserData({
+      ...userData,
+      TicketRequestedParts: updatedReturnedParts,
+    });
+
+    // Clear the form
+    setRequestedPartForm({
+      part: "",
+      quantity: 0,
+      location: "",
+    });
+  };
+
+
+
+
+
+
   return (
     <div className="commonPage">
       <div className="commonPageCenter">
@@ -190,17 +254,20 @@ function WorkOrderDetailsPage() {
             <div className="timer">02:58</div>
           </div>
 
-          <span className="requestNotice requestNoticeWO">
-            <span>
-              <button className="topWObtn">Start Work</button>
+          {!canRaiseTicket && (
+            <span className="requestNotice requestNoticeWO">
+              <span>
+                <button className="topWObtn">Start Work</button>
+              </span>
+              <span>
+                <button className="topWObtn">Request Closure</button>
+              </span>
+              <span>
+                <button className="topWObtn">Request Work Done</button>
+              </span>
             </span>
-            <span>
-              <button className="topWObtn">Request Closure</button>
-            </span>
-            <span>
-              <button className="topWObtn">Request Work Done</button>
-            </span>
-          </span>
+          )}
+
 
           <div class="dropdown actionDropdown">
             <button
@@ -259,6 +326,7 @@ function WorkOrderDetailsPage() {
             {itemDetails && <p>{itemDetails.TicketRef}</p>}
           </Link>
         </div>
+        <p>Can Raise Ticket: {canRaiseTicket ? "Yes" : "No"}</p>
         {/*  */}
 
         <div className="request-details-page">
@@ -533,14 +601,6 @@ function WorkOrderDetailsPage() {
                           </tr>
                         ))}
                       </tbody>
-                      <Link
-                        onClick={handlePartForm}
-                        className={` newAddPartLink ${
-                          !extendPartTable ? "woDownDispalyNone" : ""
-                        } `}
-                      >
-                        Add Part
-                      </Link>
                     </table>
                   </div>
                   <div
@@ -553,7 +613,7 @@ function WorkOrderDetailsPage() {
                     <table className="partsTable partsTableWO">
                       <thead>
                         <tr>
-                          <th>Parts</th>
+                          <th>Partss</th>
                           <th>Quantity</th>
                           <th>Amount(ks)</th>
                           <th>Location</th>
@@ -561,9 +621,9 @@ function WorkOrderDetailsPage() {
                         </tr>
                       </thead>
                       <tbody>
-                        {partData.map((item, i) => (
+                        {userData.TicketRequestedParts.map((item, i) => (
                           <tr key={i}>
-                            <td className="tBodyTd">{item.part}</td>
+                            <td className="tBodyTd">{item.partName}</td>
                             <td className="tBodyTd">{item.quantity}</td>
                             <td className="tBodyTd">{item.amount}</td>
                             <td className="tBodyTd">Forecourt</td>
@@ -1065,11 +1125,7 @@ function WorkOrderDetailsPage() {
       {/* PART INFO PROJECTED*/}
 
       {/* PART INFO REQUESTED*/}
-      <div
-        className={`formContainer ${
-          !showPartsRequested ? "partsFormHide" : ""
-        }`}
-      >
+      <div className={`formContainer ${!showPartsRequested ? "partsFormHide" : ""}`}>
         <div className="formCloseContainer">
           <div
             className="closeForm"
@@ -1077,19 +1133,14 @@ function WorkOrderDetailsPage() {
           >
             X
           </div>
-
-          <form
-            onSubmit={handleFormSubmit} //change this later to submit requested parts
-            className="partsFormWO"
-          >
+          <form onSubmit={handleRequestedPartSubmit} className="partsFormWO">
             <div className="partsFormInner">
               <h3 className="partsHeader">Add Requested Part</h3>
-
-              <p className="partFormHeader">Selected Part </p>
+              <p className="partFormHeader">Selected Part</p>
               <select
-                value={formData.part}
+                value={requestedPartForm.part}
                 onChange={(e) =>
-                  setFormData({ ...formData, part: e.target.value })
+                  setRequestedPartForm({ ...requestedPartForm, part: e.target.value })
                 }
               >
                 <option value="">Select</option>
@@ -1097,27 +1148,26 @@ function WorkOrderDetailsPage() {
                 <option value="Part 2">Part 2</option>
                 <option value="Part 3">Part 3</option>
               </select>
-
               <p className="partFormHeader">Selected Quantity</p>
               <input
                 type="number"
                 placeholder="Quantity"
-                value={formData.quantity}
+                value={requestedPartForm.quantity}
                 onChange={(e) =>
-                  setFormData({ ...formData, quantity: e.target.value })
+                  setRequestedPartForm({ ...requestedPartForm, quantity: e.target.value })
                 }
               />
-              <p className="partFormHeader">Selected Location </p>
+              <p className="partFormHeader">Selected Location</p>
               <select
-                value={formData.part}
+                value={requestedPartForm.location}
                 onChange={(e) =>
-                  setFormData({ ...formData, part: e.target.value })
+                  setRequestedPartForm({ ...requestedPartForm, location: e.target.value })
                 }
               >
                 <option value="">Select</option>
-                <option value="Part 1">Narok</option>
-                <option value="Part 2">Gigiri</option>
-                <option value="Part 3">Wasabi</option>
+                <option value="Narok">Narok</option>
+                <option value="Gigiri">Gigiri</option>
+                <option value="Wasabi">Wasabi</option>
               </select>
               <button type="submit">Submit</button>
             </div>
@@ -1252,11 +1302,7 @@ function WorkOrderDetailsPage() {
       {/* PART INFO RETURNED*/}
 
       {/** PARTS INFO USED **/}
-      <div
-        className={`formContainer ${
-          !showPartsUsed ? "partsFormHide" : ""
-        }`}
-      >
+      <div className={`formContainer ${!showPartsUsed ? "partsFormHide" : ""}`}>
         <div className="formCloseContainer">
           <div
             className="closeForm"

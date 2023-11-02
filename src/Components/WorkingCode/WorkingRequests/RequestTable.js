@@ -39,23 +39,56 @@ function RequestTable() {
   const [endDate, setEndDate] = useState(null);
 
 
+  // async function fetchStatuses(requestId) {
+  //   try {
+  //     const response = await axios.get(
+  //       `https://saharadeskrestapi.azurewebsites.net/api/Requests/GetRequestsByStatus/${requestId}`
+  //     );
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error("Error fetching statuses: ", error);
+  //     return [];
+  //   }
+  // }
+  
+  // async function fetchFaults(requestId) {
+  //   try {
+  //     const response = await axios.get(
+  //       `https://saharadeskrestapi.azurewebsites.net/api/Requests/GetFaultsByAsset/${requestId}`
+  //     );
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error("Error fetching faults: ", error);
+  //     return [];
+  //   }
+  // }
+  
+
+
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get(
-          "https://intra-deco.onrender.com/requests"
+          "https://saharadeskrestapi.azurewebsites.net/api/Requests/GetAllRequests"
         );
-
-        setData(response.data);
+  
+        // Fetch statuses and faults for each request
+        const requestsData = response.data;
+  
+        
+        console.log(requestsData)
+        setData(requestsData);
       } catch (error) {
         setError(error);
       } finally {
         setIsLoading(false);
       }
     }
-
+  
     fetchData();
-  }, [data]);
+  }, []);
+  
+  
 
   const handleShowStatusFilter = () => {
     setShowStatusFilter(!showStatusFilter);
@@ -132,28 +165,29 @@ function RequestTable() {
 
   const filteredData = data.filter((item) => {
     return (
-      (item.RequestRef.toLowerCase().includes(globalFilter.toLowerCase()) ||
-        item.Location.Name.toLowerCase().includes(globalFilter.toLowerCase()) ||
-        item.Description.toLowerCase().includes(globalFilter.toLowerCase())) &&
-      (selectedStatuses.length === 0 ||
-        selectedStatuses.includes(item.Status.Name)) &&
-      (selectedFaults.length === 0 ||
-        selectedFaults.some((fault) =>
-          item.Fault.some((f) => f.Name.toLowerCase() === fault.toLowerCase())
-        )) &&
+      (item.requestRef || item.requestRef.toLowerCase().includes(globalFilter.toLowerCase())) &&
+      (item.location || item.locaction.locationName.toLowerCase().includes(globalFilter.toLowerCase())) &&
+        // (item.requestDetails || item.requestDetails.toLowerCase().includes(globalFilter.toLowerCase())) &&
+      // (selectedStatuses.length === 0 ||
+      //   selectedStatuses.includes(item.Status.Name)) &&
+
+      // (selectedFaults.length === 0 ||
+      //   selectedFaults.some((fault) =>
+      //     item.Fault.some((f) => f.Name.toLowerCase() === fault.toLowerCase())
+      //   )) &&
       (selectedLocations.length === 0 ||
         selectedLocations.some(
           (location) =>
-            item.Location.Name.toLowerCase() === location.toLowerCase()
-        )) &&
-      (selectedAssets.length === 0 ||
-        selectedAssets.some((asset) =>
-          item.Asset.some((a) => a.Name.toLowerCase() === asset.toLowerCase())
-        )) &&
+            item.locaction.locationName.toLowerCase() === location.toLowerCase()
+         )) &&
+      // (selectedAssets.length === 0 ||
+      //   selectedAssets.some((asset) =>
+      //     item.Asset.some((a) => a.Name.toLowerCase() === asset.toLowerCase())
+      //   )) &&
       (selectedCreatedBy.length === 0 ||
-        selectedCreatedBy.includes(item.CreatedBy)) && // Filter for CreatedBy
+        selectedCreatedBy.includes(item.createdByNavigation.userFirstName)) && // Filter for CreatedBy
       (selectedDateCreated.length === 0 ||
-        selectedDateCreated.includes(item.DateCreated))
+        selectedDateCreated.includes(item.createdDate))
     );
   });
 
@@ -292,7 +326,7 @@ function RequestTable() {
   };
 
   const handleRowClick = (item) => {
-    if (item.Status.Name === "Completed") {
+    if (item.status.statusName === "Completed") {
       navigate(`/details/${item.id}`);
     } else {
       navigate(`/detailsUnAp/${item.id}`);
@@ -345,6 +379,11 @@ function RequestTable() {
     };
   }, []);
 
+  function formatDateToDdMmYy(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "2-digit" });
+  }
+  
 
   return (
     <div className="requestTable">
@@ -630,32 +669,33 @@ function RequestTable() {
         <thead>
           <tr>
             <th>Request Ref</th>
-            <th>Status</th>
+            {/* <th>Status</th> */}
             <th>Location</th>
-            <th>Fault</th>
+            {/* <th>Fault</th> */}
             <th>Fault Description</th>
             <th>Asset</th>
             <th>Submitted By</th>
-            <th>Work Order</th>
+            {/* <th>Work Order</th> */}
             <th>Date Submitted</th>
           </tr>
         </thead>
         <tbody>
           {paginatedData.map((item) => (
-            <tr key={item.Id} onClick={() => handleRowClick(item)}>
-              <td className="tBodyTd">{item.RequestRef}</td>
-              <td className="tBodyTd">{item.Status.Name}</td>
-              <td className="tBodyTd">{item.Location.Name}</td>
-              <td className="tBodyTd">
+            <tr key={item.id} onClick={() => handleRowClick(item)}>
+              <td className="tBodyTd">{item.requestRef}</td>
+              {/* <td className="tBodyTd">{item.Status.Name}</td> */}
+              <td className="tBodyTd">{item.locaction.locationName}</td>
+              {/* <td className="tBodyTd">
                 {item.Fault.map((fault) => fault.Name).join(", ")}
-              </td>
-              <td className="tBodyTd">{item.Description}</td>
+              </td> */}
+              <td className="tBodyTd">{item.requestDetails}</td>
               <td className="tBodyTd">
-                {item.Asset.map((asset) => asset.Name).join(", ")}
+                {item.requestAssets.map((a) => a.asset.assetName)}
               </td>
-              <td className="tBodyTd">{item.CreatedBy}</td>
-              <td className="tBodyTd">{item.WorkOrder.Title}</td>
-              <td className="tBodyTd">{item.DateCreated}</td>
+              <td className="tBodyTd">{item.createdByNavigation.userFirstName} {item.createdByNavigation.userLastName}</td>
+              {/* <td className="tBodyTd">{item.WorkOrder.Title}</td> */}
+              <td className="tBodyTd">{formatDateToDdMmYy(item.createdDate)}</td>
+
             </tr>
           ))}
         </tbody>

@@ -4,6 +4,8 @@ import "./nav.css";
 import customIcons from "../../../Icons/icons";
 
 function Nav() {
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+
   return (
     <div className="navigation">
       <nav className="navbar navbar-expand-lg bg-body-tertiary  mainNav">
@@ -131,7 +133,7 @@ function Nav() {
             </span>
             <div className="divider"></div>
             <div className="userNameNPic">
-              <h5 className="userName angels">peter ndegwa</h5>
+              <h5 className="userName angels">{user.firstName} {user.lastName}</h5>
               <div className="imgContainer">
                 <img
                   src="https://images.pexels.com/photos/1678821/pexels-photo-1678821.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"

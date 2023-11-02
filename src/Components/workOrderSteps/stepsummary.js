@@ -96,7 +96,7 @@ function StepSummary() {
             <h6 className="subHeaderSummary">Assets:</h6>
             <p className="mainInfoSummary ">
               {userData.TicketAssets.map((item) => {
-                return <div className="blockSummary">{item.AssetName}</div>;
+                return <div className="blockSummary">{item.assetName}</div>;
               })}
             </p>
           </div>
@@ -116,7 +116,7 @@ function StepSummary() {
           <p className="subHeaderSummary">Work Order 1:</p>
 
           <p className="mainInfoSummary">
-            {userData.TicketAssets[0].AssetName}
+            {/* {userData.TicketAssets[0].assetName} */}
           </p>
         </div>
 
@@ -181,7 +181,13 @@ function StepSummary() {
           <div>
             <p className="subHeaderSummary">CheckLists:</p>
             <div className="mainInfoSummary">
-              {userData.TicketChecklistForms.FormsAndSectionsName}
+              {userData.TicketChecklistForms.map((item) => {
+                return (
+                 <div>
+                  {item.FormsAndSectionsName}
+                 </div> 
+                )
+              })}
             </div>
           </div>
         </div>
@@ -189,6 +195,15 @@ function StepSummary() {
         <div className="workOrderSummaryBlock">
           <div>
             <p className="subHeaderSummary">Projected Parts:</p>
+            <div className="mainInfoSummary">
+              {userData.TicketProjectedParts.map((item) => {
+                return (
+                 <div>
+                  {item.part}
+                 </div> 
+                )
+              })}
+            </div>
           </div>
         </div>
         <hr />

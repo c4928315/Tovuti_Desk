@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "../../Components/dashboard/Grid/grid";
 import "./dashboard.css";
 
-function Dashboard() {
+function Dashboard({onLogout}) {
   return (
     <div className="mainDash">
       <div className="topMainDash">
@@ -10,7 +10,7 @@ function Dashboard() {
       </div>
       <div className="bottomMainDash">
         <div className="gridPosition">
-          <Grid />
+          <Grid onLogout={onLogout}/>
         </div>
       </div>
     </div>

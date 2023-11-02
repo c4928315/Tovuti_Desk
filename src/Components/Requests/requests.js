@@ -1,28 +1,11 @@
 import React from "react";
 import customIcons from "../../Icons/icons";
-import useFetch from "../../Hooks/useFetch";
 import { Link } from "react-router-dom";
-import DataTable, { Table2 } from "../Tables/Table2/table2";
-import { createColumnHelper } from "@tanstack/table-core";
 import RequestTable from "../WorkingCode/WorkingRequests/RequestTable";
 
 function Requests() {
   
-  const { data } = useFetch("https://intra-deco.onrender.com/workOrder");
-
-  const columnHelper = createColumnHelper();
-
-  const visibleColumnKeys = ["due", "ref", "description", "priority", "asset", "status", "assigned", "location", "updated", "created"];
-
-  const dynamicColumns = visibleColumnKeys.map((columnKey) => {
-    return columnHelper.accessor(columnKey, {
-      header: () => <span>{columnKey}</span>,
-      cell: (info) => info.renderValue(),
-    });
-
-  
-
-  });
+ 
   return (
     <div className="commonPage container">
       <div className="">
