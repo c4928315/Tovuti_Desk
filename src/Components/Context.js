@@ -30,7 +30,6 @@ const Context = ({children}) => {
     "TicketCategoryOfWork": {},
     "TicketMileageDetails": {},
     "TicketCostItems": {},
-    "TicketAssets": [],
     "ItemType": {},
     "Cost": "",
     "Budget": "",

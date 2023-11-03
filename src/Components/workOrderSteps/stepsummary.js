@@ -7,45 +7,81 @@ import { useNavigate } from "react-router-dom";
 import customIcons from "../../Icons/icons";
 
 function StepSummary() {
-  const { setStep, userData, setUserData } = useContext(MultiStepContext);
-  const { dataParts } = useFetch("https://intra-deco.onrender.com/Parts");
+  const { setStep, userData } = useContext(MultiStepContext);
 
-  console.log(userData);
+ 
 
   const navigate = useNavigate();
 
   const handleDataSubmissionAndSave = () => {
-    // Submit data to the API
-    submitDataToAPI(userData);
 
-    // Save data to local storage
-    saveDataToLocalStorage(userData);
+    let arrayAsset = []
+    userData.TicketAssets.map((asset) => arrayAsset.push(asset.id))
 
-    // Optionally, navigate to the next step
+    let arrayChecklist = []
+    userData.TicketChecklistForms.map((i) => arrayChecklist.push(i.FormsAndSectionsId))
+
+    let arrayAddTeam = []
+    userData.TicketAdditionalTeams.map((i) => arrayAddTeam.push(i.TeamId))
+
+    let arrayProjectedParts = []
+    userData.TicketProjectedParts.map((i) => arrayProjectedParts.push({
+      spareId: parseInt(i.spareId),
+      quantity: parseInt(i.quantity)
+    }))
+
+   const currentUser = localStorage.getItem("userInfo")
+
+   const ApiData = 
+    {
+      locactionId: parseInt(userData.TicketLocation.LocationId, 10),
+      categoryOfWorkId: parseInt(userData.categoryOfWork.id, 10),
+      ticketTitle: userData.TicketRef,
+      ticketDescription: userData.TicketDescription,
+      assetId: arrayAsset,
+      checklists: arrayChecklist,
+      situation: 0,
+      ticketPriorityId: userData.TicketPriority.TicketPriorityId,
+      primaryTeam: parseInt(userData.TicketCurrentTeam.CurrentAssignedTeamId, 10),
+      secondaryTeam: 1,
+      signatureRequiredToCompleteWork: userData.TechnitianSignature,
+      estimatedHours: parseInt(userData.EstimatedHours, 10),
+      projectedParts: arrayProjectedParts,
+      images: [],
+      createdBy: parseInt(JSON.parse(currentUser)?.id, 10)
+    }
+   
+   submitDataToAPI(ApiData);
+
+
+    saveDataToLocalStorage(ApiData);
+
+
     setStep(4);
   };
 
-  const submitDataToAPI = (userData) => {
-    const apiUrl = "https://intra-deco.onrender.com/workOrders";
+  const submitDataToAPI = (ApiData) => {
+    const apiUrl = "https://saharadeskrestapi.azurewebsites.net/api/Tickets/RaiseTicket";
 
     fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify(ApiData),
     })
       .then((response) => {
         if (response.ok) {
           // Data was successfully sent to the API
           return response.json();
         } else {
+          console.log("API response:", ApiData)
           throw new Error("Data submission failed.");
         }
       })
-      .then((responseData) => {
+      .then((ApiData) => {
         // Handle the API response, if needed
-        console.log("API response:", responseData);
+        console.log("API response:", ApiData);
         // navigate("work-order")
       })
       .catch((error) => {
@@ -57,7 +93,7 @@ function StepSummary() {
     try {
       const dataToStore = JSON.stringify(userData);
       localStorage.setItem("userData", dataToStore);
-      console.log("Data saved to local storage.");
+      console.log("Data saved to local storage." );
     } catch (error) {
       console.error("Error saving data to local storage:", error);
     }
@@ -116,7 +152,7 @@ function StepSummary() {
           <p className="subHeaderSummary">Work Order 1:</p>
 
           <p className="mainInfoSummary">
-            {/* {userData.TicketAssets[0].assetName} */}
+            {userData.TicketAssets[0].assetName}
           </p>
         </div>
 

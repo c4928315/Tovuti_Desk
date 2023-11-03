@@ -68,7 +68,7 @@ function NewWorkOrder() {
   const [editData, setEditData] = useState(null);
   const [partData, setPartData] = useState([]);
   const [formData, setFormData] = useState({
-    part: "",
+    spareId: "",
     quantity: "",
     amount: "",
   });
@@ -101,6 +101,8 @@ function NewWorkOrder() {
     fetchData();
   }, [partData]);
 
+  const [teams, setTeams] = useState([])
+
   useEffect(() => {
     async function fetchCategoryOfWorkData() {
       try {
@@ -117,13 +119,30 @@ function NewWorkOrder() {
 
     fetchCategoryOfWorkData();
   }, []);
+  
+  useEffect(() => {
+    async function fetchTeams() {
+      try {
+        const response = await axios.get(
+          "https://saharadeskrestapi.azurewebsites.net/api/Team/GetAllTeams"
+        );
+
+        // Assuming the response data is an array of category of work objects
+        setTeams(response.data);
+      } catch (error) {
+        console.error("Error fetching category of work data:", error);
+      }
+    }
+
+    fetchTeams();
+  }, []);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
     // Create a new part object with the form data
     const newPart = {
-      part: formData.part,
+      spareId: formData.part,
       quantity: formData.quantity,
       amount: formData.amount,
     };
@@ -141,7 +160,7 @@ function NewWorkOrder() {
     });
 
     // Clear the form
-    setFormData({ part: "", quantity: "", amount: "" });
+    setFormData({ spareId: "", quantity: "", amount: "" });
     setShowParts(!showParts);
   };
 
@@ -150,8 +169,8 @@ function NewWorkOrder() {
   if (editData && editData.id) {
     // Create a new array with updated part data
     const updatedProjectedParts = userData.TicketProjectedParts.map((item) => {
-      if (item.part === editData.id) {
-        return { part: editData.part, quantity: editData.quantity, amount: editData.amount };
+      if (item.spareId === editData.id) {
+        return { spareId: editData.spareId, quantity: editData.quantity, amount: editData.amount };
       }
       return item;
     });
@@ -166,7 +185,7 @@ function NewWorkOrder() {
 
   const handleEdit = (item) => {
     // Include the 'part' property as the 'id'
-    setEditData({ ...item, id: item.part });
+    setEditData({ ...item, id: item.spareId });
   };
   
 
@@ -531,10 +550,18 @@ function NewWorkOrder() {
                     value={userData.TicketCurrentTeam.CurrentAssignedTeamId}
                     onChange={handleTicketCurrentTeamChange}
                   >
-                    <option value="1">select</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="">
+                      select
+                    </option>
+                   {
+                    teams.map((item) => {
+                      return (
+                        <option value={item.id} key={item.id}>
+                          {item.teamName}
+                        </option>
+                      )
+                    })
+                   }
                   </select>
                   <customIcons.down
                     className="selectNewIcon selectNewIconWO"
@@ -571,27 +598,23 @@ function NewWorkOrder() {
                         />
                       </div>
                       <li>
-                        {filteredTeamOptions.map((team) => (
-                          <div
-                            key={team.TeamId}
-                            className="checkbox-item checkListDropdown"
-                          >
-                            <input
-                              type="checkbox"
-                              id={`team-${team.TeamId}`}
-                              name={`team-${team.TeamId}`}
-                              checked={userData.TicketAdditionalTeams.some(
-                                (t) => t.TeamId === team.TeamId
-                              )}
-                              onChange={() =>
-                                handleTeamCheckboxChange(team.TeamId)
-                              }
-                            />
-                            <lable htmlFor={`team-${team.TeamId}`}>
-                              {team.TeamName}
-                            </lable>
-                          </div>
-                        ))}
+                      {teams.map((team) => ( // Use the 'teams' array here
+          <div
+            key={team.id} // Assuming that the team object has an 'id' property
+            className="checkbox-item checkListDropdown"
+          >
+            <input
+              type="checkbox"
+              id={`team-${team.id}`}
+              name={`team-${team.id}`}
+              checked={userData.TicketAdditionalTeams.some(
+                (t) => t.TeamId === team.id
+              )}
+              onChange={() => handleTeamCheckboxChange(team.id)} // Use 'team.id' as the team identifier
+            />
+            <lable htmlFor={`team-${team.id}`}>{team.teamName}</lable>
+          </div>
+        ))}
                       </li>
                     </ul>
                   </div>
@@ -904,3 +927,4 @@ function NewWorkOrder() {
 }
 
 export default NewWorkOrder;
+

@@ -323,7 +323,7 @@ function Request() {
       locationId: selectedLocationId,
       selectedFaults: selectedFaultIds,
       requesrDetails: Description,
-      recurrence: Recurrence,
+      recurrence: true,
       images: [],
       createdBy: 6,
     };
