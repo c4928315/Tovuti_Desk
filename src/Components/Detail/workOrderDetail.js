@@ -187,6 +187,7 @@ function WorkOrderDetailsPage() {
   };
 
   const [partNames, setPartNames] = useState([]);
+  const [editingPart, setEditingPart] = useState(false);
   const [requestedPartForm, setRequestedPartForm] = useState({
     partId: "",
     quantity: "",
@@ -208,36 +209,90 @@ function WorkOrderDetailsPage() {
 
   const handleRequestedPartSubmit = (e) => {
     e.preventDefault();
+  
+    if (editingPart) {
+      // Editing an existing part
+      const updatedParts = userData.TicketRequestedParts.map((item) =>
+        item.id === requestedPartForm.partId
+          ? {
+              id: item.id,
+              partName: requestedPartForm.part,
+              quantity: requestedPartForm.quantity,
+              amount: 0, // Update this as needed
+            }
+          : item
+      );
+  
+      setUserData({
+        ...userData,
+        TicketRequestedParts: updatedParts,
+      });
+  
+      // Clear the form and reset the editing flag
+      setRequestedPartForm({
+        partId: "",
+        part: "",
+        quantity: "",
+        location: "",
+      });
+      setEditingPart(false);
+    } else {
+      // Adding a new part (similar to the previous code)
+      const newPart = {
+        id: new Date().getTime(),
+        partName: requestedPartForm.part,
+        quantity: parseInt(requestedPartForm.quantity, 10),
+        location: requestedPartForm.location,
+        amount: 0, // Update this as needed
+      };
+  
+      // Add the new part to the list of requested parts
+      setUserData({
+        ...userData,
+        TicketRequestedParts: [...userData.TicketRequestedParts, newPart],
+      });
+  
+      // Clear the form (as before)
+      setRequestedPartForm({
+        partId: "",
+        part: "",
+        quantity: "",
+        location: "",
+      });
+    }
+  };
+  
 
-    const { part, quantity, location } = requestedPartForm;
 
-    // Create a new part object in the required format
-    const newPart = {
-      id: new Date().getTime(), // You can use a better method to generate an ID
-      partName: part,
-      quantity: parseInt(quantity, 10),
-      amount: 0, // Update this as needed
-    };
-
-    // Construct a copy of userData.TicketRequestedParts with the new part
-    const updatedReturnedParts = [...userData.TicketRequestedParts, newPart];
-
-    // Update the userData state with the new data
+  const handleDeletePart = (partId) => {
+    // Filter out the part to delete using the partId
+    const updatedParts = userData.TicketRequestedParts.filter((item) => item.id !== partId);
+  
+    // Update the userData state with the filtered array
     setUserData({
       ...userData,
-      TicketRequestedParts: updatedReturnedParts,
-    });
-
-    // Clear the form
-    setRequestedPartForm({
-      part: "",
-      quantity: 0,
-      location: "",
+      TicketRequestedParts: updatedParts,
     });
   };
 
 
 
+  const handleEditPart = (partId) => {
+    const partToEdit = userData.TicketRequestedParts.find((item) => item.id === partId);
+  
+    if (partToEdit) {
+      setRequestedPartForm({
+        partId: partToEdit.id,
+        part: partToEdit.partName, // Assuming you have a 'partName' field
+        quantity: partToEdit.quantity,
+        location: partToEdit.location,
+      });
+  
+      setEditingPart(true);
+    }
+  };
+  
+ 
 
 
 
@@ -635,6 +690,7 @@ function WorkOrderDetailsPage() {
                                     color: "#584539",
                                     cursor: "pointer",
                                   }}
+                                  onClick={() => handleEditPart(item.id)}
                                 />
                                 <customIcons.delete
                                   size={17}
@@ -642,6 +698,7 @@ function WorkOrderDetailsPage() {
                                     color: "#584539",
                                     cursor: "pointer",
                                   }}
+                                  onClick={() => handleDeletePart(item.id)}
                                 />
                               </span>
                             </td>
@@ -1143,6 +1200,18 @@ function WorkOrderDetailsPage() {
                   setRequestedPartForm({ ...requestedPartForm, part: e.target.value })
                 }
               >
+                {/* {
+                  partNames.map((item) => {
+                    return (
+                    <option
+                    key={item.id}
+                    value={item.id}
+                    >
+                      {item.partName}
+                    </option>
+                    )
+                  })
+                } */}
                 <option value="">Select</option>
                 <option value="Part 1">Part 1</option>
                 <option value="Part 2">Part 2</option>
