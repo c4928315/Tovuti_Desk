@@ -31,8 +31,19 @@
 }
 
 .checkBox {
-  width: 320px;
-  margin: 0px;
+  width: fit-content;
+  margin: 3px 0;
+  height: fit-content;
+}
+
+.PrivateSwitchBase-input-4{
+  height: fit-content !important;
+}
+
+.MuiButtonBase-root{
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-right: 9px !important;
 }
 
 .MuiSvgIcon-root {
@@ -61,7 +72,6 @@
   padding-top: 3px;
   padding-left: 10px;
   text-transform: capitalize;
-  display: none;
 }
 
 /**
@@ -123,11 +133,16 @@ Work Order
   justify-content: space-between;
   gap: 15%;
   width: 100%;
+  z-index: 100;
+}
+
+.categoryAssets span{
+  width: 100%;
 }
 
 .assetNextBtn {
   float: right;
-  margin-top: 20% !important;
+  margin-top: 35% !important;
   width: 102px;
   height: 33px;
   flex-shrink: 0;
@@ -137,7 +152,7 @@ Work Order
 
 .assetPrevBtn {
   float: right;
-  margin-top: 20% !important;
+  margin-top: 35% !important;
   background-color: white !important;
   color: orange !important;
   border: 1px solid orange !important;
@@ -264,9 +279,7 @@ Work Order
   align-items: center;
 }
 
-.newWOflex p {
-  margin-top: 20px !important;
-}
+
 
 .newWorkOrder select,
 .newWorkOrder input {
@@ -289,6 +302,8 @@ Work Order
 
 .newWorkOrderSingleCellHolder {
   margin-top: 40px;
+  width: fit-content;
+  margin-bottom: 20px;
 }
 
 .newWorkOrderSingleCell .partsTable {
@@ -297,6 +312,7 @@ Work Order
   border-radius: 6px !important;
   margin: 20px 0;
   margin-top: 0;
+  padding-bottom: 30px;
 }
 
 .partTableConatainer {
@@ -411,10 +427,17 @@ Work Order
   align-items: center;
   gap: 15px;
   line-height: 10px;
+  color: white;
+  font-size: 14px;
+}
+
+
+.checkListDropdown input{
+  margin: 0 !important;
 }
 
 .checkListDropdown p {
-  margin-top: 20px;
+  color: black;
 }
 
 /*line-height: 20px;*/
@@ -588,7 +611,27 @@ Work Order
 }
 
 .assetsSpan {
+  position: absolute;
+  right: 0;
+  top: 35%;
+}
+
+.assetsINAsstsWrapper{
   position: relative;
+  width: 290px;
+  margin-top: 40px;
+  height: 200px;
+  overflow: auto;
+  border: 1px solid #aaabb0;
+  border-radius: 12px;
+  padding: 10px;
+  color: white;
+  background-color: #343A40;
+}
+
+.newAssetDropdownWrapper{
+  position: absolute;
+  left: 7%;
 }
 
 .dropdownAdditionalTeam .dropdown-toggle::after {
@@ -597,11 +640,16 @@ Work Order
 
 .dropdownAdditionalTeam .dropdown-menu {
   border: none !important;
-  width: 100% !important;
+  width: fit-content !important;
   padding-left: 20px !important;
-  background-color: #f1efef;
+  padding-right: 20px !important;
+  background-color: #343A40 !important;
   margin-top: 5px !important;
+  height: 250px;
+  overflow: auto;
 }
+
+
 
 /* SUMMARY*/
 
@@ -742,16 +790,16 @@ Work Order
 }
 
 .checkBox span {
-  font-size: 14px;
+  font-size: 13.5px;
 }
 
 .priorities .unselected-button {
-  background-color: #d8d8d8;
+  background-color: #f1efef;
   transition: all 0.3s ease-in-out;
   box-shadow: none;
+  font-size: 12.5px;
+  height: 34px;
 }
-
-.dropdown-toggle-add-team
 
 .priorities .unselected-button:hover {
   background-color: orange !important;
@@ -759,17 +807,24 @@ Work Order
 
 .priorities .selected-button {
   background-color: orange;
+  transition: all 0.3s ease-in-out;
   box-shadow: none;
+  font-size: 12.5px;
+  height: 34px;
+}
+
+.priorities .selected-button:hover {
+  background-color: orange !important;
 }
 
 .priorities {
   display: flex;
-  gap: 4px;
-  width: 91%;
+  justify-content: space-between;
+  width: 85.4%;
 }
 
 .assetNextBtn .newWorkOrderCells .priorities button {
-  width: calc(100% / 4);
+  width: 22.75%;
   font-size: 12.5px !important;
   height: 34px;
   box-shadow: none;
@@ -968,6 +1023,10 @@ font-weight: 500;
   color: #c5c7cd !important;
 }
 
+.newSelectInputWidth{
+  width: 100%;
+}
+
 .selectNewContainerWO2 {
   width: 100%;
   display: flex;
@@ -983,11 +1042,11 @@ font-weight: 500;
 .selectNewIconWO {
   top: 50%;
   transform: translateY(50%);
-  right: 10px !important;
+  right: 5% !important;
 }
 
 .newWorkOrder .workOrderHRmain {
-  width: 95.6%;
+  width: 92.6%;
 }
 
 
@@ -1011,6 +1070,8 @@ font-weight: 500;
   background: linear-gradient(rgb(0, 0, 0, 0.3), rgb(0, 0, 0,0.3));
   z-index: 121;
 }
+
+.dropdownAdditionalTeam .dropdown-menu
 
 .partsFormEditForm{
   width: 50%;
@@ -1049,7 +1110,31 @@ font-weight: 500;
 
 .search-container{
   width: 250px !important;
+  margin: 0;
+  position: sticky;
+  top: 0;
+  background-color: #343A40;
+  height: 30px;
 }
+
+.search-container .search-input{
+  height: 25px !important;
+  width: fill !important;
+  font-size: 12px !important;
+}
+
+custom-search-input{
+  height: 25px !important;
+  width: fill !important;
+  font-size: 12px !important;
+}
+
+.custom-search-input-container{
+  position: static !important;
+  top: 10px !important;
+}
+
+.checkListDropdown
 
 .partsFormEditFormHolder .partsFormInner h5{
   padding-left: 29%;
@@ -1087,5 +1172,104 @@ font-weight: 500;
   text-decoration: underline;
   font-size: 13px;
   float: right;
-  margin: 10px 35px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 8%;
 }
+
+.newWorkOrderSingleCellForm{
+  padding: 20px 0;
+}
+
+.WOstepOneMargin{
+  margin-bottom: 50px;
+}
+
+.addChecklistDropDown{
+  background-color: #343A40;
+  color: white;
+  font-size: 13px;
+  padding: 20px 0;
+}
+
+.addChecklistDropDown .checklistList input{
+  margin: 0 !important;
+}
+
+.partsTableConatainer{
+  border: 1px solid lightgray;
+  width: 92.6%;
+  border-radius: 12px;
+  margin: 30px 0;
+  margin-bottom: 0;
+  height: 180px; 
+  overflow: auto;
+  padding: 10px;
+}
+
+.location-dropdown, .asset-category-dropdown{
+ margin-top: 15px;
+ line-height: 25px;
+  
+}
+
+.location-dropdown li, .asset-category-dropdown li{
+  cursor: pointer;
+  color: white !important;
+  transition: all 0.3s ease-in-out;
+  border-radius: 6px !important;
+  padding: 3px 5px;
+ }
+ 
+
+ .location-dropdown li:hover, .asset-category-dropdown li:hover{
+  cursor: pointer;
+  color: #343A40 !important;
+  transition: all 0.3s ease-in-out;
+  background-color: white;
+ }
+
+ .showMenu{
+  display: block;
+ }
+
+ .hideMenu{
+  display: none;
+ }
+
+.custom-select{
+  position: relative;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 89% !important;
+  height: 34px !important;
+  background: #ebebeb !important;
+  border: none;
+  color: #aaabb0;
+}
+
+/* .custom-select::after{
+  display: none !important;
+} */
+
+.custom-select-dropdown{
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background-color: #343A40;
+  color: white;
+  padding: 20px;
+  height: 200px;
+  border-radius: 12px;
+  overflow: auto;
+  font-size: 14px;
+}
+
+
+
+/* .customSelectOption{
+  position: absolute;
+  top: 0;
+} */

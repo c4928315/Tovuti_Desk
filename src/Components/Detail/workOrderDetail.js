@@ -4,6 +4,7 @@ import "./productDetail.css";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { MultiStepContext } from "../Context";
+import CloseWorkOrder from "../Forms/CloseWorkOrder/closeWorkOrder";
 
 function WorkOrderDetailsPage() {
   const { itemId } = useParams();
@@ -92,7 +93,7 @@ function WorkOrderDetailsPage() {
     }
 
     fetchData();
-  }, [partData]);
+  }, []);
 
 
 
@@ -128,7 +129,7 @@ function WorkOrderDetailsPage() {
   };
 
   useEffect(() => {
-    const apiUrl = `https://intra-deco.onrender.com/workOrders/${itemId}`;
+    const apiUrl = `https://saharadeskrestapi.azurewebsites.net/api/Tickets/${itemId}`;
 
     fetch(apiUrl)
       .then((response) => {
@@ -168,7 +169,7 @@ function WorkOrderDetailsPage() {
     }
 
     fetchData();
-  }, [partData]);
+  }, []);
 
   const handleShowParts = () => {
     setExtendPartTable(!extendPartTable);
@@ -293,7 +294,14 @@ function WorkOrderDetailsPage() {
   };
   
  
+  const [showCloseForm, setShowCloseForm] = useState(false);
+  const [closeFormItemId, setCloseFormItemId] = useState(null);
 
+  // Function to handle the "Close Work Order" button click
+  const handleCloseWorkOrder = (itemId) => {
+    setCloseFormItemId(itemId);
+    setShowCloseForm(true);
+  };
 
 
   return (
@@ -304,7 +312,7 @@ function WorkOrderDetailsPage() {
             <h3 className="pageTitle requestDetailTitle">
               <p>Work Order</p>
               <p>-</p>
-              {itemDetails && <p>{itemDetails.TicketRef}</p>}
+              {itemDetails && <p>{itemDetails.ticketTitle}</p>}
             </h3>
             <div className="timer">02:58</div>
           </div>
@@ -378,7 +386,7 @@ function WorkOrderDetailsPage() {
           <div className="dividerCommonPage"></div>
           <Link className="flex" style={{ gap: "4px" }}>
             <p>Work Order</p>
-            {itemDetails && <p>{itemDetails.TicketRef}</p>}
+            {itemDetails && <p>{itemDetails.ticketTitle}</p>}
           </Link>
         </div>
         <p>Can Raise Ticket: {canRaiseTicket ? "Yes" : "No"}</p>
@@ -394,7 +402,7 @@ function WorkOrderDetailsPage() {
                 <div className="requestKeyValue requestKeyValue2">
                   <div>
                     <h5>Reported On:</h5>
-                    {itemDetails && <p>{itemDetails.DueDate}</p>}
+                    {itemDetails && <p>{itemDetails.createdDate}</p>}
                   </div>
 
                   <div className="requestKeyValue2StatusContainer">
@@ -431,20 +439,20 @@ function WorkOrderDetailsPage() {
                 <div className="requestKeyValue">
                   <h5>location:</h5>
                   {itemDetails && (
-                    <p>{itemDetails.TicketLocation.LocationName}</p>
+                    <p>{itemDetails.location?.locationName}</p>
                   )}
                 </div>
                 <div className="requestKeyValue">
                   <h5>Asset:</h5>
                   {itemDetails && (
                     <p>
-                      {itemDetails.TicketAssets.map((item) => item.AssetName)}
+                      {itemDetails.assets?.map((item) => item.assetName)}
                     </p>
                   )}
                 </div>
                 <div className="requestKeyValue">
                   <h5>incident description:</h5>
-                  {itemDetails && <p>{itemDetails.TicketDescription}</p>}
+                  {itemDetails && <p>{itemDetails.ticketDescription}</p>}
                 </div>
                 <div className="requestKeyValue">
                   <h5>incident comment:</h5>
@@ -475,7 +483,10 @@ function WorkOrderDetailsPage() {
                 <button className="declineApprove WOAssignbtn">
                   Assign Technician
                 </button>
-                <button className="declineApprove WOClosebtn">
+                <button 
+                className="declineApprove WOClosebtn"
+                onClick={() => handleCloseWorkOrder(itemId)}
+                >
                   Close Work Order
                 </button>
               </div>
@@ -496,7 +507,7 @@ function WorkOrderDetailsPage() {
                     <div className="WOcheckListDets">
                       {itemDetails && (
                         <span>
-                          {itemDetails.TicketChecklistForms.map((item, i) => {
+                          {itemDetails.TicketChecklistForms?.map((item, i) => {
                             return (
                               <div className="returnChecklist">
                                 <span className="WOcheckListDetsCheck">
@@ -1600,6 +1611,17 @@ function WorkOrderDetailsPage() {
         </div>
       </div>
       {/* DIAGNOSIS */}
+
+      {/* CLOSE WORKORDER */}
+      
+      {showCloseForm && (
+        <div className="closeWorkOrderContainer">
+<CloseWorkOrder itemId={closeFormItemId} setShowCloseForm={setShowCloseForm} />
+        </div>
+        
+      )}
+      
+      {/* CLOSE WORKORDER */}
     </div>
   );
 }

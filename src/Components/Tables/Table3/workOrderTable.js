@@ -87,8 +87,6 @@ function WorkOrderTable() {
 
 
   const filteredData = data.filter((item) => {
-
-    console.log(globalFilter);
     return (
       (!item.ticketRef || item.ticketRef.toLowerCase().includes(globalFilter.toLowerCase())) &&
       (!item.ticketDescription || item.ticketDescription.toLowerCase().includes(globalFilter.toLowerCase())) &&
@@ -621,9 +619,9 @@ function WorkOrderTable() {
               <td className="tBodyTd">
                 {item.currentAssignedUserId}
               </td>
-              <td className="tBodyTd">{item.locactionId}</td>
+              <td className="tBodyTd">{item.location?.locationName}</td>
               <td className="tBodyTd">
-                {/* {item.TicketAssets.map((asset) => asset.AssetName).join(", ")} */}
+                {item.assets?.map((asset) => asset.assetName).join(", ")}
               </td>
               <td className="tBodyTd">{formatDateToDdMmYy(item.modifiedDate)}</td>
               <td className="tBodyTd">{formatDateToDdMmYy(item.createdDate)}</td>

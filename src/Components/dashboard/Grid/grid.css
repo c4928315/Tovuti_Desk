@@ -119,9 +119,13 @@
   transition: transform 0.5s ease-in-out ;
 }
 
-
 .items123:hover{
   border: 1px solid orange;
+}
+
+.items123:hover a{
+  text-decoration: none;
+  color: black;
 }
 
 .items123:hover .gridStatusSelect{

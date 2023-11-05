@@ -17,8 +17,8 @@ function WorkOrder({ requiredClaims, userClaims }) {
   }
 
   return (
-    <div className="commonPage container">
-      <div>
+    <div className="allPagePosition">
+      <div className="commonPage">
         <div className="commonPageTop">
           <h3 className="pageTitle">work order</h3>
           <div className="dropdown actionDropdown">

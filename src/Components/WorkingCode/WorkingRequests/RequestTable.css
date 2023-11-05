@@ -160,7 +160,7 @@ tbody tr .tBodyTd{
 .statusFilter{
   position: absolute;
   padding: 10px 5px;
-  background-color: rgb(229, 229, 229);
+  background-color: #343A40;
   margin-top: 4px;
   border-radius: 4px;
 }
@@ -169,6 +169,7 @@ tbody tr .tBodyTd{
   border-radius: 4px;
   padding-left: 4px;
   margin: 0 5px;
+  font-size: 13px;
 }
 
 .statusFilterNoShow{
@@ -203,4 +204,7 @@ tbody tr .tBodyTd{
 
 .statusFilterAbsolute{
   display: block;
+  margin-top: 10px;
+  color: white;
+  font-size: 14px;
 }

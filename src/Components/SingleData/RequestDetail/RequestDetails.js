@@ -8,7 +8,7 @@ function RequestDetailsPage() {
   const [itemDetails, setItemDetails] = useState(null);
 
   useEffect(() => {
-    const apiUrl = `https://intra-deco.onrender.com/requests/${itemId}`;
+    const apiUrl = `https://saharadeskrestapi.azurewebsites.net/api/Requests/GetAllRequests/${itemId}`;
 
     fetch(apiUrl)
       .then((response) => {
@@ -32,16 +32,6 @@ function RequestDetailsPage() {
     return <div>Loading...</div>;
   }
 
-  console.log(itemDetails.Status.Name);
-
-  let nameAtIndex0 = "";
-
-  if (itemDetails.Asset.length > 0) {
-    nameAtIndex0 = itemDetails.Asset[0].Name;
-    console.log(nameAtIndex0); // This will log "Elevator" to the console
-  } else {
-    console.log("The array is empty");
-  }
 
   return (
     <div className="commonPage">

@@ -9,6 +9,7 @@ const Context = ({children}) => {
     "TicketRef": "Ref101",
     "DueDate": "2023-11-20",
     "ModifiedDate": "2023-06-16",
+    "TicketAssets": [],
     "TicketStatus": {
       "StatusId": 3,
       "StatusName": "In Progress"

@@ -23,6 +23,7 @@ import { useState } from "react";
 import ProtectedRoute from "../Components/ProtectedComp";
 import Login from "../Components/Forms/Login/login";
 import Unauthorized from "../Components/AccessDenied/unauthorized";
+import CloseWorkOrder from "../Components/Forms/CloseWorkOrder/closeWorkOrder";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -88,8 +89,9 @@ function App() {
           <Route path="/work-order-detail-form" element={<WorkOrderDetail />} />
           <Route path="/details/:itemId" element={<RequestDetailsPage />} />
           <Route path="/WOdetails/:itemId" element={<WorkOrderDetailsPage />} />
+          <Route path="/close-work-order" element={<CloseWorkOrder />} />
           <Route
-            path="/detailsUnAp/:Id"
+            path="/detailsUnAp/:id"
             element={<UnApprovedRequestDetailsPage />}
           />
 

@@ -326,7 +326,7 @@ function RequestTable() {
   };
 
   const handleRowClick = (item) => {
-    if (item.status.statusName === "Completed") {
+    if (item.requestStatus.statusName === "Completed") {
       navigate(`/details/${item.id}`);
     } else {
       navigate(`/detailsUnAp/${item.id}`);

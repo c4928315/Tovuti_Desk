@@ -7,8 +7,8 @@ function Requests() {
   
  
   return (
-    <div className="commonPage container">
-      <div className="">
+    <div className="allPagePosition">
+      <div className="commonPage">
         <div className="commonPageTop">
           <h3 className="pageTitle">Requests</h3>
           <div class="dropdown actionDropdown">

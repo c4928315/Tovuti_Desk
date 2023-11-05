@@ -56,7 +56,9 @@ const checklists = [
 
 function NewWorkOrder() {
   const { setStep, userData, setUserData } = useContext(MultiStepContext);
-  const [checkedItems, setCheckedItems] = useState({});
+  const [checklistSearchQuery, setChecklistSearchQuery] = useState("");
+  const [additionalTeamsSearchQuery, setAdditionalTeamsSearchQuery] =
+    useState("");
   const [activeTab, setActiveTab] = useState(true);
   const [activeTab2, setActiveTab2] = useState(false);
   const [showParts, setShowParts] = useState(false);
@@ -79,8 +81,6 @@ function NewWorkOrder() {
     setShowParts(!showParts);
   };
 
- 
-
   console.log(userData);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ function NewWorkOrder() {
     fetchData();
   }, [partData]);
 
-  const [teams, setTeams] = useState([])
+  const [teams, setTeams] = useState([]);
 
   useEffect(() => {
     async function fetchCategoryOfWorkData() {
@@ -110,7 +110,6 @@ function NewWorkOrder() {
           "https://saharadeskrestapi.azurewebsites.net/api/CategoryOfWorks"
         );
 
-        // Assuming the response data is an array of category of work objects
         setCategoryOfWorkData(response.data);
       } catch (error) {
         console.error("Error fetching category of work data:", error);
@@ -119,7 +118,7 @@ function NewWorkOrder() {
 
     fetchCategoryOfWorkData();
   }, []);
-  
+
   useEffect(() => {
     async function fetchTeams() {
       try {
@@ -127,7 +126,6 @@ function NewWorkOrder() {
           "https://saharadeskrestapi.azurewebsites.net/api/Team/GetAllTeams"
         );
 
-        // Assuming the response data is an array of category of work objects
         setTeams(response.data);
       } catch (error) {
         console.error("Error fetching category of work data:", error);
@@ -139,62 +137,59 @@ function NewWorkOrder() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    // Create a new part object with the form data
-    const newPart = {
-      spareId: formData.part,
-      quantity: formData.quantity,
-      amount: formData.amount,
-    };
-
-    // Add the newPart to the projectedParts array
-    setTicketProjectedParts((prevProjectedParts) => [
-      ...prevProjectedParts,
-      newPart,
-    ]);
-
-    // Update the userData with the new projectedParts array
-    setUserData({
-      ...userData,
-      TicketProjectedParts: [...ticketProjectedParts, newPart],
-    });
-
-    // Clear the form
-    setFormData({ spareId: "", quantity: "", amount: "" });
-    setShowParts(!showParts);
-  };
-
-  const handleUpdate = () => {
-  // Check if editData has a valid 'id' (in this case, 'part')
-  if (editData && editData.id) {
-    // Create a new array with updated part data
-    const updatedProjectedParts = userData.TicketProjectedParts.map((item) => {
-      if (item.spareId === editData.id) {
-        return { spareId: editData.spareId, quantity: editData.quantity, amount: editData.amount };
-      }
-      return item;
-    });
-
-    // Update the userData with the updated projectedParts array
-    setUserData({ ...userData, TicketProjectedParts: updatedProjectedParts });
-    // Clear the edit data
-    setEditData(null);
-  }
-};
-
-
-  const handleEdit = (item) => {
-    // Include the 'part' property as the 'id'
-    setEditData({ ...item, id: item.spareId });
+  
+    const selectedPart = partData.find((part) => part.id === parseInt(formData.part, 10)); // Parse the formData.part to an integer
+  
+    if (selectedPart) {
+      const newPart = {
+        spareId: selectedPart.id, // Use selectedPart.id as spareId
+        quantity: parseInt(formData.quantity, 10), // Parse the formData.quantity to an integer
+        amount: parseFloat(formData.amount), // Parse the formData.amount to a float
+        partName: selectedPart.partName,
+      };
+  
+      setTicketProjectedParts((prevProjectedParts) => [...prevProjectedParts, newPart]);
+  
+      setUserData({
+        ...userData,
+        TicketProjectedParts: [...ticketProjectedParts, newPart],
+      });
+  
+      setFormData({ partName: "", part: "", quantity: "", amount: "" }); // Clear the form fields
+      setShowParts(!showParts);
+    }
   };
   
+
+  const handleUpdate = () => {
+    if (editData && editData.id) {
+      const updatedProjectedParts = userData.TicketProjectedParts.map(
+        (item) => {
+          if (item.spareId === editData.id) {
+            return {
+              spareId: editData.spareId,
+              quantity: editData.quantity,
+              amount: editData.amount,
+            };
+          }
+          return item;
+        }
+      );
+
+      setUserData({ ...userData, TicketProjectedParts: updatedProjectedParts });
+
+      setEditData(null);
+    }
+  };
+
+  const handleEdit = (item) => {
+    setEditData({ ...item, id: item.spareId });
+  };
 
   const handleTabState = () => {
     setActiveTab(!activeTab);
     setActiveTab2(!activeTab2);
   };
-
-  // const handleCheckboxChanges = (option) => {
   //   setCheckedItems((prevItems) => ({
   //     ...prevItems,
   //     [option]: !prevItems[option],
@@ -273,57 +268,25 @@ function NewWorkOrder() {
     });
   };
 
-  // const handleChecklistChange = (checklistId) => {
-  //   // Check if the checklistId is already in the array
-  //   const isChecked = userData.TicketChecklistForms.some(
-  //     (form) => form.FormsAndSectionsId === checklistId
-  //   );
+  const handleChecklistSearchChange = (e) => {
+    setChecklistSearchQuery(e.target.value);
+  };
 
-  //   if (isChecked) {
-  //     // Remove the checklist if already checked
-  //     const updatedChecklist = userData.TicketChecklistForms.filter(
-  //       (form) => form.FormsAndSectionsId !== checklistId
-  //     );
-
-  //     setUserData({
-  //       ...userData,
-  //       TicketChecklistForms: updatedChecklist,
-  //     });
-  //   } else {
-  //     // Add the checklist if not checked
-  //     const selectedChecklist = checklists.find(
-  //       (checklist) => checklist.FormsAndSectionsId === checklistId
-  //     );
-
-  //     setUserData({
-  //       ...userData,
-  //       TicketChecklistForms: [
-  //         ...userData.TicketChecklistForms,
-  //         selectedChecklist,
-  //       ],
-  //     });
-  //   }
-  // };
-
- 
-  
-  
+  const handleAdditionalTeamsSearchChange = (e) => {
+    setAdditionalTeamsSearchQuery(e.target.value);
+  };
 
   const handleDeleteProjectedPart = (index) => {
     const updatedProjectedParts = [...userData.TicketProjectedParts];
-    updatedProjectedParts.splice(index, 1); // Remove the item at the specified index
+    updatedProjectedParts.splice(index, 1);
     setUserData({ ...userData, TicketProjectedParts: updatedProjectedParts });
   };
 
- 
-
   const handleChecklistItemDelete = (item) => {
-    // Filter out the item to be deleted
     const updatedChecklist = userData.TicketChecklistForms.filter(
       (form) => form.FormsAndSectionsId !== item.FormsAndSectionsId
     );
 
-    // Update the userData with the new checklist
     setUserData({
       ...userData,
       TicketChecklistForms: updatedChecklist,
@@ -360,13 +323,13 @@ function NewWorkOrder() {
 
   //ADDITIONAL TEAMS SEARCH
 
-  const [filteredTeamOptions, setFilteredTeamOptions] = useState(teamOptions);
+  const [filteredTeamOptions, setFilteredTeamOptions] = useState(teams);
 
   const handleAdditionalSearch = (e) => {
     const searchTerm = e.target.value;
     setSearchTerm(searchTerm);
-    const filteredList = teamOptions.filter((team) => {
-      return team.TeamName.toLowerCase().includes(searchTerm.toLowerCase());
+    const filteredList = teams.filter((team) => {
+      return team.teamName.toLowerCase().includes(searchTerm.toLowerCase());
     });
     setFilteredTeamOptions(filteredList);
   };
@@ -540,7 +503,7 @@ function NewWorkOrder() {
               </div>
             </div>
 
-            <div className="newWorkOrderCells newWorkOrderCellsAssetCategory allTopWO ">
+            <div className="newWorkOrderCells newWorkOrderCellsAssetCategory allTopWO WOstepOneMargin">
               <div>
                 <p className="form-label-newWO">Assign Team(primary)</p>
                 <div className="selectNewContainerWO2">
@@ -550,18 +513,14 @@ function NewWorkOrder() {
                     value={userData.TicketCurrentTeam.CurrentAssignedTeamId}
                     onChange={handleTicketCurrentTeamChange}
                   >
-                    <option value="">
-                      select
-                    </option>
-                   {
-                    teams.map((item) => {
+                    <option value="">select</option>
+                    {teams.map((item) => {
                       return (
                         <option value={item.id} key={item.id}>
                           {item.teamName}
                         </option>
-                      )
-                    })
-                   }
+                      );
+                    })}
                   </select>
                   <customIcons.down
                     className="selectNewIcon selectNewIconWO"
@@ -588,33 +547,45 @@ function NewWorkOrder() {
                     </p>
                     <ul class="dropdown-menu">
                       <div class="search-container">
-                        {/* <customIcons.search/> */}
                         <input
                           type="text"
                           class="form-control search-input"
-                          placeholder="Search..."
-                          value={searchTerm}
-                          onChange={handleAdditionalSearch}
+                          placeholder="Search Additional Teams..."
+                          value={additionalTeamsSearchQuery}
+                          onChange={handleAdditionalTeamsSearchChange}
                         />
                       </div>
+
                       <li>
-                      {teams.map((team) => ( // Use the 'teams' array here
-          <div
-            key={team.id} // Assuming that the team object has an 'id' property
-            className="checkbox-item checkListDropdown"
-          >
-            <input
-              type="checkbox"
-              id={`team-${team.id}`}
-              name={`team-${team.id}`}
-              checked={userData.TicketAdditionalTeams.some(
-                (t) => t.TeamId === team.id
-              )}
-              onChange={() => handleTeamCheckboxChange(team.id)} // Use 'team.id' as the team identifier
-            />
-            <lable htmlFor={`team-${team.id}`}>{team.teamName}</lable>
-          </div>
-        ))}
+                        {teams
+                          .filter((team) =>
+                            team.teamName
+                              .toLowerCase()
+                              .includes(
+                                additionalTeamsSearchQuery.toLowerCase()
+                              )
+                          )
+                          .map((team) => (
+                            <div
+                              key={team.id} // Assuming that the team object has an 'id' property
+                              className="checkbox-item checkListDropdown"
+                            >
+                              <input
+                                type="checkbox"
+                                id={`team-${team.id}`}
+                                name={`team-${team.id}`}
+                                checked={userData.TicketAdditionalTeams.some(
+                                  (t) => t.TeamId === team.id
+                                )}
+                                onChange={() =>
+                                  handleTeamCheckboxChange(team.id)
+                                } // Use 'team.id' as the team identifier
+                              />
+                              <lable htmlFor={`team-${team.id}`}>
+                                {team.teamName}
+                              </lable>
+                            </div>
+                          ))}
                       </li>
                     </ul>
                   </div>
@@ -668,15 +639,12 @@ function NewWorkOrder() {
               </div>
             </div>
             <hr className="workOrderHRmain" />
-            <div className="newWorkOrderSingleCell">
+            <div className="newWorkOrderSingleCell newWorkOrderSingleCellForm">
               <div className="partsTop">
                 <p className="form-label-newWO">Projected Parts</p>
               </div>
 
-              <div
-                className="partsTableConatainer"
-                style={{ maxHeight: "200px", overflowY: "auto" }}
-              >
+              <div className="partsTableConatainer">
                 <table className="partsTable">
                   <thead>
                     <tr>
@@ -687,27 +655,29 @@ function NewWorkOrder() {
                     </tr>
                   </thead>
                   <tbody>
-                    {userData.TicketProjectedParts.map((item, i) => (
-                      <tr key={i}>
-                        <td className="tBodyTd">{item.part}</td>
-                        <td className="tBodyTd">{item.quantity}</td>
-                        <td className="tBodyTd">{item.amount}</td>
-                        <td className="tBodyTd">
-                          <span>
-                            <customIcons.edit
-                              size={17}
-                              style={{ color: "#584539", cursor: "pointer" }}
-                              onClick={() => handleEdit(item)}
-                            />
-                            <customIcons.delete
-                              size={17}
-                              style={{ color: "#584539", cursor: "pointer" }}
-                              onClick={() => handleDeleteProjectedPart(i)}
-                            />
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
+                    {userData.TicketProjectedParts.map((item, i) => {
+                      return (
+                        <tr key={i}>
+                          <td className="tBodyTd">{item.partName}</td>
+                          <td className="tBodyTd">{item.quantity}</td>
+                          <td className="tBodyTd">{item.amount}</td>
+                          <td className="tBodyTd">
+                            <span>
+                              <customIcons.edit
+                                size={17}
+                                style={{ color: "#584539", cursor: "pointer" }}
+                                onClick={() => handleEdit(item)}
+                              />
+                              <customIcons.delete
+                                size={17}
+                                style={{ color: "#584539", cursor: "pointer" }}
+                                onClick={() => handleDeleteProjectedPart(i)}
+                              />
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -789,45 +759,51 @@ function NewWorkOrder() {
                     <customIcons.down />
                   </span>
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu addChecklistDropDown">
                   <div class="search-container">
-                    {/* <customIcons.search/> */}
                     <input
                       type="text"
                       class="form-control search-input"
-                      placeholder="Search..."
-                      value={searchTerm}
-                      onChange={handleSearch}
+                      placeholder="Search Checklists..."
+                      value={checklistSearchQuery}
+                      onChange={handleChecklistSearchChange}
                     />
                   </div>
+
                   <li>
-                    {checklists.map((checklist) => (
-                      <div
-                        key={checklist.FormsAndSectionsId}
-                        className="checklistList"
-                      >
-                        <input
-                          type="radio"
-                          id={`checklist-${checklist.FormsAndSectionsId}`}
-                          checked={
-                            userData.TicketChecklistForms.length > 0 &&
-                            userData.TicketChecklistForms[0]
-                              .FormsAndSectionsId ===
-                              checklist.FormsAndSectionsId
-                          }
-                          onChange={() =>
-                            handleChecklistRadioChange(
-                              checklist.FormsAndSectionsId
-                            )
-                          }
-                        />
-                        <label
-                          htmlFor={`checklist-${checklist.FormsAndSectionsId}`}
+                    {checklists
+                      .filter((checklist) =>
+                        checklist.FormsAndSectionsName.toLowerCase().includes(
+                          checklistSearchQuery.toLowerCase()
+                        )
+                      )
+                      .map((checklist) => (
+                        <div
+                          key={checklist.FormsAndSectionsId}
+                          className="checklistList"
                         >
-                          {checklist.FormsAndSectionsName}
-                        </label>
-                      </div>
-                    ))}
+                          <input
+                            type="radio"
+                            id={`checklist-${checklist.FormsAndSectionsId}`}
+                            checked={
+                              userData.TicketChecklistForms.length > 0 &&
+                              userData.TicketChecklistForms[0]
+                                .FormsAndSectionsId ===
+                                checklist.FormsAndSectionsId
+                            }
+                            onChange={() =>
+                              handleChecklistRadioChange(
+                                checklist.FormsAndSectionsId
+                              )
+                            }
+                          />
+                          <lable
+                            htmlFor={`checklist-${checklist.FormsAndSectionsId}`}
+                          >
+                            {checklist.FormsAndSectionsName}
+                          </lable>
+                        </div>
+                      ))}
                   </li>
                 </ul>
               </div>
@@ -881,50 +857,55 @@ function NewWorkOrder() {
         </div>
       </div>
       {editData && (
-  <div className="partsForm partsFormEdit">
-    <div className="partsFormEditForm">
-      <div className="partsFormEditFormHolder">
-        <h2>Edit Parts</h2>
-        <div className="partsFormInner">
-          <h5>Edit Part</h5>
-          <input
-            className="partsFormInner"
-            type="text"
-            name="part"
-            value={editData.part}
-            onChange={(e) => setEditData({ ...editData, part: e.target.value })}
-          />
-          <br />
+        <div className="partsForm partsFormEdit">
+          <div className="partsFormEditForm">
+            <div className="partsFormEditFormHolder">
+              <h2>Edit Parts</h2>
+              <div className="partsFormInner">
+                <h5>Edit Part</h5>
+                <input
+                  className="partsFormInner"
+                  type="text"
+                  name="part"
+                  value={editData.part}
+                  onChange={(e) =>
+                    setEditData({ ...editData, part: e.target.value })
+                  }
+                />
+                <br />
 
-          <h5>Edit Quantity</h5>
-          <input
-            type="text"
-            name="quantity"
-            value={editData.quantity}
-            onChange={(e) => setEditData({ ...editData, quantity: e.target.value })}
-          />
-          <br />
+                <h5>Edit Quantity</h5>
+                <input
+                  type="text"
+                  name="quantity"
+                  value={editData.quantity}
+                  onChange={(e) =>
+                    setEditData({ ...editData, quantity: e.target.value })
+                  }
+                />
+                <br />
 
-          <h5>Edit Amount</h5>
-          <input
-            type="text"
-            name="amount"
-            value={editData.amount}
-            onChange={(e) => setEditData({ ...editData, amount: e.target.value })}
-          />
-          <br />
-          <div className="editPartsBtn">
-            <button onClick={handleUpdate}>Update</button>
-            <button onClick={() => setEditData(null)}>Cancel</button>
+                <h5>Edit Amount</h5>
+                <input
+                  type="text"
+                  name="amount"
+                  value={editData.amount}
+                  onChange={(e) =>
+                    setEditData({ ...editData, amount: e.target.value })
+                  }
+                />
+                <br />
+                <div className="editPartsBtn">
+                  <button onClick={handleUpdate}>Update</button>
+                  <button onClick={() => setEditData(null)}>Cancel</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-)}
+      )}
     </div>
   );
 }
 
 export default NewWorkOrder;
-

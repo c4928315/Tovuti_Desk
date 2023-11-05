@@ -13,6 +13,8 @@ function StepSummary() {
 
   const navigate = useNavigate();
 
+  console.log(userData)
+
   const handleDataSubmissionAndSave = () => {
 
     let arrayAsset = []
@@ -36,7 +38,7 @@ function StepSummary() {
     {
       locactionId: parseInt(userData.TicketLocation.LocationId, 10),
       categoryOfWorkId: parseInt(userData.categoryOfWork.id, 10),
-      ticketTitle: userData.TicketRef,
+      ticketTitle: userData.TicketTitle,
       ticketDescription: userData.TicketDescription,
       assetId: arrayAsset,
       checklists: arrayChecklist,
@@ -152,7 +154,7 @@ function StepSummary() {
           <p className="subHeaderSummary">Work Order 1:</p>
 
           <p className="mainInfoSummary">
-            {userData.TicketAssets[0].assetName}
+            {userData.TicketAssets[0]?.assetName}
           </p>
         </div>
 
