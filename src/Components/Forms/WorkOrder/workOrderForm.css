@@ -194,7 +194,7 @@
 .stepFlex{
   display: flex;
   width: 100%;
-  gap: 20px;
+  gap: -20px;
   min-height: 550px;
   background-color: white;
 }

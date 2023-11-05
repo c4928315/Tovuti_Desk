@@ -18,17 +18,22 @@ function Grid() {
   const recordsPerPage = 5
   const keys = ["status"]
 
+  
+
   return (
-    <div className="containers">
-      <div className="greetings angels container">
+    <div className="allPagePosition">
+      <div className="commonPage">
+      <div className="greetings angels">
         <h3>Welcome back, <b>Peter</b> </h3>
+        <button>logout</button>
       </div>
-      <div className="grid-container container">
+      <div className="grid-container">
         <div className="item1 items123">
         <Card
             data={data}
-            text="Assets"
+            text="Corrective Maintenance"
             link="work-order"
+            number="60"
             dropdownText="Period"
             dropdownClassName="gridStatusSelect"
             itemProperty="status"
@@ -39,7 +44,8 @@ function Grid() {
           <Card
             data={data}
             link="/requests"
-            text="Incidents"
+            number="16"
+            text="Preventative Maintenance"
             dropdownText="Period"
             dropdownClassName="gridStatusSelect"
             itemProperty="status"
@@ -53,7 +59,7 @@ function Grid() {
             dropdownText="Period"
             dropdownClassName="gridStatusSelect"
             itemProperty="status"
-            dropdownComp={<Dropdown gridStatusSelect="gridStatusSelectChart" />}
+            dropdownComp={<Dropdown text="Period" gridStatusSelect="gridStatusSelectChart" />}
           />
         </div>
         <div className="item4">
@@ -69,6 +75,7 @@ function Grid() {
         <div className="item5">
           <Reminders />
         </div>
+      </div>
       </div>
     </div>
   );

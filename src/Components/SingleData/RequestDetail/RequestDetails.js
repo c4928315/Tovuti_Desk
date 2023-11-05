@@ -8,7 +8,7 @@ function RequestDetailsPage() {
   const [itemDetails, setItemDetails] = useState(null);
 
   useEffect(() => {
-    const apiUrl = `https://intra-deco.onrender.com/requests/${itemId}`;
+    const apiUrl = `https://saharadeskrestapi.azurewebsites.net/api/Requests/GetAllRequests/${itemId}`;
 
     fetch(apiUrl)
       .then((response) => {
@@ -32,16 +32,6 @@ function RequestDetailsPage() {
     return <div>Loading...</div>;
   }
 
-  console.log(itemDetails.Status.Name);
-
-  let nameAtIndex0 = "";
-
-  if (itemDetails.Asset.length > 0) {
-    nameAtIndex0 = itemDetails.Asset[0].Name;
-    console.log(nameAtIndex0); // This will log "Elevator" to the console
-  } else {
-    console.log("The array is empty");
-  }
 
   return (
     <div className="commonPage">
@@ -50,9 +40,9 @@ function RequestDetailsPage() {
           <h3 className="pageTitle requestDetailTitle">
             <p>Requests</p>
             <p>-</p>
-            <p>{nameAtIndex0}</p>
+            <p>{itemDetails.requestDetails}</p>
             <p>-</p>
-            <p> {itemDetails.RequestRef}</p>
+            <p> {itemDetails.requestRef}</p>
           </h3>
 
           <span className="requestNotice">
@@ -70,14 +60,14 @@ function RequestDetailsPage() {
           <Link to="/requests">Requests</Link>
           <div className="dividerCommonPage"></div>
           <Link className="flex" style={{ gap: "4px" }}>
-            <p> {nameAtIndex0}</p>
+            <p>{itemDetails.requestDetails}</p>
             <p>-</p>
-            <p> {itemDetails.RequestRef}</p>
+            <p> {itemDetails.requestRef}</p>
           </Link>
         </div>
         {/*  */}
 
-        <div className="request-details-page">
+        <div className="request-details-page onlyRequests">
           <div className="left">
             <h3 className="request-details-page-main">Request Details</h3>
 
@@ -85,8 +75,8 @@ function RequestDetailsPage() {
               <div className="requestKeyValue requestKeyValue2">
                 <div>
                   <h5>faulty asset:</h5>
-                  {itemDetails.Asset.map((item) => {
-                    return <p>{item.Name}</p>;
+                  {itemDetails.requestAsset.map((item) => {
+                    return <p>{item.assetName}</p>;
                   })}
                 </div>
 
@@ -123,7 +113,7 @@ function RequestDetailsPage() {
               </div>
               <div className="requestKeyValue">
                 <h5>location:</h5>
-                <p>{itemDetails.Location.Name}</p>
+                <p>{itemDetails.locaction.locationName}</p>
               </div>
               <div className="requestKeyValue">
                 <h5>fault:</h5>
@@ -160,7 +150,7 @@ function RequestDetailsPage() {
                 <customIcons.down size={14} />
               </div>
               <div className="workOrderDetailContainer">
-                <div className="left">
+                <div className="minLeft">
                   <h5 className="workOrderDetailContainerH5">
                     work order title:
                   </h5>
@@ -168,22 +158,22 @@ function RequestDetailsPage() {
                     {itemDetails.WorkOrder.Title}
                   </p>
                 </div>
-                <div className="right">
+                <div className="minRight">
                   <h5 className="workOrderDetailContainerH5">description:</h5>
-                  <p className="workOrderDetailContainerP">
+                  <p className="workOrderDetailContainerP workOrderDetailContainerH5Description">
                     {itemDetails.WorkOrder.Description}
                   </p>
                 </div>
               </div>
 
               <div className="workOrderDetailContainer">
-                <div className="left">
+                <div className="minLeft">
                   <h5 className="workOrderDetailContainerH5">
                     {itemDetails.WorkOrder.CategoryOfWork.Name}
                   </h5>
                   <p className="workOrderDetailContainerP">Engineering</p>
                 </div>
-                <div className="right">
+                <div className="minRight">
                   <h5 className="workOrderDetailContainerH5">Priority:</h5>
                   <button
                     className={`workOrderDetailContainerButton ${
@@ -200,13 +190,13 @@ function RequestDetailsPage() {
               </div>
 
               <div className="workOrderDetailContainer">
-                <div className="left">
+                <div className="minLeft">
                   <h5 className="workOrderDetailContainerH5">team:</h5>
                   <p className="workOrderDetailContainerP">
                     {itemDetails.WorkOrder.AssignTeam.Name}
                   </p>
                 </div>
-                <div className="right">
+                <div className="minRight">
                   <h5 className="workOrderDetailContainerH5">
                     Additional Team:
                   </h5>
@@ -217,7 +207,7 @@ function RequestDetailsPage() {
               </div>
 
               <div className="workOrderDetailContainer">
-                <div className="left">
+                <div className="minLeft">
                   <h5 className="workOrderDetailContainerH5">
                     Technician Signature Required?
                   </h5>
@@ -225,7 +215,7 @@ function RequestDetailsPage() {
                     {itemDetails === "True" ? <p>Yes</p> : <p>No</p>}
                   </p>
                 </div>
-                <div className="right">
+                <div className="minRight">
                   <h5 className="workOrderDetailContainerH5">
                     Estimated Hours
                   </h5>
@@ -238,7 +228,6 @@ function RequestDetailsPage() {
                 <h3 className="request-details-page-main">
                   tasks and checklists
                 </h3>
-
                 <customIcons.down size={14} />
               </div>
               <div className="innerTaskChecklist">

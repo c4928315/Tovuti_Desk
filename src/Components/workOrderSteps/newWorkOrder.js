@@ -1,94 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import { Button, Checkbox, TextField } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { MultiStepContext } from "../Context";
 import customIcons from "../../Icons/icons";
 import "./steps.css";
-import { act } from "react-dom/test-utils";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
-const assetCategory = [
-  {
-    value: 1,
-    label: "Asset category 1",
-  },
-  {
-    value: 2,
-    label: "Asset category 2",
-  },
-  {
-    value: 3,
-    label: "Asset category 3",
-  },
-  {
-    value: 4,
-    label: "Asset category 4",
-  },
-];
-
-const locations = [
-  {
-    value: 1,
-    label: "Kenya",
-  },
-  {
-    value: 2,
-    label: "Uganda",
-  },
-  {
-    value: 3,
-    label: "Tanzania",
-  },
-  {
-    value: 4,
-    label: "Rwanda",
-  },
-];
-
-const assets = [
-  {
-    value: 1,
-    label: "Asset 1",
-  },
-  {
-    value: 2,
-    label: "Asset 2",
-  },
-  {
-    value: 3,
-    label: "Asset 3",
-  },
-  {
-    value: 4,
-    label: "Asset 4",
-  },
-];
-
-const ticketList = [
-  {
-    value: 1,
-    label: "ticket 1",
-  },
-  {
-    value: 2,
-    label: "ticket 2",
-  },
-  {
-    value: 3,
-    label: "ticket 3",
-  },
-  {
-    value: 4,
-    label: "ticket 4",
-  },
-];
 
 const teamOptions = [
   { TeamId: 1, TeamName: "One" },
   { TeamId: 2, TeamName: "Two" },
   { TeamId: 3, TeamName: "Three" },
-  // Add more teams as needed
 ];
 
 const priorities = [
@@ -109,8 +30,6 @@ const priorities = [
     TicketPriorityName: "Criticle",
   },
 ];
-
-const features = ["Scales", "Horns", "Claws", "Wings"];
 
 const checklists = [
   {
@@ -137,14 +56,21 @@ const checklists = [
 
 function NewWorkOrder() {
   const { setStep, userData, setUserData } = useContext(MultiStepContext);
-  const [checkedItems, setCheckedItems] = useState({});
+  const [checklistSearchQuery, setChecklistSearchQuery] = useState("");
+  const [additionalTeamsSearchQuery, setAdditionalTeamsSearchQuery] =
+    useState("");
   const [activeTab, setActiveTab] = useState(true);
   const [activeTab2, setActiveTab2] = useState(false);
   const [showParts, setShowParts] = useState(false);
+  const [ticketProjectedParts, setTicketProjectedParts] = useState([]);
 
+  const [selectedCategoryOfWork, setSelectedCategoryOfWork] = useState(null);
+  const [categoryOfWorkData, setCategoryOfWorkData] = useState([]);
+
+  const [editData, setEditData] = useState(null);
   const [partData, setPartData] = useState([]);
   const [formData, setFormData] = useState({
-    part: "",
+    spareId: "",
     quantity: "",
     amount: "",
   });
@@ -155,11 +81,13 @@ function NewWorkOrder() {
     setShowParts(!showParts);
   };
 
+  console.log(userData);
+
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get(
-          "https://intra-deco.onrender.com/Parts"
+          "https://saharadeskrestapi.azurewebsites.net/api/Parts/GetAllParts"
         );
 
         setPartData(response.data);
@@ -173,79 +101,129 @@ function NewWorkOrder() {
     fetchData();
   }, [partData]);
 
-  //   const handleTicketCurrentTeamChange = (e) => {
-  //     setUserData({ ...userData, TicketCurrentTeam: e.target.value });
-  //   };
+  const [teams, setTeams] = useState([]);
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    async function fetchCategoryOfWorkData() {
+      try {
+        const response = await axios.get(
+          "https://saharadeskrestapi.azurewebsites.net/api/CategoryOfWorks"
+        );
 
-    // Perform a POST request to your server to add the data
-    try {
-      const response = await fetch("https://intra-deco.onrender.com/Parts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const newData = await response.json();
-
-        // Update the state with the new data
-        setPartData([...partData, newData]);
-
-        // Clear the form
-        setFormData({ part: "", quantity: "", amount: "" });
-      } else {
-        console.error("Failed to add data");
+        setCategoryOfWorkData(response.data);
+      } catch (error) {
+        console.error("Error fetching category of work data:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
     }
+
+    fetchCategoryOfWorkData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchTeams() {
+      try {
+        const response = await axios.get(
+          "https://saharadeskrestapi.azurewebsites.net/api/Team/GetAllTeams"
+        );
+
+        setTeams(response.data);
+      } catch (error) {
+        console.error("Error fetching category of work data:", error);
+      }
+    }
+
+    fetchTeams();
+  }, []);
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+  
+    const selectedPart = partData.find((part) => part.id === parseInt(formData.part, 10)); // Parse the formData.part to an integer
+  
+    if (selectedPart) {
+      const newPart = {
+        spareId: selectedPart.id, // Use selectedPart.id as spareId
+        quantity: parseInt(formData.quantity, 10), // Parse the formData.quantity to an integer
+        amount: parseFloat(formData.amount), // Parse the formData.amount to a float
+        partName: selectedPart.partName,
+      };
+  
+      setTicketProjectedParts((prevProjectedParts) => [...prevProjectedParts, newPart]);
+  
+      setUserData({
+        ...userData,
+        TicketProjectedParts: [...ticketProjectedParts, newPart],
+      });
+  
+      setFormData({ partName: "", part: "", quantity: "", amount: "" }); // Clear the form fields
+      setShowParts(!showParts);
+    }
+  };
+  
+
+  const handleUpdate = () => {
+    if (editData && editData.id) {
+      const updatedProjectedParts = userData.TicketProjectedParts.map(
+        (item) => {
+          if (item.spareId === editData.id) {
+            return {
+              spareId: editData.spareId,
+              quantity: editData.quantity,
+              amount: editData.amount,
+            };
+          }
+          return item;
+        }
+      );
+
+      setUserData({ ...userData, TicketProjectedParts: updatedProjectedParts });
+
+      setEditData(null);
+    }
+  };
+
+  const handleEdit = (item) => {
+    setEditData({ ...item, id: item.spareId });
   };
 
   const handleTabState = () => {
     setActiveTab(!activeTab);
     setActiveTab2(!activeTab2);
   };
+  //   setCheckedItems((prevItems) => ({
+  //     ...prevItems,
+  //     [option]: !prevItems[option],
+  //   }));
+  // };
 
-  const handleCheckboxChanges = (option) => {
-    setCheckedItems((prevItems) => ({
-      ...prevItems,
-      [option]: !prevItems[option],
-    }));
-  };
+  // const handleAssetCheckboxChange = (assets) => {
+  //   const { asset } = userData;
 
-  const handleAssetCheckboxChange = (assets) => {
-    const { asset } = userData;
+  //   const updatedasset = asset.includes(assets)
+  //     ? asset.filter((selectedAsset) => selectedAsset !== assets)
+  //     : [...asset, assets];
 
-    const updatedasset = asset.includes(assets)
-      ? asset.filter((selectedAsset) => selectedAsset !== assets)
-      : [...asset, assets];
+  //   setUserData({ ...userData, asset: updatedasset });
+  // };
 
-    setUserData({ ...userData, asset: updatedasset });
-  };
+  // const handleCheckboxChange = (option) => {
+  //   console.log("Clicked option:", option);
 
-  const handleCheckboxChange = (option) => {
-    console.log("Clicked option:", option);
-
-    const selectedFeatures = userData.features || [];
-    if (selectedFeatures.includes(option)) {
-      setUserData({
-        ...userData,
-        features: selectedFeatures.filter(
-          (selectedFeature) => selectedFeature !== option
-        ),
-      });
-    } else {
-      setUserData({
-        ...userData,
-        features: [...selectedFeatures, option],
-      });
-    }
-  };
+  //   const selectedFeatures = userData.features || [];
+  //   if (selectedFeatures.includes(option)) {
+  //     setUserData({
+  //       ...userData,
+  //       features: selectedFeatures.filter(
+  //         (selectedFeature) => selectedFeature !== option
+  //       ),
+  //     });
+  //   } else {
+  //     setUserData({
+  //       ...userData,
+  //       features: [...selectedFeatures, option],
+  //     });
+  //   }
+  // };
 
   const handleTicketCurrentTeamChange = (e) => {
     const teamName = e.target.options[e.target.selectedIndex].text;
@@ -290,40 +268,77 @@ function NewWorkOrder() {
     });
   };
 
-  const handleChecklistChange = (checklistId) => {
-    // Check if the checklistId is already in the array
-    const isChecked = userData.TicketChecklistForms.some(
-      (form) => form.FormsAndSectionsId === checklistId
-    );
-
-    if (isChecked) {
-      // Remove the checklist if already checked
-      const updatedChecklist = userData.TicketChecklistForms.filter(
-        (form) => form.FormsAndSectionsId !== checklistId
-      );
-
-      setUserData({
-        ...userData,
-        TicketChecklistForms: updatedChecklist,
-      });
-    } else {
-      // Add the checklist if not checked
-      const selectedChecklist = checklists.find(
-        (checklist) => checklist.FormsAndSectionsId === checklistId
-      );
-
-      setUserData({
-        ...userData,
-        TicketChecklistForms: [
-          ...userData.TicketChecklistForms,
-          selectedChecklist,
-        ],
-      });
-    }
+  const handleChecklistSearchChange = (e) => {
+    setChecklistSearchQuery(e.target.value);
   };
 
+  const handleAdditionalTeamsSearchChange = (e) => {
+    setAdditionalTeamsSearchQuery(e.target.value);
+  };
+
+  const handleDeleteProjectedPart = (index) => {
+    const updatedProjectedParts = [...userData.TicketProjectedParts];
+    updatedProjectedParts.splice(index, 1);
+    setUserData({ ...userData, TicketProjectedParts: updatedProjectedParts });
+  };
+
+  const handleChecklistItemDelete = (item) => {
+    const updatedChecklist = userData.TicketChecklistForms.filter(
+      (form) => form.FormsAndSectionsId !== item.FormsAndSectionsId
+    );
+
+    setUserData({
+      ...userData,
+      TicketChecklistForms: updatedChecklist,
+    });
+  };
+
+  //CHECKLIST SEARCH
+
+  const handleChecklistRadioChange = (checklistId) => {
+    const selectedChecklist = checklists.find(
+      (checklist) => checklist.FormsAndSectionsId === checklistId
+    );
+    setUserData({
+      ...userData,
+      TicketChecklistForms: [selectedChecklist], // Use an array to hold the selected checklist
+    });
+  };
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredChecklists, setFilteredChecklists] = useState(checklists);
+
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+    const filteredList = checklists.filter((checklist) => {
+      return checklist.FormsAndSectionsName.toLowerCase().includes(
+        searchTerm.toLowerCase()
+      );
+    });
+    setFilteredChecklists(filteredList);
+  };
+
+  //CHECKLIST SEARCH
+
+  //ADDITIONAL TEAMS SEARCH
+
+  const [filteredTeamOptions, setFilteredTeamOptions] = useState(teams);
+
+  const handleAdditionalSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+    const filteredList = teams.filter((team) => {
+      return team.teamName.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+    setFilteredTeamOptions(filteredList);
+  };
+
+  //ADDITIONAL TEAMS SEARCH
+
   return (
-    <div>
+    <div className="WORKorderContainerMAIN">
+      <h4 className="WORKorderContainerMAINH4Top">Work Order Details</h4>
       <nav>
         <div
           className="nav nav-tabs nav-tabs-newWo"
@@ -380,7 +395,7 @@ function NewWorkOrder() {
           </button>
         </div>
       </nav>
-      <div className="tab-content" id="nav-tabContent">
+      <div className="tab-content " id="nav-tabContent">
         <div
           className="tab-pane fade show active"
           id="nav-home"
@@ -422,69 +437,106 @@ function NewWorkOrder() {
             <div className="newWorkOrderCells">
               <div>
                 <p className="form-label-newWO">Category Of Work</p>
-                <select
-                  className="form-select newWorkOrderSelectStep2"
-                  aria-label="Default select example"
-                  value={userData.categoryOfWork}
-                  onChange={(e) =>
-                    setUserData({ ...userData, categoryOfWork: e.target.value })
-                  }
-                >
-                  <option selected>select</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
+                <div className="selectNewContainerWO2">
+                  <select
+                    className="form-select newWorkOrderSelectStep2"
+                    aria-label="Default select example"
+                    value={
+                      selectedCategoryOfWork ? selectedCategoryOfWork.id : ""
+                    }
+                    onChange={(e) => {
+                      const selectedCategoryId = e.target.value;
+                      const selectedCategory = categoryOfWorkData.find(
+                        (category) => category.id === Number(selectedCategoryId)
+                      );
+                      setSelectedCategoryOfWork(selectedCategory);
+
+                      // Update userData with the selected category of work
+                      setUserData({
+                        ...userData,
+                        categoryOfWork: selectedCategory,
+                      });
+                    }}
+                    style={{
+                      color: "#C5C7CD",
+                    }}
+                  >
+                    <option value="">select</option>
+                    {categoryOfWorkData.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.categoryOfWorkName}
+                      </option>
+                    ))}
+                  </select>
+                  <customIcons.down
+                    className="selectNewIcon selectNewIconWO"
+                    size={13}
+                  />
+                </div>
               </div>
 
-              <div>
+              <div className="priorityMain">
                 <p className="form-label-newWO">Priority</p>
-                <div className="newWorkOrderCellsCheckBox">
-                  {/* fbu4hfu4hi */}
-                  <div className="priorities">
-                    {priorities.map((priority) => (
-                      <Button
-                        key={priority.TicketPriorityId}
-                        onClick={() => handlePrioritySelection(priority)}
-                        variant="contained"
-                        className={
-                          userData.TicketPriority &&
-                          userData.TicketPriority.TicketPriorityId ===
-                            priority.TicketPriorityId
-                            ? "selected-button"
-                            : "unselected-button"
-                        }
-                      >
-                        {priority.TicketPriorityName}
-                      </Button>
-                    ))}
+                <div className="selectNewContainerWO2">
+                  <div className="newWorkOrderCellsCheckBox">
+                    {/* fbu4hfu4hi */}
+                    <div className="priorities">
+                      {priorities.map((priority) => (
+                        <Button
+                          key={priority.TicketPriorityId}
+                          onClick={() => handlePrioritySelection(priority)}
+                          variant="contained"
+                          className={
+                            userData.TicketPriority &&
+                            userData.TicketPriority.TicketPriorityId ===
+                              priority.TicketPriorityId
+                              ? "selected-button"
+                              : "unselected-button"
+                          }
+                        >
+                          {priority.TicketPriorityName}
+                        </Button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div>
-              <div className="newWorkOrderCells newWorkOrderCellsAssetCategory">
-                <div>
-                  <p className="form-label-newWO">Assign Team(primary)</p>
+            <div className="newWorkOrderCells newWorkOrderCellsAssetCategory allTopWO WOstepOneMargin">
+              <div>
+                <p className="form-label-newWO">Assign Team(primary)</p>
+                <div className="selectNewContainerWO2">
                   <select
                     className="form-select newWorkOrderSelectStep2"
                     aria-label="Default select example"
                     value={userData.TicketCurrentTeam.CurrentAssignedTeamId}
                     onChange={handleTicketCurrentTeamChange}
                   >
-                    <option value="1">select</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="">select</option>
+                    {teams.map((item) => {
+                      return (
+                        <option value={item.id} key={item.id}>
+                          {item.teamName}
+                        </option>
+                      );
+                    })}
                   </select>
+                  <customIcons.down
+                    className="selectNewIcon selectNewIconWO"
+                    size={13}
+                  />
                 </div>
+              </div>
 
-                <div>
-                  <div class="dropdown actionDropdown dropdownAdditionalTeam">
-                    <div className="header">
-                      <p>Assign Additional Team</p>
-                    </div>
+              <div>
+                <div class="dropdown actionDropdown dropdownAdditionalTeam">
+                  <div className="header">
+                    <p className="additionalTeamHeader">
+                      Assign Additional Team
+                    </p>
+                  </div>
+                  <div className="selectNewContainerWO2">
                     <p
                       className="form-label-newWO btn btn-light dropdown-toggle dropdown-toggle-add-team"
                       type="button"
@@ -493,97 +545,120 @@ function NewWorkOrder() {
                     >
                       select
                     </p>
-
                     <ul class="dropdown-menu">
-                      {teamOptions.map((team) => (
-                        <div
-                          key={team.TeamId}
-                          className="checkbox-item checkListDropdown"
-                        >
-                          <input
-                            type="checkbox"
-                            id={`team-${team.TeamId}`}
-                            name={`team-${team.TeamId}`}
-                            checked={userData.TicketAdditionalTeams.some(
-                              (t) => t.TeamId === team.TeamId
-                            )}
-                            onChange={() =>
-                              handleTeamCheckboxChange(team.TeamId)
-                            }
-                          />
-                          <p htmlFor={`team-${team.TeamId}`}>{team.TeamName}</p>
-                        </div>
-                      ))}
+                      <div class="search-container">
+                        <input
+                          type="text"
+                          class="form-control search-input"
+                          placeholder="Search Additional Teams..."
+                          value={additionalTeamsSearchQuery}
+                          onChange={handleAdditionalTeamsSearchChange}
+                        />
+                      </div>
+
+                      <li>
+                        {teams
+                          .filter((team) =>
+                            team.teamName
+                              .toLowerCase()
+                              .includes(
+                                additionalTeamsSearchQuery.toLowerCase()
+                              )
+                          )
+                          .map((team) => (
+                            <div
+                              key={team.id} // Assuming that the team object has an 'id' property
+                              className="checkbox-item checkListDropdown"
+                            >
+                              <input
+                                type="checkbox"
+                                id={`team-${team.id}`}
+                                name={`team-${team.id}`}
+                                checked={userData.TicketAdditionalTeams.some(
+                                  (t) => t.TeamId === team.id
+                                )}
+                                onChange={() =>
+                                  handleTeamCheckboxChange(team.id)
+                                } // Use 'team.id' as the team identifier
+                              />
+                              <lable htmlFor={`team-${team.id}`}>
+                                {team.teamName}
+                              </lable>
+                            </div>
+                          ))}
+                      </li>
                     </ul>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <hr />
+            <hr className="workOrderHRmain" />
 
-              <div className="newWorkOrderSingleCellHolder">
-                <div className="newWorkOrderSingleCell">
-                  <h3 className="form-label-newWO">Completion</h3>
+            <div className="newWorkOrderSingleCellHolder">
+              <div className="newWorkOrderSingleCell">
+                <h3 className="form-label-newWO">Completion</h3>
 
-                  <div className="newWOflex checkListDropdown">
-                    <input
-                      type="checkbox"
-                      id="vehicle2"
-                      name="vehicle2"
-                      value="Car"
-                      checked={userData.TechnitianSignature}
-                      onChange={() =>
-                        setUserData({
-                          ...userData,
-                          TechnitianSignature: !userData.TechnitianSignature,
-                        })
-                      }
-                    />
-                    <p htmlFor="vehicle">Technician Signature Required</p>
-                  </div>
-                </div>
-
-                <div className="newWorkOrderSingleCell">
-                  <div className="mb-3">
-                    <p className="form-label-newWO estimatedHours">
-                      Estimated Hours
-                    </p>
-                    <input
-                      type="text"
-                      className="form-control newWorkOrderInput"
-                      id="formGroupExampleInput"
-                      placeholder="hours"
-                      value={userData.EstimatedHours}
-                      onChange={(e) =>
-                        setUserData({
-                          ...userData,
-                          EstimatedHours: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
+                <div className="newWOflex checkListDropdown">
+                  <input
+                    type="checkbox"
+                    id="vehicle2"
+                    name="vehicle2"
+                    value="Car"
+                    checked={userData.TechnitianSignature}
+                    onChange={() =>
+                      setUserData({
+                        ...userData,
+                        TechnitianSignature: !userData.TechnitianSignature,
+                      })
+                    }
+                  />
+                  <p htmlFor="vehicle">Technician Signature Required</p>
                 </div>
               </div>
-              <hr />
-              <div className="newWorkOrderSingleCell">
-                <div className="partsTop">
-                  <p className="form-label-newWO">Projected Parts</p>
-                </div>
 
-                <div className="partTableConatainer">
-                  <table className="partsTable">
-                    <thead>
-                      <tr>
-                        <th>Parts</th>
-                        <th>Quantity</th>
-                        <th>Ammount(ks)</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {partData.map((item, i) => (
+              <div className="newWorkOrderSingleCell">
+                <div className="mb-3">
+                  <p className="form-label-newWO estimatedHours">
+                    Estimated Hours
+                  </p>
+                  <input
+                    type="text"
+                    className="form-control newWorkOrderInput"
+                    id="formGroupExampleInput"
+                    placeholder="hours"
+                    value={userData.EstimatedHours}
+                    onChange={(e) =>
+                      setUserData({
+                        ...userData,
+                        EstimatedHours: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+            <hr className="workOrderHRmain" />
+            <div className="newWorkOrderSingleCell newWorkOrderSingleCellForm">
+              <div className="partsTop">
+                <p className="form-label-newWO">Projected Parts</p>
+              </div>
+
+              <div className="partsTableConatainer">
+                <table className="partsTable">
+                  <thead>
+                    <tr>
+                      <th>Parts</th>
+                      <th>Quantity</th>
+                      <th>Ammount(ks)</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {userData.TicketProjectedParts.map((item, i) => {
+                      return (
                         <tr key={i}>
-                          <td className="tBodyTd">{item.part}</td>
+                          <td className="tBodyTd">{item.partName}</td>
                           <td className="tBodyTd">{item.quantity}</td>
                           <td className="tBodyTd">{item.amount}</td>
                           <td className="tBodyTd">
@@ -591,23 +666,37 @@ function NewWorkOrder() {
                               <customIcons.edit
                                 size={17}
                                 style={{ color: "#584539", cursor: "pointer" }}
+                                onClick={() => handleEdit(item)}
                               />
                               <customIcons.delete
                                 size={17}
                                 style={{ color: "#584539", cursor: "pointer" }}
+                                onClick={() => handleDeleteProjectedPart(i)}
                               />
                             </span>
                           </td>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <Link onClick={handleShowParts}>Add Part</Link>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <Link onClick={handleShowParts} className="addPartsLink">
+                Add Part
+              </Link>
+              <div
+                className={`fixedPartsContainer ${
+                  !showParts ? "partsFormHide" : ""
+                }`}
+              >
+                <div className="closePartTable" onClick={handleShowParts}>
+                  X
                 </div>
-
                 <form
                   onSubmit={handleFormSubmit}
-                  className={`partsForm ${!showParts ? "partsFormHide" : ""}`}
+                  className={`partsForm partsFormOne ${
+                    !showParts ? "partsFormHide" : ""
+                  }`}
                 >
                   <div className="partsFormInner">
                     <h3 className="partsHeader">Add Part</h3>
@@ -620,9 +709,13 @@ function NewWorkOrder() {
                       }
                     >
                       <option value="">Select</option>
-                      <option value="Part 1">Part 1</option>
-                      <option value="Part 2">Part 2</option>
-                      <option value="Part 3">Part 3</option>
+                      {partData.map((item) => {
+                        return (
+                          <option key={item.id} value={item.id}>
+                            {item.partName}
+                          </option>
+                        );
+                      })}
                     </select>
 
                     <p className="partFormHeader">Selected Quantity</p>
@@ -647,370 +740,170 @@ function NewWorkOrder() {
                     <button type="submit">Submit</button>
                   </div>
                 </form>
-
-                {/* <form onSubmit={handleFormSubmit} className="partsForm">
-                  <div className="partsFormInner">
-                  <input
-                    type="text"
-                    placeholder="Part"
-                    value={formData.part}
-                    onChange={(e) =>
-                      setFormData({ ...formData, part: e.target.value })
-                    }
-                  />
-                  <br/>
-                  <input
-                    type="text"
-                    placeholder="Quantity"
-                    value={formData.quantity}
-                    onChange={(e) =>
-                      setFormData({ ...formData, quantity: e.target.value })
-                    }
-                  />
-                  <br/>
-                  <input
-                    type="text"
-                    placeholder="Amount"
-                    value={formData.amount}
-                    onChange={(e) =>
-                      setFormData({ ...formData, amount: e.target.value })
-                    }
-                  />
-                  <br/>
-                  <button type="submit">Submit</button>
-                  </div>
-                </form> */}
               </div>
-              <hr />
-              <div className="newWorkOrderSingleCell checklistToggle">
-                <p className="form-label-newWO">Tasks and Checklists</p>
+            </div>
 
-                <div class="dropdown actionDropdown">
-                  <button
-                    className="btn btn-light dropdown-toggle actionBtn addChecklist"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <span>Add Checklists</span>
-                    <span>
-                      <customIcons.down />
-                    </span>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <div class="search-container">
-                      {/* <customIcons.search/> */}
-                      <input
-                        type="text"
-                        class="form-control search-input"
-                        placeholder="Search..."
-                      />
-                    </div>
-                    <li>
-                      {checklists.map((checklist) => (
+            <hr className="workOrderHRmain" />
+            <div className="newWorkOrderSingleCell checklistToggle">
+              <p className="form-label-newWO">Tasks and Checklists</p>
+
+              <div class="dropdown actionDropdown">
+                <button
+                  className="btn btn-light dropdown-toggle actionBtn addChecklist"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span>Add Checklists</span>
+                  <span>
+                    <customIcons.down />
+                  </span>
+                </button>
+                <ul class="dropdown-menu addChecklistDropDown">
+                  <div class="search-container">
+                    <input
+                      type="text"
+                      class="form-control search-input"
+                      placeholder="Search Checklists..."
+                      value={checklistSearchQuery}
+                      onChange={handleChecklistSearchChange}
+                    />
+                  </div>
+
+                  <li>
+                    {checklists
+                      .filter((checklist) =>
+                        checklist.FormsAndSectionsName.toLowerCase().includes(
+                          checklistSearchQuery.toLowerCase()
+                        )
+                      )
+                      .map((checklist) => (
                         <div
                           key={checklist.FormsAndSectionsId}
                           className="checklistList"
                         >
                           <input
-                            type="checkbox"
+                            type="radio"
                             id={`checklist-${checklist.FormsAndSectionsId}`}
-                            checked={userData.TicketChecklistForms.some(
-                              (form) =>
-                                form.FormsAndSectionsId ===
+                            checked={
+                              userData.TicketChecklistForms.length > 0 &&
+                              userData.TicketChecklistForms[0]
+                                .FormsAndSectionsId ===
                                 checklist.FormsAndSectionsId
-                            )}
+                            }
                             onChange={() =>
-                              handleChecklistChange(
+                              handleChecklistRadioChange(
                                 checklist.FormsAndSectionsId
                               )
                             }
                           />
-                          <p
+                          <lable
                             htmlFor={`checklist-${checklist.FormsAndSectionsId}`}
                           >
                             {checklist.FormsAndSectionsName}
-                          </p>
+                          </lable>
                         </div>
                       ))}
-                      {/* <Link class="dropdown-item action-dropdown-item" to="/request-form">
-                  <customIcons.add style={{color: "green"}}/>
-                  <span>New Request</span>
-                </Link> */}
-                    </li>
-                  </ul>
-                </div>
-                {userData.TicketChecklistForms.length > 0 && (
-                  <div className="partTableConatainer checklistTableContainer">
-                    <table className="checklistTable">
-                      <thead>
-                        <tr>
-                          <th>Checklists</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {userData.TicketChecklistForms.map((item, i) => (
-                          <tr key={i}>
-                            <td>
-                              <li>{item.FormsAndSectionsName}</li>
-                              <customIcons.delete style={{color: "rgba(88, 69, 57, 0.87)"}}/>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
+                  </li>
+                </ul>
               </div>
-              <div className="newWoBtn">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setStep(1)}
-                  className="nextBtn assetPrevBtn"
-                >
-                  Back
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setStep(3)}
-                  className="nextBtn assetNextBtn"
-                >
-                  Next
-                </Button>
+              {userData.TicketChecklistForms.length > 0 && (
+                <div className="partTableConatainer checklistTableContainer">
+                  <table className="checklistTable">
+                    <thead>
+                      <tr>
+                        <th>Checklists</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {userData.TicketChecklistForms.map((item, i) => (
+                        <tr key={i}>
+                          <td>
+                            <div className="pointerChecklistContainer">
+                              <span className="checklistPointer"></span>
+                              {item.FormsAndSectionsName}
+                            </div>
+                            <customIcons.delete
+                              style={{ color: "rgba(88, 69, 57, 0.87)" }}
+                              onClick={() => handleChecklistItemDelete(item)}
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+            <div className="newWoBtn">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setStep(1)}
+                className="nextBtn assetPrevBtn"
+              >
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setStep(3)}
+                className="nextBtn assetNextBtn"
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {editData && (
+        <div className="partsForm partsFormEdit">
+          <div className="partsFormEditForm">
+            <div className="partsFormEditFormHolder">
+              <h2>Edit Parts</h2>
+              <div className="partsFormInner">
+                <h5>Edit Part</h5>
+                <input
+                  className="partsFormInner"
+                  type="text"
+                  name="part"
+                  value={editData.part}
+                  onChange={(e) =>
+                    setEditData({ ...editData, part: e.target.value })
+                  }
+                />
+                <br />
+
+                <h5>Edit Quantity</h5>
+                <input
+                  type="text"
+                  name="quantity"
+                  value={editData.quantity}
+                  onChange={(e) =>
+                    setEditData({ ...editData, quantity: e.target.value })
+                  }
+                />
+                <br />
+
+                <h5>Edit Amount</h5>
+                <input
+                  type="text"
+                  name="amount"
+                  value={editData.amount}
+                  onChange={(e) =>
+                    setEditData({ ...editData, amount: e.target.value })
+                  }
+                />
+                <br />
+                <div className="editPartsBtn">
+                  <button onClick={handleUpdate}>Update</button>
+                  <button onClick={() => setEditData(null)}>Cancel</button>
+                </div>
               </div>
             </div>
           </div>
-          {/* <div
-            className="tab-pane fade"
-            id="nav-profile"
-            role="tabpanel"
-            aria-labelledby="nav-profile-tab"
-            tabIndex="0"
-          >
-            <div className="newWorkOrder">
-              <div className="newWorkOrderCells">
-                <div className="mb-3">
-                  <p className="form-label-newWO">Work Order Title</p>
-                  <input
-                    type="text"
-                    className="form-control newWorkOrderInput"
-                    id="formGroupExampleInput"
-                    placeholder="Example input placeholder"
-                    value={userData.title}
-                    onChange={(e) =>
-                      setUserData({ ...userData, title: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="mb-3">
-                  <p className="form-label-newWO">Description</p>
-                  <input
-                    type="text"
-                    className="form-control newWorkOrderInput"
-                    id="formGroupExampleInput2"
-                    placeholder="Another input placeholder"
-                    value={userData.description}
-                    onChange={(e) =>
-                      setUserData({ ...userData, description: e.target.value })
-                    }
-                  />
-                </div>
-              </div>
-
-              <div className="newWorkOrderCells">
-                <div>
-                  <p className="form-label-newWO">Category Of Work</p>
-                  <select
-                    className="form-select newWorkOrderSelectStep2"
-                    aria-label="Default select example"
-                    value={userData.categoryOfWork}
-                    onChange={(e) =>
-                      setUserData({
-                        ...userData,
-                        categoryOfWork: e.target.value,
-                      })
-                    }
-                  >
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-
-                <div>
-                  <p className="form-label-newWO">Priority</p>
-                  <div className="newWorkOrderCellsCheckBox">
-                    {options.map((option, index) => (
-                      <label
-                        key={option}
-                        className={`checkbox-button ${
-                          checkedItems[option] ? "checked" : ""
-                        } ${index === 0 ? "first-option" : ""} ${
-                          index === options.length - 1 ? "last-option" : ""
-                        }`}
-                        onClick={() => handleCheckboxChange(option)}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={checkedItems[option]}
-                          onChange={() => {}}
-                        />
-                        {option}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="newWorkOrderCells">
-                <div>
-                  <p className="form-label-newWO">Assign Team(primary)</p>
-                  <select
-                    className="form-select newWorkOrderSelectStep2"
-                    aria-label="Default select example"
-                    value={userData.primaryTeam}
-                    onChange={(e) =>
-                      setUserData({ ...userData, primaryTeam: e.target.value })
-                    }
-                  >
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-
-                <div>
-                  <p className="form-label-newWO">Assign Additional Team</p>
-                  <select
-                    className="form-select newWorkOrderSelectStep2"
-                    aria-label="Default select example"
-                    value={userData.additionalTeam}
-                    onChange={(e) =>
-                      setUserData({
-                        ...userData,
-                        additionalTeam: e.target.value,
-                      })
-                    }
-                  >
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-              </div>
-
-              <hr />
-
-              <div className="newWorkOrderSingleCellHolder">
-                <div className="newWorkOrderSingleCell">
-                  <h3 className="form-label-newWO">Completion</h3>
-
-                  <div className="newWOflex">
-                    <input
-                      type="checkbox"
-                      id="vehicle2"
-                      name="vehicle2"
-                      value="Car"
-                      checked={userData.signatureRequired}
-                      onChange={() =>
-                        setUserData({
-                          ...userData,
-                          signatureRequired: !userData.signatureRequired,
-                        })
-                      }
-                    />
-                    <label htmlFor="vehicle">
-                      Technician Signature Required
-                    </label>
-                  </div>
-                </div>
-
-                <div className="newWorkOrderSingleCell">
-                  <div className="mb-3">
-                    <p className="form-label-newWO">Estimated Hours</p>
-                    <input
-                      type="text"
-                      className="form-control newWorkOrderInput"
-                      id="formGroupExampleInput"
-                      placeholder="hours"
-                      value={userData.estimatedHours}
-                      onChange={(e) =>
-                        setUserData({
-                          ...userData,
-                          estimatedHours: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
-              <hr />
-              <div className="newWorkOrderSingleCell">
-                <p className="form-label-newWO">Projected Parts</p>
-                <table className="partsTable">
-                  <thead>
-                    <tr>
-                      <th>Parts</th>
-                      <th>Quantity</th>
-                      <th>Ammount(ks)</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="tBodyTd"></td>
-                      <td className="tBodyTd"></td>
-                      <td className="tBodyTd"></td>
-                      <td className="tBodyTd"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <hr />
-              <div className="newWorkOrderSingleCell">
-                <p className="form-label-newWO">Tasks and Checklists</p>
-                {features.map((feature) => (
-                  <div key={feature}>
-                    <input
-                      type="checkbox"
-                      id={feature.toLowerCase()}
-                      name={feature.toLowerCase()}
-                      checked={
-                        userData.features && userData.features.includes(feature)
-                      }
-                      onChange={() => handleCheckboxChange(feature)}
-                    />
-                    <p htmlFor={feature.toLowerCase()}>{feature}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="newWoBtn">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setStep(1)}
-                  className="nextBtn assetPrevBtn"
-                >
-                  Back
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setStep(3)}
-                  className="nextBtn assetNextBtn"
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
-          </div> */}
         </div>
-      </div>
+      )}
     </div>
   );
 }

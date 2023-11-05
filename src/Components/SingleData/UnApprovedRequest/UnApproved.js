@@ -3,11 +3,11 @@ import customIcons from "../../../Icons/icons";
 import { Link, useParams } from "react-router-dom";
 
 function UnApprovedRequestDetailsPage() {
-  const { Id } = useParams();
+  const { id } = useParams();
   const [itemDetails, setItemDetails] = useState(null);
 
   useEffect(() => {
-    const apiUrl = `https://intra-deco.onrender.com/requests/${Id}`;
+    const apiUrl = `https://saharadeskrestapi.azurewebsites.net/api/Requests/RequestDetails/${id}`;
 
     fetch(apiUrl)
       .then((response) => {
@@ -25,33 +25,33 @@ function UnApprovedRequestDetailsPage() {
       .catch((error) => {
         console.error("Error fetching item details:", error);
       });
-  }, [Id]);
+  }, [id]);
 
   if (!itemDetails) {
     return <div>Loading...</div>;
   }
 
-  console.log(itemDetails.Status.Name);
+  // console.log(itemDetails.Status.Name);
 
-  let nameAtIndex0 = "";
+  // let nameAtIndex0 = "";
 
-  if (itemDetails.Asset.length > 0) {
-    nameAtIndex0 = itemDetails.Asset[0].Name;
-    console.log(nameAtIndex0); // This will log "Elevator" to the console
-  } else {
-    console.log("The array is empty");
-  }
+  // if (itemDetails.Asset.length > 0) {
+  //   nameAtIndex0 = itemDetails.Asset[0].Name;
+  //   console.log(nameAtIndex0); // This will log "Elevator" to the console
+  // } else {
+  //   console.log("The array is empty");
+  // }
 
   return (
     <div className="commonPage">
       <div className="commonPageCenter">
         <div className="commonPageTop">
           <h3 className="pageTitle requestDetailTitle">
-            <p>Requests</p>
+          <p>Requests</p>
             <p>-</p>
-            <p>{nameAtIndex0}</p>
+            <p>{itemDetails.requestDetails}</p>
             <p>-</p>
-            <p> {itemDetails.RequestRef}</p>
+            <p> {itemDetails.requestRef}</p>
           </h3>
         </div>
         <div className="commonPageMiddle">
@@ -60,9 +60,9 @@ function UnApprovedRequestDetailsPage() {
           <Link to="/requests">Requests</Link>
           <div className="dividerCommonPage"></div>
           <Link className="flex" style={{ gap: "4px" }}>
-            <p> {nameAtIndex0}</p>
+            <p>{itemDetails.requestDetails}</p>
             <p>-</p>
-            <p> {itemDetails.RequestRef}</p>
+            <p> {itemDetails.requestRef}</p>
           </Link>
         </div>
         {/*  */}
@@ -75,9 +75,10 @@ function UnApprovedRequestDetailsPage() {
               <div className="requestKeyValue requestKeyValue2">
                 <div>
                   <h5>faulty asset:</h5>
-                  {itemDetails.Asset.map((item) => {
-                    return <p>{item.Name}</p>;
-                  })}
+                  {/* {itemDetails.requestAssets.map((item) => {
+                    return <p>{item.asset.assetName}</p>;
+                  })} */}
+                  add
                 </div>
 
                 <div className="requestKeyValue2StatusContainer">
@@ -113,25 +114,23 @@ function UnApprovedRequestDetailsPage() {
               </div>
               <div className="requestKeyValue">
                 <h5>location:</h5>
-                <p>{itemDetails.Location.Name}</p>
+                <p>{itemDetails.locaction.locationName}</p>
               </div>
               <div className="requestKeyValue">
                 <h5>fault:</h5>
-                {itemDetails.Fault.map((item) => {
-                  return <p>{item.Name}</p>;
-                })}
+                {/* {itemDetails.requestFaults} */}
               </div>
               <div className="requestKeyValue">
                 <h5>fault description:</h5>
-                <p>{itemDetails.Description}</p>
+                <p>{itemDetails.requestDetails}</p>
               </div>
               <div className="requestKeyValue">
                 <h5>recurrence:</h5>
-                <p>{itemDetails.Recurrence}</p>
+                {/* <p>{itemDetails.Recurrence}</p> */}
               </div>
               <div className="requestKeyValue">
                 <h5>submitted by:</h5>
-                <p>{itemDetails.CreatedBy}</p>
+                <p>{itemDetails.createdByNavigation.userFirstName} {itemDetails.createdByNavigation.userLastName}</p>
               </div>
             </div>
             <div className="declineApproveContainner">
@@ -152,119 +151,6 @@ function UnApprovedRequestDetailsPage() {
               <Link to="/work-order-detail-form" className="addWorkOrderDetail">add work order</Link>
             </div>
           </div>
-          {/* <div className="workOrderDetail">
-              <div className="requestDetailExpand">
-                <h3 className="request-details-page-main">work order detail</h3>
-                <customIcons.down size={14} />
-              </div>
-              <div className="workOrderDetailContainer">
-                <div className="left">
-                  <h5 className="workOrderDetailContainerH5">
-                    work order title:
-                  </h5>
-                  <p className="workOrderDetailContainerP">
-                    {itemDetails.WorkOrder.Title}
-                  </p>
-                </div>
-                <div className="right">
-                  <h5 className="workOrderDetailContainerH5">description:</h5>
-                  <p className="workOrderDetailContainerP">
-                    {itemDetails.WorkOrder.Description}
-                  </p>
-                </div>
-              </div>
-
-              <div className="workOrderDetailContainer">
-                <div className="left">
-                  <h5 className="workOrderDetailContainerH5">
-                    {itemDetails.WorkOrder.CategoryOfWork.Name}
-                  </h5>
-                  <p className="workOrderDetailContainerP">Engineering</p>
-                </div>
-                <div className="right">
-                  <h5 className="workOrderDetailContainerH5">Priority:</h5>
-                  <button
-                    className={`workOrderDetailContainerButton ${
-                      itemDetails.WorkOrder.Priority === "High"
-                        ? "greenPriority"
-                        : itemDetails.WorkOrder.Priority === "Low"
-                        ? "redPriority"
-                        : ""
-                    }`}
-                  >
-                    {itemDetails.WorkOrder.Priority}
-                  </button>
-                </div>
-              </div>
-
-              <div className="workOrderDetailContainer">
-                <div className="left">
-                  <h5 className="workOrderDetailContainerH5">team:</h5>
-                  <p className="workOrderDetailContainerP">
-                    {itemDetails.WorkOrder.AssignTeam.Name}
-                  </p>
-                </div>
-                <div className="right">
-                  <h5 className="workOrderDetailContainerH5">
-                    Additional Team:
-                  </h5>
-                  <p className="workOrderDetailContainerP">
-                    {itemDetails.WorkOrder.AssignAdditionalTeam.Name}
-                  </p>
-                </div>
-              </div>
-
-              <div className="workOrderDetailContainer">
-                <div className="left">
-                  <h5 className="workOrderDetailContainerH5">
-                    Technician Signature Required?
-                  </h5>
-                  <p className="workOrderDetailContainerP">
-                    {itemDetails === "True" ? <p>Yes</p> : <p>No</p>}
-                  </p>
-                </div>
-                <div className="right">
-                  <h5 className="workOrderDetailContainerH5">
-                    Estimated Hours
-                  </h5>
-                  <p className="workOrderDetailContainerP">20</p>
-                </div>
-              </div>
-            </div>
-            <div className="taskChecklist">
-              <div className="requestDetailExpand">
-                <h3 className="request-details-page-main">
-                  tasks and checklists
-                </h3>
-
-                <customIcons.down size={14} />
-              </div>
-              <div className="innerTaskChecklist">
-                {itemDetails.WorkOrder.Checklist.map((i) => {
-                  return (
-                    <div className="displayBlock">
-                      <customIcons.check className="innerTaskChecklistCheck" />
-                      <p>{i.Name}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="otherInfo">
-              <div className="requestDetailExpand">
-                <h3 className="request-details-page-main">OTHER INFORMATION</h3>
-                <customIcons.down size={14} />
-              </div>
-
-              <div className="innerOtherInfo">
-                <div className="requestKeyValue">
-                  <h5>files:</h5>
-                  {itemDetails.WorkOrder.AttachedFiles.map((i) => (
-                    <p>{i.Name}</p>
-                  ))}
-                </div>
-              </div>
-            </div> */}
         </div>
       </div>
 

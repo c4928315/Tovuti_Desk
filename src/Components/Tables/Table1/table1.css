@@ -104,3 +104,16 @@ tr:hover{
 .red-bg{
     background-color: red !important;
 }
+
+.dashBoardTable .dashBoardTbody tr td{
+    max-width: 0px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .requestTableDashboard{
+    padding: 20px 30px;
+  }
+
+  

@@ -1,175 +1,117 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import { Button, Checkbox } from "@material-ui/core";
 import { MultiStepContext } from "../Context";
+import customIcons from "../../Icons/icons";
 import "./steps.css";
-
-const locations = [
-  {
-    value: 1,
-    label: "Kenya",
-    assetCategory: [
-      {
-        CategoryId: 1,
-        CategoryName: "Movers",
-        Assets: [
-          {
-            AssetId: 1,
-            AssetName: "Pump",
-          },
-          {
-            AssetId: 2,
-            AssetName: "Cooler",
-          },
-        ],
-      },
-      {
-        CategoryId: 2,
-        CategoryName: "Shaker",
-        Assets: [
-          {
-            AssetId: 3,
-            AssetName: "Generator",
-          },
-          {
-            AssetId: 4,
-            AssetName: "Drill",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 2,
-    label: "Uganda",
-    assetCategory: [
-      {
-        CategoryId: 14,
-        CategoryName: "Movers2",
-        Assets: [
-          {
-            AssetId: 10,
-            AssetName: "Pump2",
-          },
-          {
-            AssetId: 5,
-            AssetName: "Cooler2",
-          },
-        ],
-      },
-      {
-        CategoryId: 20,
-        CategoryName: "Shaker2",
-        Assets: [
-          {
-            AssetId: 30,
-            AssetName: "Generator2",
-          },
-          {
-            AssetId: 40,
-            AssetName: "Drill2",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 3,
-    label: "Tanzania",
-    assetCategory: [
-      {
-        CategoryId: 100,
-        CategoryName: "Movers3",
-        Assets: [
-          {
-            AssetId: 12,
-            AssetName: "Pump3",
-          },
-          {
-            AssetId: 24,
-            AssetName: "Cooler3",
-          },
-        ],
-      },
-      {
-        CategoryId: 200,
-        CategoryName: "Shaker3",
-        Assets: [
-          {
-            AssetId: 30,
-            AssetName: "Generator3",
-          },
-          {
-            AssetId: 40,
-            AssetName: "Drill3",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 4,
-    label: "Rwanda",
-    assetCategory: [
-      {
-        CategoryId: 130,
-        CategoryName: "Movers4",
-        Assets: [
-          {
-            AssetId: 120,
-            AssetName: "Pump4",
-          },
-          {
-            AssetId: 204,
-            AssetName: "Cooler4",
-          },
-        ],
-      },
-      {
-        CategoryId: 210,
-        CategoryName: "Shaker4",
-        Assets: [
-          {
-            AssetId: 301,
-            AssetName: "Generator4",
-          },
-          {
-            AssetId: 410,
-            AssetName: "Drill4",
-          },
-        ],
-      },
-    ],
-  },
-];
 
 function StepAsset() {
   const { setStep, userData, setUserData } = useContext(MultiStepContext);
+  const [selectedAssetCategory, setSelectedAssetCategory] = useState("");
+  const [selectedAssets, setSelectedAssets] = useState([]);
+  const [assets, setAssets] = useState([]);
+  const [location, setLocation] = useState([]);
+  const [assetCategories, setAssetCategories] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [assetCategorySearchQuery, setAssetCategorySearchQuery] = useState("");
+  const [isLocationDropdownOpen, setLocationDropdownOpen] = useState(false);
+  const [isCategoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
+  const [isAssetDropdownOpen, setAssetDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleAssetCheckboxChange = (asset) => {
     const { TicketAssets } = userData;
-    const assetIndex = TicketAssets.findIndex(
-      (selectedAsset) => selectedAsset.AssetId === asset.AssetId
-    );
 
-    if (assetIndex !== -1) {
-      // Asset exists, remove it
-      const updatedTicketAssets = [...TicketAssets];
-      updatedTicketAssets.splice(assetIndex, 1);
-      setUserData({ ...userData, TicketAssets: updatedTicketAssets });
+    if (TicketAssets) {
+      const assetIndex = TicketAssets.findIndex(
+        (selectedAsset) => selectedAsset.AssetId === asset.AssetId
+      );
+
+      if (assetIndex !== -1) {
+        // Asset exists, remove it
+        const updatedTicketAssets = [...TicketAssets];
+        updatedTicketAssets.splice(assetIndex, 1);
+        setUserData({ ...userData, TicketAssets: updatedTicketAssets });
+      } else {
+        // Asset doesn't exist, add it
+        setUserData({
+          ...userData,
+          TicketAssets: [...TicketAssets, asset],
+        });
+      }
+    }
+    setAssetDropdownOpen(false);
+  };
+
+  useEffect(() => {
+    fetch("https://saharadeskrestapi.azurewebsites.net/api/Assets/Categories")
+      .then((response) => response.json())
+      .then((data) => setAssetCategories(data))
+      .catch((error) =>
+        console.error("Error fetching asset categories: " + error)
+      );
+  }, []);
+
+  useEffect(() => {
+    fetch("https://saharadeskrestapi.azurewebsites.net/api/Locations")
+      .then((response) => response.json())
+      .then((data) => console.log("assetCategory", setLocation(data)))
+      .catch((error) =>
+        console.error("Error fetching asset categories: " + error)
+      );
+  }, []);
+
+  const handleAssetCategoryChange = (categoryId) => {
+    setSelectedAssetCategory(categoryId);
+
+    if (categoryId) {
+      fetch(
+        `https://saharadeskrestapi.azurewebsites.net/api/Assets/GetAssetsByCategory/${categoryId}`
+      )
+        .then((response) => response.json())
+        .then((data) => console.log("asset", setAssets(data)))
+        .catch((error) => console.error("Error fetching assets: " + error));
     } else {
-      // Asset doesn't exist, add it
-      setUserData({
-        ...userData,
-        TicketAssets: [...TicketAssets, asset],
-      });
+      setAssets([]);
+    }
+
+    setCategoryDropdownOpen(false);
+  };
+
+  console.log(userData);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setLocationDropdownOpen(false);
+      setCategoryDropdownOpen(false);
+      setAssetDropdownOpen(false);
     }
   };
 
-  console.log(userData)
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const filteredLocations = location.filter((option) =>
+    option.locationName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredAssetCategories = assetCategories.filter((category) =>
+    category.assetCategoryName
+      .toLowerCase()
+      .includes(assetCategorySearchQuery.toLowerCase())
+  );
 
   return (
-    <div className="allStepAsset">
+    <div className="allStepAsset"  ref={dropdownRef}>
       <h3 className="stepTopHeader">Asset(s)</h3>
       <Box
         component="form"
@@ -178,115 +120,169 @@ function StepAsset() {
         }}
         noValidate
         autoComplete="off"
+        ref={dropdownRef}
       >
-        <div className="innerAsset">
-          <div className="allEncompassing">
-            <div className="categoryAssetscontainer">
+        <div className="innerAsset"  ref={dropdownRef}>
+          <div className="allEncompassing"
+           ref={dropdownRef}
+          >
+            <div className="categoryAssetscontainer"  ref={dropdownRef}>
               <div>
                 <h3>Location</h3>
-                <select
-                  className="assetsSelect"
-                  value={userData.TicketLocation.LocationId}
-                  onChange={(e) => {
-                    const selectedValue = e.target.value;
-                    const selectedLabel =
-                      e.nativeEvent.target[e.nativeEvent.target.selectedIndex].text;
-                    setUserData({
-                      ...userData,
-                      TicketLocation: {
-                        LocationId: parseInt(selectedValue),
-                        LocationName: selectedLabel,
-                      },
-                      TicketCategoryOfWork: {
-                        CategoryOfWorkId: null,
-                        CategoryOfWorkName: "",
-                      },
-                      TicketAssets: [], // Reset assets
-                    });
-                  }}
-                >
-                  <option value="" className="WoFade">Select</option>
-                  {locations.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+                <div className="selectNewContainer selectNewContainerWO">
+                  <div
+                    className="custom-select"
+                    onClick={() =>{
+                      setLocationDropdownOpen(!isLocationDropdownOpen);
+                      setCategoryDropdownOpen(false);
+                      setAssetDropdownOpen(false);
+                    }
+                    }
+                  >
+                    <p className="customSelectOption">select</p>
+                    <div
+                      className={`custom-select-dropdown ${
+                        isLocationDropdownOpen ? "showMenu" : "hideMenu"
+                      }`}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="search-container">
+                        <input
+                          type="text"
+                          className="form-control search-input custom-search-input"
+                          placeholder="Search Locations..."
+                          value={searchQuery}
+                          onChange={handleSearchChange}
+                        />
+                      </div>
+                      <ul
+                        className={`location-dropdown ${
+                          isLocationDropdownOpen ? "open" : ""
+                        }`}
+                      >
+                        {filteredLocations.map((option) => (
+                          <li
+                            key={option.id}
+                            onClick={() => {
+                              const selectedValue = option.id;
+                              const selectedLabel = option.locationName;
+                              setUserData({
+                                ...userData,
+                                TicketLocation: {
+                                  LocationId: parseInt(selectedValue),
+                                  LocationName: selectedLabel,
+                                },
+                                TicketCategoryOfWork: {
+                                  CategoryOfWorkId: null,
+                                  CategoryOfWorkName: "",
+                                },
+                                TicketAssets: [], // Reset assets
+                              });
+                              setLocationDropdownOpen(false);
+                            }}
+                          >
+                            {option.locationName}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="categoryAssetsFlex">
                 <div className="categoryAssets">
                   <span>
                     <h3>Asset Category</h3>
-                    <select
-                      className="assetsSelect"
-                      value={userData.TicketCategoryOfWork.CategoryOfWorkId}
-                      onChange={(e) => {
-                        const selectedValue = e.target.value;
-                        const selectedLabel =
-                          e.nativeEvent.target[
-                            e.nativeEvent.target.selectedIndex
-                          ].text;
-                        setUserData({
-                          ...userData,
-                          TicketCategoryOfWork: {
-                            CategoryOfWorkId: parseInt(selectedValue),
-                            CategoryOfWorkName: selectedLabel,
-                          },
-                          TicketAssets: [], // Reset assets
-                        });
-                      }}
-                    >
-                      <option value="" className="WoFade">Select</option>
-                      {locations
-                        .find((location) => {
-                          const isMatch =
-                            parseInt(location.value) ===
-                            parseInt(userData.TicketLocation.LocationId);
-                          return isMatch;
-                        })
-                        ?.assetCategory.map((category) => (
-                          <option
-                            key={category.CategoryId}
-                            value={category.CategoryId}
-                          >
-                            {category.CategoryName}
-                          </option>
-                        ))
-                      }
-                    </select>
+                    <div className="selectNewContainer selectNewContainerWO">
+                      <div
+                        className="custom-select"
+                        onClick={() =>{
+                          setCategoryDropdownOpen(!isCategoryDropdownOpen);
+                          setLocationDropdownOpen(false);
+                          setAssetDropdownOpen(false);
+                        }
+                        }
+                      >
+                        <p className="customSelectOption">select</p>
+                        <div
+                          className={`custom-select-dropdown ${
+                            isCategoryDropdownOpen ? "showMenu" : "hideMenu"
+                          }`}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <div className="search-container">
+                            <input
+                              type="text"
+                              className="form-control search-input"
+                              placeholder="Search Asset Categories..."
+                              value={assetCategorySearchQuery}
+                              onChange={(e) =>
+                                setAssetCategorySearchQuery(e.target.value)
+                              }
+                            />
+                            <ul className="asset-category-dropdown">
+                              {filteredAssetCategories.map((category) => (
+                                <li
+                                  key={category.id}
+                                  onClick={() => {
+                                    const selectedValue = category.id;
+                                    handleAssetCategoryChange(selectedValue);
+                                    setAssetCategorySearchQuery(""); // Clear the search query
+                                  }}
+                                >
+                                  {category.assetCategoryName}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </span>
                 </div>
                 <span className="assetsSpan">
                   <h4>Asset(s)</h4>
                   <h4 className="notHeader WoFade">Select</h4>
-                  <div className="assetsContainerInSteps">
-                  {locations
-                    .find(
-                      (location) =>
-                        parseInt(location.value) ===
-                        parseInt(userData.TicketLocation.LocationId)
-                    )
-                    ?.assetCategory.find(
-                      (category) =>
-                        parseInt(category.CategoryId) ===
-                        parseInt(userData.TicketCategoryOfWork.CategoryOfWorkId)
-                    )
-                    ?.Assets.map((asset) => (
-                      <div key={parseInt(asset.AssetId)} className="checkBox">
-                        <Checkbox
-                        style={{color: "orange"}}
-                          checked={userData.TicketAssets.some(
-                            (selectedAsset) =>
-                              selectedAsset.AssetId === asset.AssetId
-                          )}
-                          onChange={() => handleAssetCheckboxChange(asset)}
+                  {assets.length > 0 ? (
+                    <div className="assetsINAsstsWrapper">
+                      <div className="newAssetDropdownWrapper">
+                      <div class="search-container">
+                        <input
+                          type="text"
+                          class="form-control search-input"
+                          placeholder="Search..."
+                          value={searchQuery}
+                          onChange={handleSearchChange}
                         />
-                        <label>{asset.AssetName}</label>
-                        <span>{asset.AssetName}</span>
                       </div>
-                    ))}
-                  </div>
+
+                      {assets
+                        .filter(
+                          (asset) =>
+                            asset.assetCategoryId ===
+                            parseInt(selectedAssetCategory)
+                        )
+                        .filter((asset) =>
+                          asset.assetName
+                            .toLowerCase()
+                            .includes(searchQuery.toLowerCase())
+                        )
+                        .map((asset) => (
+                          <div key={asset.id} className="checkBox">
+                            <Checkbox
+                              style={{ color: "white" }}
+                              defaultChecked={selectedAssets.some(
+                                (selectedAsset) => selectedAsset.id === asset.id
+                              )}
+                              onChange={() => handleAssetCheckboxChange(asset)}
+                            />
+                            <span>{asset.assetName}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
                 </span>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import customIcons from "../../../Icons/icons";
 import useFetch from "../../../Hooks/useFetch";
 import "./workOrderTable.css";
@@ -36,9 +36,9 @@ function WorkOrderTable() {
     async function fetchData() {
       try {
         const response = await axios.get(
-          "https://intra-deco.onrender.com/workOrders"
+          "https://saharadeskrestapi.azurewebsites.net/api/Tickets/All"
         );
-
+          console.log(response)
         setData(response.data);
       } catch (error) {
         setError(error);
@@ -48,51 +48,15 @@ function WorkOrderTable() {
     }
 
     fetchData();
-  }, [data]);
-
-  const handleShowStatusFilter = () => {
-    setShowStatusFilter(!showStatusFilter);
-  };
-
-  const handleShowLocationFilter = () => {
-    setShowLocationFilter(!showLocationFilter);
-  };
-
-  const handleShowAssetFilter = () => {
-    setShowAssetFilter(!showAssetFilter);
-  };
-
-  const handleShowFaultFilter = () => {
-    setShowFaultFilter(!showFaultFilter);
-  };
-  const handleShowStageFilter = () => {
-    setShowStageFilter(!showStageFilter);
-  };
-
-  const handleTicketTypeFilter = () => {
-    setTicketTypeFilter(!showTicketTypeFilter);
-  };
+  }, []);
 
   const [globalFilter, setGlobalFilter] = useState("");
-  const [columnFilters, setColumnFilters] = useState({
-    TicketRef: "",
-    TicketLocation: "",
-    TicketAssets: "",
-    TicketStage: "",
-    TicketType: "",
-    Id: 0,
-    TicketStatus: "",
-    DateCreated: "",
-    Description: "",
-    WorkOrder: "",
-  });
 
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 7;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
 
-  const statusOptions = ["Completed", "In Progress", "Pending", "Cancelled"];
   const stageOptions = ["Completed", "In Progress", "Pending", "Cancelled"];
   const locationOptions = ["nairobi", "Kisumu", "eldoret", "mombasa"];
   const typeOptions = [
@@ -119,35 +83,38 @@ function WorkOrderTable() {
     "not cooling",
   ];
 
+  const statusOptions = [...new Set(data.map(item => item.status.statusName))];
+
+
   const filteredData = data.filter((item) => {
     return (
-      (!item.TicketRef || item.TicketRef.includes(globalFilter.toLowerCase())) &&
-      (item.TicketLocation?.LocationName?.toLowerCase().includes(globalFilter.toLowerCase())) &&
-      (!item.Description || item.Description.toLowerCase().includes(globalFilter.toLowerCase())) &&
+      (!item.ticketRef || item.ticketRef.toLowerCase().includes(globalFilter.toLowerCase())) &&
+      (!item.ticketDescription || item.ticketDescription.toLowerCase().includes(globalFilter.toLowerCase())) &&
+      // (item.TicketLocation?.LocationName?.toLowerCase().includes(globalFilter.toLowerCase())) &&
       (selectedStatuses.length === 0 ||
-        (item.TicketStatus && selectedStatuses.includes(item.TicketStatus.StatusName))) &&
+       (item.status && selectedStatuses.includes(item.status.statusName))) &&
       (selectedStages.length === 0 ||
-        (item.TicketStage && selectedStages.includes(item.TicketStage.StageName))) &&
-      (selectedTicketType.length === 0 ||
-        (item.TicketType && selectedTicketType.includes(item.TicketType.TicketTypeName))) &&
-      (selectedFaults.length === 0 ||
-        (item.Fault && selectedFaults.some((fault) =>
-          item.Fault.some((f) => f.Name.toLowerCase() === fault.toLowerCase())
-        ))) &&
-      (selectedLocations.length === 0 ||
-        (item.TicketLocation && selectedLocations.some(
-          (location) =>
-            item.TicketLocation.LocationName.toLowerCase() ===
-            location.toLowerCase()
-        ))) &&
-      (selectedAssets.length === 0 ||
-        (item.TicketAssets && selectedAssets.some((asset) =>
-          item.TicketAssets.some(
-            (a) => a.AssetName.toLowerCase() === asset.toLowerCase()
-          )
-        ))
-    ));
-  });
+        (item.stage && selectedStages.includes(item.stage.ticketStageName)))
+      // (selectedTicketType.length === 0 ||
+      //   (item.TicketType && selectedTicketType.includes(item.TicketType.TicketTypeName))) &&
+      // (selectedFaults.length === 0 ||
+      //   (item.Fault && selectedFaults.some((fault) =>
+      //     item.Fault.some((f) => f.Name.toLowerCase() === fault.toLowerCase())
+      //   ))) &&
+      // (selectedLocations.length === 0 ||
+      //   (item.TicketLocation && selectedLocations.some(
+      //     (location) =>
+      //       item.TicketLocation.LocationName.toLowerCase() ===
+      //       location.toLowerCase()
+      //   ))) &&
+    //   (selectedAssets.length === 0 ||
+    //     (item.TicketAssets && selectedAssets.some((asset) =>
+    //       item.TicketAssets.some(
+    //         (a) => a.AssetName.toLowerCase() === asset.toLowerCase()
+    //       )
+    //     ))
+    // ));
+  )});
 
   const handleStatusSearch = (e) => {
     const searchValue = e.target.value;
@@ -293,13 +260,64 @@ function WorkOrderTable() {
       navigate(`/WOdetails/${item.id}`);
   };
 
+  const handleToggleFilter = (filterName) => {
+    const filterState = {
+      status: showStatusFilter,
+      location: showLocationFilter,
+      asset: showAssetFilter,
+      fault: showFaultFilter,
+      stage: showStageFilter,
+      type: showTicketTypeFilter,
+    };
+
+    for (const key in filterState) {
+      filterState[key] = false;
+    }
+
+    filterState[filterName] = true;
+
+    setShowStatusFilter(filterState.status);
+    setShowLocationFilter(filterState.location);
+    setShowAssetFilter(filterState.asset);
+    setShowFaultFilter(filterState.fault);
+    setTicketTypeFilter(filterState.type);
+    setShowStageFilter(filterState.stage);
+  };
+
+  const filterContainerRef = useRef();
+
+  const handleClearFilters = (e) => {
+    if (!filterContainerRef.current.contains(e.target)) {
+      // Click occurred outside of filter controls
+      setShowStatusFilter(false);
+      setShowLocationFilter(false);
+      setShowAssetFilter(false);
+      setShowFaultFilter(false);
+      setShowStageFilter(false);
+      setTicketTypeFilter(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClearFilters);
+
+    return () => {
+      document.removeEventListener("click", handleClearFilters);
+    };
+  }, []);
+
+  function formatDateToDdMmYy(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "2-digit" });
+  }
+
   return (
     <div className="requestTable">
-      <div className="topFilterContainer">
+      <div className="topFilterContainer" ref={filterContainerRef}>
         <div className="filterInputContainer">
           <div className="allFiltersContainer">
             <div
-              onClick={handleShowStatusFilter}
+              onClick={() => handleToggleFilter('status')}
               className="filterIconStatement"
             >
               <span>status</span>
@@ -344,7 +362,7 @@ function WorkOrderTable() {
 
           <div className="allFiltersContainer">
             <div
-              onClick={handleShowLocationFilter}
+              onClick={() => handleToggleFilter('location')}
               className="filterIconStatement"
             >
               <span>location</span>
@@ -391,13 +409,13 @@ function WorkOrderTable() {
 
           <div className="allFiltersContainer">
             <div
-              onClick={handleTicketTypeFilter}
+             onClick={() => handleToggleFilter('type')}
               className="filterIconStatement"
             >
               <span>Type</span>
               <span>
                 <customIcons.down
-                  className={showStageFilter ? "filterIconDropDown" : ""}
+                  className={showTicketTypeFilter ? "filterIconDropDown" : ""}
                   size={14}
                 />
               </span>
@@ -409,7 +427,7 @@ function WorkOrderTable() {
             >
               <input
                 type="text"
-                placeholder="Search Stage"
+                placeholder="Search Type"
                 value={ticketTypeSearch}
                 onChange={handleTicketTypeSearch}
               />
@@ -435,7 +453,7 @@ function WorkOrderTable() {
 
           <div className="allFiltersContainer">
             <div
-              onClick={handleShowStageFilter}
+              onClick={() => handleToggleFilter('stage')}
               className="filterIconStatement"
             >
               <span>stage</span>
@@ -481,7 +499,7 @@ function WorkOrderTable() {
           {/* Asset filter */}
           <div className="allFiltersContainer">
             <div
-              onClick={handleShowAssetFilter}
+              onClick={() => handleToggleFilter('asset')}
               className="filterIconStatement"
             >
               <span>asset</span>
@@ -523,7 +541,7 @@ function WorkOrderTable() {
 
           <div className="allFiltersContainer">
             <div
-              onClick={handleShowFaultFilter}
+              onClick={() => handleToggleFilter('fault')}
               className="filterIconStatement"
             >
               <span>fault</span>
@@ -591,22 +609,22 @@ function WorkOrderTable() {
         <tbody>
           {paginatedData.map((item) => (
             <tr key={item.Id} onClick={() => handleRowClick(item)}>
-              <td className="tBodyTd">{item.DueDate}</td>
-              <td className="tBodyTd">{item.TicketRef}</td>
-              <td className="tBodyTd">{item.TicketStatus.StatusName}</td>
-              <td className="tBodyTd">{item.TicketDescription}</td>
+              <td className="tBodyTd">{formatDateToDdMmYy(item.dueDate)}</td>
+              <td className="tBodyTd">{item.ticketRef}</td>
+              <td className="tBodyTd">{item.status.statusName}</td>
+              <td className="tBodyTd">{item.ticketDescription}</td>
               <td className="tBodyTd">
-                {item.TicketPriority.TicketPriorityName}
+                {item.ticketPriorityId}
               </td>
               <td className="tBodyTd">
-                {item.TicketCurrentTeam.CurrentAssignedTeamName}
+                {item.currentAssignedUserId}
               </td>
-              <td className="tBodyTd">{item.TicketLocation.LocationName}</td>
+              <td className="tBodyTd">{item.location?.locationName}</td>
               <td className="tBodyTd">
-                {item.TicketAssets.map((asset) => asset.AssetName).join(", ")}
+                {item.assets?.map((asset) => asset.assetName).join(", ")}
               </td>
-              <td className="tBodyTd">{item.ModifiedDate}</td>
-              <td className="tBodyTd">{item.DueDate}</td>
+              <td className="tBodyTd">{formatDateToDdMmYy(item.modifiedDate)}</td>
+              <td className="tBodyTd">{formatDateToDdMmYy(item.createdDate)}</td>
             </tr>
           ))}
         </tbody>

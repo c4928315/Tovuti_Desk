@@ -9,6 +9,7 @@ const Context = ({children}) => {
     "TicketRef": "Ref101",
     "DueDate": "2023-11-20",
     "ModifiedDate": "2023-06-16",
+    "TicketAssets": [],
     "TicketStatus": {
       "StatusId": 3,
       "StatusName": "In Progress"
@@ -19,8 +20,7 @@ const Context = ({children}) => {
       
     },
     "TicketPriority": {
-      "TicketPriorityId": 1,
-      "TicketPriorityName": "High"
+      
     },
     "TicketProjectedParts": [],
     "TicketRequestedParts": [],
@@ -41,13 +41,16 @@ const Context = ({children}) => {
   const [requestData, setRequestData] = useState({})
   const [finalData, setFinalData] = useState([])
 
+  const storedClaims = localStorage.getItem('claims');
+  const [userClaims, setUserClaims] = useState(storedClaims ? JSON.parse(storedClaims) : []);
+
   function submitData(){
 
   }
   
   return (
     <div>
-      <MultiStepContext.Provider value={{currentStep, setStep, userData, setUserData, finalData, setFinalData, submitData,requestData, setRequestData}}>
+      <MultiStepContext.Provider value={{currentStep, setStep, userData, setUserData, finalData, setFinalData, submitData,requestData, setRequestData, userClaims}}>
        {children}
       </MultiStepContext.Provider>
     </div>

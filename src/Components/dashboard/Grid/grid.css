@@ -119,10 +119,28 @@
   transition: transform 0.5s ease-in-out ;
 }
 
-
 .items123:hover{
-  transform: translateY(-10px);
-  background-color: var(--orange-not-heavy);
+  border: 1px solid orange;
+}
+
+.items123:hover a{
+  text-decoration: none;
+  color: black;
+}
+
+.items123:hover .gridStatusSelect{
+  border: 1px solid orange;
+}
+.items123:hover .chartDropdownComp{
+  color: orange !important;
+}
+
+.items123:hover .chartDropdownComp select{
+  color: orange !important;
+}
+
+.items123:hover .gridTitle, .items123:hover .gridData, .items123:hover .gridStatusSelect p, .items123:hover .gridStatusSelect select {
+  color: orange;
 }
 
 .greetings h3{
@@ -146,3 +164,4 @@
 .columnBorder{
   border-right: 200px solid white;
 } */
+

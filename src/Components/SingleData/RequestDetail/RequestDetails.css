@@ -18,8 +18,9 @@
     width: 60%;
     background-color: white;
     border-radius: 12px;
-    min-height: 100vh;
-    min-height: 132vh;
+    min-height: 109vh;
+    max-height: 132vh;
+    overflow: auto;
 }
 
 .requestDetailTitle{
@@ -38,8 +39,9 @@
     left: 50%;
     right: 50%;
     transform: translate(-50%);
-    width: fit-content;
+    width: 40%;
     top: 0px;
+    margin-left: 40px;
 }
 
 .requestNotice .statement{
@@ -63,7 +65,7 @@
 }
 
 .requestKeyValue  h5, .requestKeyValue2StatusH6, .workOrderDetailContainerH5{
-    font-size: 15px;
+    font-size: 14.49px;
     text-transform: capitalize;
     color: rgb(135, 135, 135);
 }
@@ -73,6 +75,13 @@
 .requestKeyValue p, .workOrderDetailContainerP{
     font-size: 13.6px;
     margin-top: 4px;
+}
+
+.workOrderDetailContainerH5Description{
+    width: 320px; /* Set your desired container width */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide any overflowing text */
+  text-overflow: ellipsis;
 }
 
 .requestKeyValue2{
@@ -107,13 +116,21 @@
     margin: 0;
     padding: 0 10px;
     height: 60px;
+    width: 100%;
 }
 
-.workOrderDetailContainer .left, .workOrderDetailContainer .right{
+.workOrderDetailContainer .minLeft{
     padding: 10px 0;
     margin-bottom: 20px;
+    width: 40%;
 }
 
+.workOrderDetailContainer .minRight{
+    padding: 10px 0;
+    margin-bottom: 20px;
+    width: 60%;
+    
+}
 
 .workOrderDetail, .taskChecklist, .otherInfo{
     padding: 20px;
