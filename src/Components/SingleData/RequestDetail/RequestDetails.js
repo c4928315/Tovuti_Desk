@@ -8,7 +8,7 @@ function RequestDetailsPage() {
   const [itemDetails, setItemDetails] = useState(null);
 
   useEffect(() => {
-    const apiUrl = `https://saharadeskrestapi.azurewebsites.net/api/Requests/GetAllRequests/${itemId}`;
+    const apiUrl = `https://saharadeskrestapi.azurewebsites.net/api/Requests/RequestDetails/${itemId}`;
 
     fetch(apiUrl)
       .then((response) => {
@@ -75,40 +75,14 @@ function RequestDetailsPage() {
               <div className="requestKeyValue requestKeyValue2">
                 <div>
                   <h5>faulty asset:</h5>
-                  {itemDetails.requestAsset.map((item) => {
+                  {itemDetails.requestAsset?.map((item) => {
                     return <p>{item.assetName}</p>;
                   })}
                 </div>
 
                 <div className="requestKeyValue2StatusContainer">
                   <h6 className="requestKeyValue2StatusH6">Status:</h6>
-                  <div class="dropdown">
-                    <button
-                      class="btn dropdown-toggle requestKeyValue2Status"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Select
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-lg-end detailsDropdownStatus">
-                      <li>
-                        <button class="dropdown-item" type="button">
-                          In Progress
-                        </button>
-                      </li>
-                      <li>
-                        <button class="dropdown-item" type="button">
-                          On Hold
-                        </button>
-                      </li>
-                      <li>
-                        <button class="dropdown-item" type="button">
-                          Closed
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
+                  <p>{itemDetails.requestStatus.statusName}</p>
                 </div>
               </div>
               <div className="requestKeyValue">
@@ -117,17 +91,17 @@ function RequestDetailsPage() {
               </div>
               <div className="requestKeyValue">
                 <h5>fault:</h5>
-                {itemDetails.Fault.map((item) => {
+                {itemDetails.Fault?.map((item) => {
                   return <p>{item.Name}</p>;
                 })}
               </div>
               <div className="requestKeyValue">
                 <h5>fault description:</h5>
-                <p>{itemDetails.Description}</p>
+                <p>{itemDetails.requestDetails}</p>
               </div>
               <div className="requestKeyValue">
                 <h5>recurrence:</h5>
-                <p>{itemDetails.Recurrence}</p>
+                {/* <p>{itemDetails.Recurrence}</p> */}
               </div>
               <div className="requestKeyValue">
                 <h5>submitted by:</h5>
@@ -155,13 +129,13 @@ function RequestDetailsPage() {
                     work order title:
                   </h5>
                   <p className="workOrderDetailContainerP">
-                    {itemDetails.WorkOrder.Title}
+                    {itemDetails.WorkOrder?.Title}
                   </p>
                 </div>
                 <div className="minRight">
                   <h5 className="workOrderDetailContainerH5">description:</h5>
                   <p className="workOrderDetailContainerP workOrderDetailContainerH5Description">
-                    {itemDetails.WorkOrder.Description}
+                    {itemDetails.WorkOrder?.Description}
                   </p>
                 </div>
               </div>
@@ -169,7 +143,7 @@ function RequestDetailsPage() {
               <div className="workOrderDetailContainer">
                 <div className="minLeft">
                   <h5 className="workOrderDetailContainerH5">
-                    {itemDetails.WorkOrder.CategoryOfWork.Name}
+                    {itemDetails.WorkOrder?.CategoryOfWork.Name}
                   </h5>
                   <p className="workOrderDetailContainerP">Engineering</p>
                 </div>
@@ -177,14 +151,14 @@ function RequestDetailsPage() {
                   <h5 className="workOrderDetailContainerH5">Priority:</h5>
                   <button
                     className={`workOrderDetailContainerButton ${
-                      itemDetails.WorkOrder.Priority === "High"
+                      itemDetails.WorkOrder?.Priority === "High"
                         ? "greenPriority"
-                        : itemDetails.WorkOrder.Priority === "Low"
+                        : itemDetails.WorkOrder?.Priority === "Low"
                         ? "redPriority"
                         : ""
                     }`}
                   >
-                    {itemDetails.WorkOrder.Priority}
+                    {itemDetails.WorkOrder?.Priority}
                   </button>
                 </div>
               </div>
@@ -193,7 +167,7 @@ function RequestDetailsPage() {
                 <div className="minLeft">
                   <h5 className="workOrderDetailContainerH5">team:</h5>
                   <p className="workOrderDetailContainerP">
-                    {itemDetails.WorkOrder.AssignTeam.Name}
+                    {itemDetails.WorkOrder?.AssignTeam.Name}
                   </p>
                 </div>
                 <div className="minRight">
@@ -201,7 +175,7 @@ function RequestDetailsPage() {
                     Additional Team:
                   </h5>
                   <p className="workOrderDetailContainerP">
-                    {itemDetails.WorkOrder.AssignAdditionalTeam.Name}
+                    {itemDetails.WorkOrder?.AssignAdditionalTeam.Name}
                   </p>
                 </div>
               </div>
@@ -231,7 +205,7 @@ function RequestDetailsPage() {
                 <customIcons.down size={14} />
               </div>
               <div className="innerTaskChecklist">
-                {itemDetails.WorkOrder.Checklist.map((i) => {
+                {itemDetails.WorkOrder?.Checklist.map((i) => {
                   return (
                     <div className="displayBlock">
                       <customIcons.check className="innerTaskChecklistCheck" />
@@ -250,7 +224,7 @@ function RequestDetailsPage() {
               <div className="innerOtherInfo">
                 <div className="requestKeyValue">
                   <h5>files:</h5>
-                 <p>{itemDetails.WorkOrder.AttachedFiles.Name}</p>
+                 <p>{itemDetails.WorkOrder?.AttachedFiles.Name}</p>
                 </div>
               </div>
             </div>

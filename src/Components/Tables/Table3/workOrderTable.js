@@ -257,6 +257,8 @@ function WorkOrderTable() {
   };
 
   const handleRowClick = (item) => {
+    const singleWO = JSON.stringify(item);
+      localStorage.setItem("singleWO", singleWO);
       navigate(`/WOdetails/${item.id}`);
   };
 

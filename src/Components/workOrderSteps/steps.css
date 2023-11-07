@@ -289,8 +289,6 @@ Work Order
 
 .form-label-newWO,
 .additionalTeamHeader {
-  margin-top: 10px;
-  margin-top: 10px;
 
   color: #000;
   font-size: 14px;
@@ -479,7 +477,7 @@ Work Order
 .partsFormOne{
   position: absolute;
   top: 10%;
-  right: 33%;
+  right: 30%;
   z-index: 100;
   display: flex;
   background-color: white;
@@ -538,9 +536,12 @@ Work Order
   background-color: #f1efef !important;
   transition: all 0.3s ease-in-out;
   color: #c5c7cd;
-  margin-top: 20px !important;
   height: 35px !important;
   font-size: 1rem !important;
+}
+
+.assignedTeam{
+  margin-top: 20px !important;
 }
 
 
@@ -618,7 +619,7 @@ Work Order
 
 .assetsINAsstsWrapper{
   position: relative;
-  width: 290px;
+  width: 350px;
   margin-top: 40px;
   height: 200px;
   overflow: auto;
@@ -638,14 +639,17 @@ Work Order
   display: none;
 }
 
-.dropdownAdditionalTeam .dropdown-menu {
+.dropdownAdditionalTeam .header{
+  margin-bottom: 20px !important;
+}
+
+.dropdownAdditionalTeam .dropdown-menu, .assignedTeam .dropdown-menu {
   border: none !important;
-  width: fit-content !important;
+  width: 350px !important;
   padding-left: 20px !important;
   padding-right: 20px !important;
   background-color: #343A40 !important;
   margin-top: 5px !important;
-  height: 250px;
   overflow: auto;
 }
 
@@ -821,6 +825,7 @@ Work Order
   display: flex;
   justify-content: space-between;
   width: 85.4%;
+  margin-top: 13px !important;
 }
 
 .assetNextBtn .newWorkOrderCells .priorities button {
@@ -1006,7 +1011,7 @@ font-weight: 500;
 }
 
 .newWOTabs span .newWorkOrder select,
-.newWorkOrder input {
+.newWorkOrder input, .categoryOfWork {
   height: 34px !important;
   border: none !important;
   color: #c5c7cd;
@@ -1021,6 +1026,7 @@ font-weight: 500;
   align-items: center;
   border: none !important;
   color: #c5c7cd !important;
+  margin-top: 35px !important;
 }
 
 .newSelectInputWidth{
@@ -1052,8 +1058,10 @@ font-weight: 500;
 
 .partsFormEdit{
   width: 100%;
+  height: 100%;
   right: 0;
   top: 0;
+  bottom: 0;
   padding: 25% 0;
   position: fixed;
   border-radius: 12px;
@@ -1062,7 +1070,9 @@ font-weight: 500;
 
 .fixedPartsContainer{
   width: 100%;
+  height: 100%;
   right: 0;
+  bottom: 0;
   top: 0;
   padding: 25% 0;
   position: fixed;
@@ -1071,7 +1081,7 @@ font-weight: 500;
   z-index: 121;
 }
 
-.dropdownAdditionalTeam .dropdown-menu
+
 
 .partsFormEditForm{
   width: 50%;
@@ -1091,7 +1101,7 @@ font-weight: 500;
   height: 100%;
 }
 
-.partsFormEditFormHolder .partsFormInner input{
+.partsFormEditFormHolder .partsFormInner input, .partsFormEditFormHolder .partsFormInner select {
   width: 70%;
   transform: translateX(20%);
   background: #F1EFEF;
@@ -1109,12 +1119,13 @@ font-weight: 500;
 }
 
 .search-container{
-  width: 250px !important;
+  width: 100% !important;
   margin: 0;
   position: sticky;
   top: 0;
   background-color: #343A40;
   height: 30px;
+  text-align: center;
 }
 
 .search-container .search-input{
@@ -1154,8 +1165,8 @@ custom-search-input{
 
 .closePartTable{
   position: absolute;
-  right: 32.5%;
-  top: 8%;
+  right: 29.3%;
+  top: 9%;
   cursor: pointer;
   z-index: 101;
   width: 30px;
@@ -1183,6 +1194,11 @@ custom-search-input{
 
 .WOstepOneMargin{
   margin-bottom: 50px;
+  margin-top: 55px;
+}
+
+.assignedTeam .dropdown-toggle::after {
+  display: none;
 }
 
 .addChecklistDropDown{
@@ -1254,7 +1270,7 @@ custom-search-input{
   display: none !important;
 } */
 
-.custom-select-dropdown{
+.custom-select-dropdown, .assetsINAsstsWrapper{
   position: absolute;
   top: 40px;
   left: 0;
@@ -1264,8 +1280,13 @@ custom-search-input{
   height: 200px;
   border-radius: 12px;
   overflow: auto;
+  width: 336px;
   font-size: 14px;
+  
 }
+
+
+
 
 
 
@@ -1273,3 +1294,5 @@ custom-search-input{
   position: absolute;
   top: 0;
 } */
+
+

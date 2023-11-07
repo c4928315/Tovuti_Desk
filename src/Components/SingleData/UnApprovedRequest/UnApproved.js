@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
 import customIcons from "../../../Icons/icons";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import RequestApproval from "../../Forms/ApproveRequest/approve";
+import RejectionRequest from "../../Forms/RejectRequest/rejectRequest";
 
 function UnApprovedRequestDetailsPage() {
   const { id } = useParams();
   const [itemDetails, setItemDetails] = useState(null);
+  const [showApprovalForm, setShowApprovalForm] = useState(false);
+  const [showRejectionForm, setRejectionForm] = useState(false);
+  const currentUser = JSON.parse(localStorage.getItem("userInfo"));
+
+  const navigate = useNavigate();
+
+  console.log(currentUser.id)
 
   useEffect(() => {
     const apiUrl = `https://saharadeskrestapi.azurewebsites.net/api/Requests/RequestDetails/${id}`;
@@ -31,17 +40,80 @@ function UnApprovedRequestDetailsPage() {
     return <div>Loading...</div>;
   }
 
-  // console.log(itemDetails.Status.Name);
+  const handleApproveRequest = (approvalRemarks) => {
 
-  // let nameAtIndex0 = "";
+    if (itemDetails) {
+      const apiUrl = `https://saharadeskrestapi.azurewebsites.net/api/Requests/Approve/${id}`;
+      const requestBody = {
+        approvalRemarks: approvalRemarks,
+        approvedBy: parseInt(currentUser.id, 10), 
+      };
 
-  // if (itemDetails.Asset.length > 0) {
-  //   nameAtIndex0 = itemDetails.Asset[0].Name;
-  //   console.log(nameAtIndex0); // This will log "Elevator" to the console
-  // } else {
-  //   console.log("The array is empty");
-  // }
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              `Network response was not ok (HTTP status: ${response.status})`
+            );
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Handle the response data as needed
+          console.log(data);
+          localStorage.setItem("waitingApproval", JSON.stringify(itemDetails));
+          navigate('/work-order-form?source=request')
+        })
+        .catch((error) => {
+          console.error("Error approving request:", error);
+        });
+    }
+  };
 
+  const handleRejectionRequest = (rejectionRemarks) => {
+
+    if(itemDetails){
+      const apiUrl = `https://saharadeskrestapi.azurewebsites.net/api/Requests/Reject/${id}`;
+
+      const requestBody = {
+        rejectionRemarks: rejectionRemarks,
+        rejectedBy: parseInt(currentUser.id, 10), 
+      };
+
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `Network response was not ok (HTTP status: ${response.status})`
+          );
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Handle the response data as needed
+        console.log(data);
+        navigate('/requests')
+      })
+      .catch((error) => {
+        console.error("Error approving request:", error);
+      });
+
+    }
+
+  }
+  
   return (
     <div className="commonPage">
       <div className="commonPageCenter">
@@ -83,33 +155,7 @@ function UnApprovedRequestDetailsPage() {
 
                 <div className="requestKeyValue2StatusContainer">
                   <h6 className="requestKeyValue2StatusH6">Status:</h6>
-                  <div class="dropdown">
-                    <button
-                      class="btn dropdown-toggle requestKeyValue2Status"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Select
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-lg-end">
-                      <li>
-                        <button class="dropdown-item" type="button">
-                          In Progress
-                        </button>
-                      </li>
-                      <li>
-                        <button class="dropdown-item" type="button">
-                          On Hold
-                        </button>
-                      </li>
-                      <li>
-                        <button class="dropdown-item" type="button">
-                          Closed
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
+                  <p>{itemDetails.requestStatus.statusName}</p>
                 </div>
               </div>
               <div className="requestKeyValue">
@@ -134,10 +180,10 @@ function UnApprovedRequestDetailsPage() {
               </div>
             </div>
             <div className="declineApproveContainner">
-              <button className="declineApprove declineRequest">
+              <button className="declineApprove declineRequest" onClick={() => setRejectionForm(true)}>
                 Decline Request
               </button>
-              <button className="declineApprove approveRequest">
+              <button className="declineApprove approveRequest" onClick={() => setShowApprovalForm(true)}>
                 Approve Request
               </button>
             </div>
@@ -154,6 +200,8 @@ function UnApprovedRequestDetailsPage() {
         </div>
       </div>
 
+      {showApprovalForm && <RequestApproval handleApproveRequest={handleApproveRequest} />}
+      {showRejectionForm && <RejectionRequest handleRejectionRequest={handleRejectionRequest} />}
       {/*  */}
     </div>
   );
