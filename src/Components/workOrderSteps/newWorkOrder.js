@@ -6,31 +6,6 @@ import "./steps.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const teamOptions = [
-  { TeamId: 1, TeamName: "One" },
-  { TeamId: 2, TeamName: "Two" },
-  { TeamId: 3, TeamName: "Three" },
-];
-
-const priorities = [
-  {
-    TicketPriorityId: 1,
-    TicketPriorityName: "Low",
-  },
-  {
-    TicketPriorityId: 2,
-    TicketPriorityName: "Medium",
-  },
-  {
-    TicketPriorityId: 3,
-    TicketPriorityName: "High",
-  },
-  {
-    TicketPriorityId: 4,
-    TicketPriorityName: "Criticle",
-  },
-];
-
 const checklists = [
   {
     FormsAndSectionsId: 1,
@@ -57,17 +32,30 @@ const checklists = [
 function NewWorkOrder() {
   const { setStep, userData, setUserData } = useContext(MultiStepContext);
   const [checklistSearchQuery, setChecklistSearchQuery] = useState("");
+  const [primaryTeamSearchQuery, setPrimaryTeamSearchQuery] = useState("");
+  const [selectedPart, setSelectedPart] = useState(null);
   const [additionalTeamsSearchQuery, setAdditionalTeamsSearchQuery] =
     useState("");
   const [activeTab, setActiveTab] = useState(true);
   const [activeTab2, setActiveTab2] = useState(false);
   const [showParts, setShowParts] = useState(false);
   const [ticketProjectedParts, setTicketProjectedParts] = useState([]);
+  const [calculatedAmount, setCalculatedAmount] = useState(0);
 
   const [selectedCategoryOfWork, setSelectedCategoryOfWork] = useState(null);
+  const [selectedPrimaryTeam, setSelectedPrimaryTeam] = useState(null);
   const [categoryOfWorkData, setCategoryOfWorkData] = useState([]);
 
+  const [priorities, setPriorities] = useState([]);
+  const [editedEntity, setEditedEntity] = useState(null);
+
   const [editData, setEditData] = useState(null);
+  const [editedPartData, setEditedPartData] = useState({
+    partName: "",
+    quantity: 0,
+    amount: 0,
+  });
+
   const [partData, setPartData] = useState([]);
   const [formData, setFormData] = useState({
     spareId: "",
@@ -81,25 +69,25 @@ function NewWorkOrder() {
     setShowParts(!showParts);
   };
 
-  console.log(userData);
+
+
+  const partsAssetId = userData.TicketAssets?.map((i) => i.id);
+
+  
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(
-          "https://saharadeskrestapi.azurewebsites.net/api/Parts/GetAllParts"
-        );
+    const apiUrl = `https://saharadeskrestapi.azurewebsites.net/api/Parts/GetPartsByAsset/${partsAssetId}`;
 
-        setPartData(response.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchData();
-  }, [partData]);
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setPartData(data);
+       
+      })
+      .catch((error) => {
+        console.error("Error fetching parts:", error);
+      });
+  }, [partsAssetId]);
 
   const [teams, setTeams] = useState([]);
 
@@ -127,6 +115,8 @@ function NewWorkOrder() {
         );
 
         setTeams(response.data);
+
+        setFilteredTeamOptions(response.data);
       } catch (error) {
         console.error("Error fetching category of work data:", error);
       }
@@ -135,31 +125,52 @@ function NewWorkOrder() {
     fetchTeams();
   }, []);
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-  
-    const selectedPart = partData.find((part) => part.id === parseInt(formData.part, 10)); // Parse the formData.part to an integer
-  
-    if (selectedPart) {
-      const newPart = {
-        spareId: selectedPart.id, // Use selectedPart.id as spareId
-        quantity: parseInt(formData.quantity, 10), // Parse the formData.quantity to an integer
-        amount: parseFloat(formData.amount), // Parse the formData.amount to a float
-        partName: selectedPart.partName,
-      };
-  
-      setTicketProjectedParts((prevProjectedParts) => [...prevProjectedParts, newPart]);
-  
-      setUserData({
-        ...userData,
-        TicketProjectedParts: [...ticketProjectedParts, newPart],
-      });
-  
-      setFormData({ partName: "", part: "", quantity: "", amount: "" }); // Clear the form fields
-      setShowParts(!showParts);
+  useEffect(() => {
+    async function fetchPriorities() {
+      try {
+        const response = await axios.get(
+          "https://saharadeskrestapi.azurewebsites.net/api/Tickets/GetAllTicketPriorities"
+        );
+
+        setPriorities(response.data);
+      } catch (error) {
+        console.error("Error fetching category of work data:", error);
+      }
     }
-  };
-  
+
+    fetchPriorities();
+  }, []);
+
+  //https://saharadeskrestapi.azurewebsites.net/api/Tickets/GetAllTicketPriorities
+
+  // const handleUpdateEditedPart = () => {
+  //   const partIndex = userData.TicketProjectedParts.findIndex(
+  //     (part) => part.spareId === editData.id
+  //   );
+
+  //   if (partIndex !== -1) {
+  //     const selectedPart = partData.find(
+  //       (part) => part.id === selectedPart
+  //     );
+
+  //     if (selectedPart) {
+  //       const updatedProjectedParts = [...userData.TicketProjectedParts];
+  //       updatedProjectedParts[partIndex] = {
+  //         ...updatedProjectedParts[partIndex],
+  //         spareId: selectedPart.id,
+  //         partName: editedPartData.partName,
+  //         quantity: editedPartData.quantity,
+  //         amount: parseFloat(selectedPart.cost) * parseInt(editedPartData.quantity, 10), // Recalculate the amount
+  //       };
+
+  //       setUserData({ ...userData, TicketProjectedParts: updatedProjectedParts });
+
+  //       setEditedPartData({ partName: "", quantity: 0, amount: 0 });
+  //       setSelectedPart(null);
+  //       setEditData(null);
+  //     }
+  //   }
+  // };
 
   const handleUpdate = () => {
     if (editData && editData.id) {
@@ -190,90 +201,167 @@ function NewWorkOrder() {
     setActiveTab(!activeTab);
     setActiveTab2(!activeTab2);
   };
-  //   setCheckedItems((prevItems) => ({
-  //     ...prevItems,
-  //     [option]: !prevItems[option],
-  //   }));
-  // };
 
-  // const handleAssetCheckboxChange = (assets) => {
-  //   const { asset } = userData;
-
-  //   const updatedasset = asset.includes(assets)
-  //     ? asset.filter((selectedAsset) => selectedAsset !== assets)
-  //     : [...asset, assets];
-
-  //   setUserData({ ...userData, asset: updatedasset });
-  // };
-
-  // const handleCheckboxChange = (option) => {
-  //   console.log("Clicked option:", option);
-
-  //   const selectedFeatures = userData.features || [];
-  //   if (selectedFeatures.includes(option)) {
-  //     setUserData({
-  //       ...userData,
-  //       features: selectedFeatures.filter(
-  //         (selectedFeature) => selectedFeature !== option
-  //       ),
-  //     });
-  //   } else {
-  //     setUserData({
-  //       ...userData,
-  //       features: [...selectedFeatures, option],
-  //     });
-  //   }
-  // };
-
-  const handleTicketCurrentTeamChange = (e) => {
-    const teamName = e.target.options[e.target.selectedIndex].text;
-    setUserData({
-      ...userData,
-      TicketCurrentTeam: {
-        CurrentAssignedTeamId: e.target.value,
-        CurrentAssignedTeamName: teamName,
-      },
-    });
-  };
-
-  const handleTeamCheckboxChange = (teamId) => {
-    if (userData.TicketAdditionalTeams.some((team) => team.TeamId === teamId)) {
-      // If the team is already selected, remove it from the array
-      setUserData({
-        ...userData,
-        TicketAdditionalTeams: userData.TicketAdditionalTeams.filter(
-          (team) => team.TeamId !== teamId
-        ),
-      });
+  const calculateAmount = () => {
+    if (formData.part && formData.quantity) {
+      const selectedPart = partData.find(
+        (item) => item.id === parseInt(formData.part, 10)
+      );
+      if (selectedPart) {
+        const cost = selectedPart.cost; // Replace 'cost' with the actual property name in your part data
+        const quantity = parseInt(formData.quantity, 10);
+        const amount = cost * quantity;
+        setCalculatedAmount(amount);
+      } else {
+        setCalculatedAmount(0); // If the selected part is not found, set the amount to 0
+      }
     } else {
-      // If the team is not selected, add it to the array
-      const selectedTeam = teamOptions.find((team) => team.TeamId === teamId);
-      setUserData({
-        ...userData,
-        TicketAdditionalTeams: [
-          ...userData.TicketAdditionalTeams,
-          selectedTeam,
-        ],
-      });
+      setCalculatedAmount(0); // If either the part or quantity is not selected, set the amount to 0
     }
   };
 
+  useEffect(() => {
+    calculateAmount();
+  }, [formData.part, formData.quantity, partData]);
+
+  useEffect(() => {
+    if (formData.part) {
+      calculateAmount();
+    }
+  }, [formData.part, partData]);
+
+  const handleEditPart = (item) => {
+    setEditedPartData({
+      partName: item.partName,
+      quantity: item.quantity,
+      amount: item.amount,
+    });
+
+    setSelectedPart(item.spareId);
+
+    // Store the item being edited so that it can be used in the edit form
+    setEditedEntity(item);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    const selectedPart = partData.find(
+      (part) => part.id === parseInt(formData.part, 10)
+    );
+
+    if (selectedPart) {
+      const newPart = {
+        spareId: selectedPart.id,
+        quantity: parseInt(formData.quantity, 10),
+        amount: parseFloat(selectedPart.cost) * parseInt(formData.quantity, 10), // Calculate the amount
+        partName: selectedPart.partName,
+      };
+
+      setTicketProjectedParts((prevProjectedParts) => [
+        ...prevProjectedParts,
+        newPart,
+      ]);
+
+      setUserData({
+        ...userData,
+        TicketProjectedParts: [...ticketProjectedParts, newPart],
+      });
+
+      setFormData({ partName: "", part: "", quantity: "", amount: "" });
+      setShowParts(!showParts);
+    }
+  };
+
+  const handleUpdateEditedPart = () => {
+    if (editData && editData.id) {
+      // Find the index of the edited part in the projected parts array
+      const partIndex = userData.TicketProjectedParts.findIndex(
+        (part) => part.spareId === editData.id
+      );
+
+      if (partIndex !== -1) {
+        const updatedProjectedParts = [...userData.TicketProjectedParts];
+        updatedProjectedParts[partIndex] = {
+          ...updatedProjectedParts[partIndex],
+          spareId: selectedPart, // Use the selected part's ID
+          partName: editedPartData.partName,
+          quantity: editedPartData.quantity,
+          amount:
+            parseFloat(editedPartData.quantity) *
+            parseFloat(
+              partData.find((part) => part.id === selectedPart)?.cost || 0
+            ),
+        };
+
+        setUserData({
+          ...userData,
+          TicketProjectedParts: updatedProjectedParts,
+        });
+
+        // Clear the edited part data and close the edit form
+        setEditedPartData({ partName: "", quantity: 0, amount: 0 });
+        setSelectedPart(null); // Clear the selected part
+        setEditData(null);
+      }
+    }
+  };
+
+  const handleTicketCurrentTeamChange = (teamId, teamName) => {
+    const selectedTeam = teams.find((team) => team.id === parseInt(teamId, 10));
+
+    if (selectedTeam) {
+      setUserData({
+        ...userData,
+        TicketCurrentTeam: {
+          CurrentAssignedTeamId: selectedTeam.id,
+          CurrentAssignedTeamName: selectedTeam.teamName,
+        },
+      });
+      setPrimaryTeamSearchQuery(selectedTeam.teamName);
+    }
+  };
+
+  const handleTeamRadioChange = (teamId) => {
+    const selectedTeam = teams.find((team) => team.id === parseInt(teamId, 10)); // Parse teamId to an integer
+    setUserData({
+      ...userData,
+      TicketAdditionalTeams: [selectedTeam],
+    });
+  };
+
+  const handleTeamRadioChange2 = (teamId) => {
+    const selectedTeam = teams.find((team) => team.id === parseInt(teamId, 10)); // Parse teamId to an integer
+
+    if (selectedTeam) {
+      // Update the TicketCurrentTeam field in userData
+      setUserData({
+        ...userData,
+        TicketCurrentTeam: {
+          CurrentAssignedTeamId: selectedTeam.id,
+          CurrentAssignedTeamName: selectedTeam.teamName,
+        },
+      });
+      // Set the search query to the selected team's name
+      setPrimaryTeamSearchQuery(selectedTeam.teamName);
+    }
+  };
+
+
+
   const handlePrioritySelection = (priority) => {
+    console.log("Selected Priority:", priority); // Log the selected priority
     setUserData({
       ...userData,
       TicketPriority: {
-        TicketPriorityId: priority.TicketPriorityId,
-        TicketPriorityName: priority.TicketPriorityName,
+        TicketPriorityId: priority.id,
+        TicketPriorityName: priority.ticketPrioritiesName,
       },
     });
   };
 
   const handleChecklistSearchChange = (e) => {
     setChecklistSearchQuery(e.target.value);
-  };
-
-  const handleAdditionalTeamsSearchChange = (e) => {
-    setAdditionalTeamsSearchQuery(e.target.value);
   };
 
   const handleDeleteProjectedPart = (index) => {
@@ -294,6 +382,9 @@ function NewWorkOrder() {
   };
 
   //CHECKLIST SEARCH
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredTeams, setFilteredTeams] = useState(teams);
 
   const handleChecklistRadioChange = (checklistId) => {
     const selectedChecklist = checklists.find(
@@ -319,22 +410,74 @@ function NewWorkOrder() {
     setFilteredChecklists(filteredList);
   };
 
+  useEffect(() => {
+    setFilteredTeams(teams);
+  }, [teams]);
+
+  const handlePrimaryTeamSearchChange = (e) => {
+    const selectedTeamName = e.target.value;
+
+    // Update the search query as the user types
+    setSearchQuery(selectedTeamName);
+
+    // Filter the teams based on the search query
+    const filteredTeams = teams.filter((team) =>
+      team.teamName.toLowerCase().includes(selectedTeamName.toLowerCase())
+    );
+
+    setFilteredTeams(filteredTeams);
+  };
+
   //CHECKLIST SEARCH
 
-  //ADDITIONAL TEAMS SEARCH
+  const [categorySearchQuery, setCategorySearchQuery] = useState("");
+  const [filteredCategories, setFilteredCategories] =
+    useState(categoryOfWorkData);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const [filteredTeamOptions, setFilteredTeamOptions] = useState(teams);
 
-  const handleAdditionalSearch = (e) => {
-    const searchTerm = e.target.value;
-    setSearchTerm(searchTerm);
-    const filteredList = teams.filter((team) => {
-      return team.teamName.toLowerCase().includes(searchTerm.toLowerCase());
-    });
-    setFilteredTeamOptions(filteredList);
+  const handleAdditionalTeamsSearchChange = (e) => {
+    setAdditionalTeamsSearchQuery(e.target.value);
+    // You can filter the teams here based on the search query
+    const filteredTeams = teams.filter((team) =>
+      team.teamName.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFilteredTeamOptions(filteredTeams);
   };
 
-  //ADDITIONAL TEAMS SEARCH
+  const handleCategoryOfWorkSearchChange = (e) => {
+    const selectedCategoryName = e.target.value;
+
+    // Update the search query as the user types
+    setCategorySearchQuery(selectedCategoryName);
+
+    // Filter the categories based on the search query
+    const filteredCategories = categoryOfWorkData.filter((category) =>
+      category.categoryOfWorkName
+        .toLowerCase()
+        .includes(selectedCategoryName.toLowerCase())
+    );
+
+    setFilteredCategories(filteredCategories);
+    setIsDropdownOpen(true); // Open the dropdown
+  };
+
+
+  
+
+  const handleCategoryOfWorkSelection = (selectedCategory) => {
+    setSelectedCategoryOfWork(selectedCategory);
+
+    // Update userData with the selected category of work
+    setUserData({
+      ...userData,
+      categoryOfWork: selectedCategory,
+    });
+
+    // Close the dropdown
+    setIsDropdownOpen(false);
+  };
 
   return (
     <div className="WORKorderContainerMAIN">
@@ -489,12 +632,12 @@ function NewWorkOrder() {
                           className={
                             userData.TicketPriority &&
                             userData.TicketPriority.TicketPriorityId ===
-                              priority.TicketPriorityId
+                              priority.id
                               ? "selected-button"
                               : "unselected-button"
                           }
                         >
-                          {priority.TicketPriorityName}
+                          {priority.ticketPrioritiesName}
                         </Button>
                       ))}
                     </div>
@@ -506,31 +649,55 @@ function NewWorkOrder() {
             <div className="newWorkOrderCells newWorkOrderCellsAssetCategory allTopWO WOstepOneMargin">
               <div>
                 <p className="form-label-newWO">Assign Team(primary)</p>
-                <div className="selectNewContainerWO2">
-                  <select
-                    className="form-select newWorkOrderSelectStep2"
-                    aria-label="Default select example"
-                    value={userData.TicketCurrentTeam.CurrentAssignedTeamId}
-                    onChange={handleTicketCurrentTeamChange}
+                <div class="dropdown actionDropdown assignedTeam">
+                  <p
+                    className="form-label-newWO btn btn-light dropdown-toggle dropdown-toggle-add-team"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
-                    <option value="">select</option>
-                    {teams.map((item) => {
-                      return (
-                        <option value={item.id} key={item.id}>
-                          {item.teamName}
-                        </option>
-                      );
-                    })}
-                  </select>
-                  <customIcons.down
-                    className="selectNewIcon selectNewIconWO"
-                    size={13}
-                  />
+                    {userData.TicketCurrentTeam?.CurrentAssignedTeamName ||
+                      "Select"}
+                  </p>
+                  <ul className="dropdown-menu">
+                    <div className="search-container">
+                      <input
+                        type="text"
+                        className="form-control search-input"
+                        placeholder="Search Primary Team..."
+                        value={searchQuery}
+                        onChange={handlePrimaryTeamSearchChange}
+                      />
+                    </div>
+                    <li>
+                      {filteredTeams.map((team) => (
+                        <div
+                          key={team.id}
+                          className="radio-item checkListDropdown"
+                        >
+                          <input
+                            type="radio"
+                            id={`team-${team.id}`}
+                            name="currentTeam"
+                            value={team.id}
+                            checked={
+                              selectedPrimaryTeam &&
+                              selectedPrimaryTeam.id === team.id
+                            }
+                            onChange={() => handleTeamRadioChange2(team.id)}
+                          />
+                          <label htmlFor={`team-${team.id}`}>
+                            {team.teamName}
+                          </label>
+                        </div>
+                      ))}
+                    </li>
+                  </ul>
                 </div>
               </div>
 
               <div>
-                <div class="dropdown actionDropdown dropdownAdditionalTeam">
+                <div className="dropdown actionDropdown dropdownAdditionalTeam">
                   <div className="header">
                     <p className="additionalTeamHeader">
                       Assign Additional Team
@@ -543,7 +710,8 @@ function NewWorkOrder() {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      select
+                      {userData.TicketAdditionalTeams?.map((i) => i.teamName) ||
+                        "Select"}
                     </p>
                     <ul class="dropdown-menu">
                       <div class="search-container">
@@ -555,37 +723,29 @@ function NewWorkOrder() {
                           onChange={handleAdditionalTeamsSearchChange}
                         />
                       </div>
-
                       <li>
-                        {teams
-                          .filter((team) =>
-                            team.teamName
-                              .toLowerCase()
-                              .includes(
-                                additionalTeamsSearchQuery.toLowerCase()
-                              )
-                          )
-                          .map((team) => (
-                            <div
-                              key={team.id} // Assuming that the team object has an 'id' property
-                              className="checkbox-item checkListDropdown"
-                            >
-                              <input
-                                type="checkbox"
-                                id={`team-${team.id}`}
-                                name={`team-${team.id}`}
-                                checked={userData.TicketAdditionalTeams.some(
-                                  (t) => t.TeamId === team.id
-                                )}
-                                onChange={() =>
-                                  handleTeamCheckboxChange(team.id)
-                                } // Use 'team.id' as the team identifier
-                              />
-                              <lable htmlFor={`team-${team.id}`}>
-                                {team.teamName}
-                              </lable>
-                            </div>
-                          ))}
+                        {filteredTeamOptions.map((team) => (
+                          <div
+                            key={team.id}
+                            className="radio-item checkListDropdown"
+                          >
+                            <input
+                              type="radio"
+                              id={`team-${team.id}`}
+                              name="selectedTeam"
+                              value={team.id}
+                              checked={userData.TicketAdditionalTeams.some(
+                                (selectedTeam) =>
+                                  selectedTeam.TeamId === team.id
+                              )}
+                              onChange={() => handleTeamRadioChange(team.id)}
+                            />
+
+                            <label htmlFor={`team-${team.id}`}>
+                              {team.teamName}
+                            </label>
+                          </div>
+                        ))}
                       </li>
                     </ul>
                   </div>
@@ -650,7 +810,7 @@ function NewWorkOrder() {
                     <tr>
                       <th>Parts</th>
                       <th>Quantity</th>
-                      <th>Ammount(ks)</th>
+                      <th>Amount(ksh)</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -723,19 +883,25 @@ function NewWorkOrder() {
                       type="number"
                       placeholder="Quantity"
                       value={formData.quantity}
-                      onChange={(e) =>
-                        setFormData({ ...formData, quantity: e.target.value })
-                      }
+                      onChange={(e) => {
+                        setCalculatedAmount(0); // Reset the calculated amount when the quantity changes
+                        setFormData({ ...formData, quantity: e.target.value });
+                      }}
                     />
-                    <p className="partFormHeader">Add Ammount</p>
-                    <input
-                      type="number"
-                      placeholder="Amount"
-                      value={formData.amount}
-                      onChange={(e) =>
-                        setFormData({ ...formData, amount: e.target.value })
-                      }
-                    />
+
+                    <p className="partFormHeader">
+                      Calculated Amount: ${calculatedAmount}
+                    </p>
+
+                    {/* <p className="partFormHeader">Add Amount</p>
+            <input
+              type="number"
+              placeholder="Amount"
+              value={formData.amount}
+              onChange={(e) =>
+                setFormData({ ...formData, amount: e.target.value })
+              }
+            /> */}
 
                     <button type="submit">Submit</button>
                   </div>
@@ -862,41 +1028,48 @@ function NewWorkOrder() {
             <div className="partsFormEditFormHolder">
               <h2>Edit Parts</h2>
               <div className="partsFormInner">
-                <h5>Edit Part</h5>
-                <input
-                  className="partsFormInner"
-                  type="text"
-                  name="part"
-                  value={editData.part}
-                  onChange={(e) =>
-                    setEditData({ ...editData, part: e.target.value })
-                  }
-                />
+                <select
+                  name="partName"
+                  value={selectedPart}
+                  placeholder="edit part name"
+                  onChange={(e) => {
+                    const selectedPartId = parseInt(e.target.value, 10);
+                    setSelectedPart(selectedPartId);
+                    const selectedPart = partData.find(
+                      (part) => part.id === selectedPartId
+                    );
+                    if (selectedPart) {
+                      setEditedPartData({
+                        ...editedPartData,
+                        partName: selectedPart.partName,
+                      });
+                    }
+                  }}
+                >
+                  <option value="">Select Part</option>
+                  {partData.map((part) => (
+                    <option key={part.id} value={part.id}>
+                      {part.partName}
+                    </option>
+                  ))}
+                </select>
                 <br />
 
-                <h5>Edit Quantity</h5>
                 <input
-                  type="text"
+                  type="number"
+                  placeholder="edit quantity"
                   name="quantity"
-                  value={editData.quantity}
+                  value={editedPartData.quantity}
                   onChange={(e) =>
-                    setEditData({ ...editData, quantity: e.target.value })
-                  }
-                />
-                <br />
-
-                <h5>Edit Amount</h5>
-                <input
-                  type="text"
-                  name="amount"
-                  value={editData.amount}
-                  onChange={(e) =>
-                    setEditData({ ...editData, amount: e.target.value })
+                    setEditedPartData({
+                      ...editedPartData,
+                      quantity: e.target.value,
+                    })
                   }
                 />
                 <br />
                 <div className="editPartsBtn">
-                  <button onClick={handleUpdate}>Update</button>
+                  <button onClick={handleUpdateEditedPart}>Update</button>
                   <button onClick={() => setEditData(null)}>Cancel</button>
                 </div>
               </div>

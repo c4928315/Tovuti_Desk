@@ -58,7 +58,7 @@ function Request() {
     "https://saharadeskrestapi.azurewebsites.net/api/Locations"
   );
 
-  console.log(locations);
+  console.log();
 
   const navigate = useNavigate();
 
@@ -78,7 +78,6 @@ function Request() {
   const [assetSearchQuery, setAssetSearchQuery] = useState("");
   const [isAssetDropdownOpen, setAssetDropdownOpen] = useState(false);
 
-
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -88,7 +87,7 @@ function Request() {
     }
   }, [selectedLocationId]);
 
-  console.log(assets);
+
 
   const fetchAssetsForLocation = (locationId) => {
     // Fetch assets based on the selected location
@@ -107,7 +106,6 @@ function Request() {
         console.error("Error fetching assets:", error);
       });
   };
-  
 
   const fetchFaultsForAsset = (assetId) => {
     // Fetch faults based on the selected asset
@@ -116,7 +114,8 @@ function Request() {
     )
       .then((response) => response.json())
       .then((data) => {
-        if (Array.isArray(data)) { // Check if data is an array
+        if (Array.isArray(data)) {
+          // Check if data is an array
           setFaults(data);
         } else {
           console.error("Faults data is not an array:", data);
@@ -126,7 +125,6 @@ function Request() {
         console.error("Error fetching faults:", error);
       });
   };
-  
 
   const handleAssetChange = (e) => {
     const assetId = parseInt(e.target.value);
@@ -139,9 +137,11 @@ function Request() {
     }
   }, [selectedAssetId]);
 
-  console.log(selectedAssetId);
 
-  console.log(faults);
+  console.log(AttachedFiles)
+
+
+ 
 
   useEffect(() => {
     const storedFormData = JSON.parse(localStorage.getItem("formData"));
@@ -189,12 +189,12 @@ function Request() {
   const handleLocationChange = (e) => {
     const locationId = parseInt(e.target.value);
     setSelectedLocationId(locationId);
-  
+
     // Reset the selected asset to the first one available in the new location
     const assetsInNewLocation = assts.filter(
       (asset) => asset.assetLocationId === locationId
     );
-  
+
     if (assetsInNewLocation.length > 0) {
       setSelectedAssetId(assetsInNewLocation[0].id);
       fetchFaultsForAsset(assetsInNewLocation[0].id); // Fetch faults for the first asset
@@ -204,8 +204,6 @@ function Request() {
       setFaults([]); // Clear the faults when there are no assets
     }
   };
-  
-  
 
   const handleFaultChange = (e) => {
     const selectedFaultId = parseInt(e.target.value);
@@ -229,9 +227,34 @@ function Request() {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setAttachedFiles(file);
+    const selectedFiles = e.target.files;
+    const newFileNames = [];
+  
+    if (selectedFiles.length > 10) {
+      alert("You can't select more than 10 files.");
+      return; // Do not process the files if they exceed the limit.
+    }
+  
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const file = selectedFiles[i];
+      if (file.size > 2 * 1024 * 1024) {
+        alert(`File "${file.name}" exceeds the 2MB size limit.`);
+      } else {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const base64Data = event.target.result.split(',')[1]; // Extract base64 data
+          newFileNames.push(base64Data);
+          setAttachedFiles([...AttachedFiles, ...newFileNames]);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
   };
+  
+  
+  
+  
+  
 
   const postDataToAPI = (formData) => {
     // Create an object with the additional data you want to add
@@ -348,7 +371,7 @@ function Request() {
       selectedFaults: selectedFaultIds,
       requestDetails: Description,
       recurrence: isRecurrentFault,
-      images: [],
+      images: AttachedFiles,
       createdBy: 6,
     };
 
@@ -367,7 +390,7 @@ function Request() {
     );
 
     if (response.ok) {
-      console.log("Post request was successful");
+      console.log(response);
 
       // Handle success, reset the form, or perform any necessary actions
     } else {
@@ -379,11 +402,11 @@ function Request() {
     navigate("/requests");
   };
 
-
   const filteredLocations = locations.filter((option) =>
-  option.locationName.toLowerCase().includes(locationSearchQuery.toLowerCase())
-);
-
+    option.locationName
+      .toLowerCase()
+      .includes(locationSearchQuery.toLowerCase())
+  );
 
   return (
     <div className="allPagePosition">
@@ -435,95 +458,114 @@ function Request() {
                     <div className="formRowRight">
                       <h3 className="requestHeader">Where are you located?</h3>
                       <div className="selectNewContainer">
-  <div
-    className="custom-select dropdown-toggle"
-    data-bs-toggle="dropdown"
-    aria-expanded="false"
-    onClick={() => setLocationDropdownOpen(!isLocationDropdownOpen)}
-  >
-    <p className="customSelectOption">
-      {selectedLocationId
-        ? locations.find((location) => location.id === selectedLocationId).locationName
-        : "Select"}
-    </p>
-    
-  </div>
-  <div className="custom-select-dropdown dropdown-menu">
-    <div className="search-container">
-      <input
-        type="text"
-        className="form-control search-input custom-search-input"
-        placeholder="Search Locations..."
-        value={locationSearchQuery}
-        onChange={(e) => setLocationSearchQuery(e.target.value)}
-      />
-    </div>
-    <ul className={`location-dropdown ${isLocationDropdownOpen ? "open" : ""}`}>
-      {filteredLocations.map((option) => (
-        <li
-          key={option.id}
-          onClick={() => {
-            setSelectedLocationId(option.id);
-            setLocationDropdownOpen(false);
-          }}
-          className="dropdown-item"
-        >
-          {option.locationName}
-        </li>
-      ))}
-    </ul>
-  </div>
-</div>
-
+                        <div
+                          className="custom-select dropdown-toggle requestDropDownNew"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          onClick={() =>
+                            setLocationDropdownOpen(!isLocationDropdownOpen)
+                          }
+                        >
+                          <p className="customSelectOption">
+                            {selectedLocationId
+                              ? locations.find(
+                                  (location) =>
+                                    location.id === selectedLocationId
+                                ).locationName
+                              : "Select"}
+                          </p>
+                        </div>
+                        <div className="custom-select-dropdown dropdown-menu requestDropDownNew">
+                          <div className="search-container">
+                            <input
+                              type="text"
+                              className="form-control search-input custom-search-input"
+                              placeholder="Search Locations..."
+                              value={locationSearchQuery}
+                              onChange={(e) =>
+                                setLocationSearchQuery(e.target.value)
+                              }
+                            />
+                          </div>
+                          <ul
+                            className={`location-dropdown ${
+                              isLocationDropdownOpen ? "open" : ""
+                            }`}
+                          >
+                            {filteredLocations.map((option) => (
+                              <li
+                                key={option.id}
+                                onClick={() => {
+                                  setSelectedLocationId(option.id);
+                                  setLocationDropdownOpen(false);
+                                }}
+                                className="dropdown-item"
+                              >
+                                {option.locationName}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
 
                     <div className="formRowLeft">
                       <h3 className="requestHeader">Select faulty Asset</h3>
                       <div className="selectNewContainer">
-  <div
-    className="custom-select dropdown-toggle"
-    data-bs-toggle="dropdown"
-    aria-expanded="false"
-    onClick={() => setAssetDropdownOpen(!isAssetDropdownOpen)}
-  >
-    <p className="customSelectOption">
-      {selectedAssetId
-        ? assets.find((asset) => asset.id === selectedAssetId).assetName
-        : "Select"}
-    </p>
-    
-  </div>
-  <div className="custom-select-dropdown dropdown-menu">
-    <div className="search-container">
-      <input
-        type="text"
-        className="form-control search-input custom-search-input"
-        placeholder="Search Faulty Assets..."
-        value={assetSearchQuery}
-        onChange={(e) => setAssetSearchQuery(e.target.value)}
-      />
-    </div>
-    <ul className={`location-dropdown ${isAssetDropdownOpen ? "open" : ""}`}>
-      {assets
-        .filter((asset) =>
-          asset.assetName.toLowerCase().includes(assetSearchQuery.toLowerCase())
-        )
-        .map((option) => (
-          <li
-            key={option.id}
-            onClick={() => {
-              setSelectedAssetId(option.id);
-              setAssetDropdownOpen(false);
-            }}
-            className="dropdown-item"
-          >
-            {option.assetName}
-          </li>
-        ))}
-    </ul>
-  </div>
-</div>
-
+                        <div
+                          className="custom-select dropdown-toggle "
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          onClick={() =>
+                            setAssetDropdownOpen(!isAssetDropdownOpen)
+                          }
+                        >
+                          <p className="customSelectOption">
+                            {selectedAssetId
+                              ? assets.find(
+                                  (asset) => asset.id === selectedAssetId
+                                ).assetName
+                              : "Select"}
+                          </p>
+                        </div>
+                        <div className="custom-select-dropdown dropdown-menu requestDropDownNew">
+                          <div className="search-container">
+                            <input
+                              type="text"
+                              className="form-control search-input custom-search-input"
+                              placeholder="Search Faulty Assets..."
+                              value={assetSearchQuery}
+                              onChange={(e) =>
+                                setAssetSearchQuery(e.target.value)
+                              }
+                            />
+                          </div>
+                          <ul
+                            className={`location-dropdown ${
+                              isAssetDropdownOpen ? "open" : ""
+                            }`}
+                          >
+                            {assets
+                              .filter((asset) =>
+                                asset.assetName
+                                  .toLowerCase()
+                                  .includes(assetSearchQuery.toLowerCase())
+                              )
+                              .map((option) => (
+                                <li
+                                  key={option.id}
+                                  onClick={() => {
+                                    setSelectedAssetId(option.id);
+                                    setAssetDropdownOpen(false);
+                                  }}
+                                  className="dropdown-item"
+                                >
+                                  {option.assetName}
+                                </li>
+                              ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="formRow">
@@ -616,10 +658,10 @@ function Request() {
                         </label>
                         <input
                           type="file"
-                          disabled
                           class="form-control attachFile"
                           id="inputGroupFile02"
                           onChange={handleFileChange}
+                          multiple
                         />
                       </div>
                     </div>
@@ -638,3 +680,4 @@ function Request() {
 }
 
 export default Request;
+

@@ -32,7 +32,7 @@ function WorkOrder({ requiredClaims, userClaims }) {
             </button>
             <ul className="dropdown-menu">
               <li>
-                <Link className="dropdown-item action-dropdown-item" to="/work-order-form">
+                <Link className="dropdown-item action-dropdown-item" to="/work-order-form?source=workorder">
                   <customIcons.add style={{ color: "green" }} />
                   <span>Add Work Order</span>
                 </Link>

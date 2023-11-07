@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import StepAsset from "../../workOrderSteps/stepAsset";
 import StepOtherInfo from "../../workOrderSteps/stepOtherInfo";
 import StepWorkOrder from "../../workOrderSteps/stepWorkOrder";
@@ -7,11 +7,16 @@ import StepSummary from "../../workOrderSteps/stepsummary";
 import { MultiStepContext } from "../../Context";
 import "./workOrderForm.css";
 import customIcons from "../../../Icons/icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import NewWorkOrder from "../../workOrderSteps/newWorkOrder";
 
 function WorkOrderForm() {
   const { currentStep, finalData, setStep } = useContext(MultiStepContext);
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const source = queryParams.get("source");
+
 
   function showStep(step) {
     switch (step) {
@@ -32,13 +37,13 @@ function WorkOrderForm() {
     }
   }
 
-  const styleLabel = {
-    display: "flex",
-    gap: "10px",
-    color: "lightgrey",
-    fontSize: "16px",
-    with: "fit-content"
-  }
+  useEffect(() => {
+    if (source === "request") {
+      setStep(2);
+    }
+  }, [source, setStep]);
+
+
 
   return (
     <div className="allPagePosition">

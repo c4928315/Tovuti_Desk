@@ -32,6 +32,13 @@ function StepSummary() {
       quantity: parseInt(i.quantity)
     }))
 
+    // let imagesArray = []
+    // userData.files?.map((file) => imagesArray.push(file.base64))
+
+    let imagesArray = userData.files ? userData.files.map(file => file.base64) : [];
+
+
+
    const currentUser = localStorage.getItem("userInfo")
 
    const ApiData = 
@@ -49,7 +56,7 @@ function StepSummary() {
       signatureRequiredToCompleteWork: userData.TechnitianSignature,
       estimatedHours: parseInt(userData.EstimatedHours, 10),
       projectedParts: arrayProjectedParts,
-      images: [],
+      images: imagesArray,
       createdBy: parseInt(JSON.parse(currentUser)?.id, 10)
     }
    
@@ -64,7 +71,7 @@ function StepSummary() {
 
   const submitDataToAPI = (ApiData) => {
     const apiUrl = "https://saharadeskrestapi.azurewebsites.net/api/Tickets/RaiseTicket";
-
+  
     fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -74,22 +81,36 @@ function StepSummary() {
     })
       .then((response) => {
         if (response.ok) {
-          // Data was successfully sent to the API
           return response.json();
         } else {
-          console.log("API response:", ApiData)
           throw new Error("Data submission failed.");
         }
       })
-      .then((ApiData) => {
-        // Handle the API response, if needed
-        console.log("API response:", ApiData);
-        // navigate("work-order")
+      .then((workOrderResponse) => {
+        // Handle the API response data, if needed
+        console.log("API response:", workOrderResponse);
+  
+        // Save the response data to local storage
+        saveWOResponseLocalStorage(workOrderResponse);
+  
+        navigate('/work-order')
       })
       .catch((error) => {
         console.error("API Error:", error);
       });
   };
+
+  
+  const saveWOResponseLocalStorage = (workOrderResponse) => {
+    try {
+      const dataToStore = JSON.stringify(workOrderResponse);
+      localStorage.setItem("workOrderResponse", dataToStore);
+      console.log("Response data saved to local storage.");
+    } catch (error) {
+      console.error("Error saving response data to local storage:", error);
+    }
+  };
+  
 
   const saveDataToLocalStorage = (userData) => {
     try {
@@ -125,7 +146,7 @@ function StepSummary() {
             <div className="WOsummaryRight">
               <h6 className="subHeaderSummary">asset category:</h6>
               <p className="mainInfoSummary">
-                {userData.TicketCategoryOfWork.CategoryOfWorkName}
+                {userData.TicketAssetCategory.name}
               </p>
             </div>
           </div>
@@ -173,7 +194,7 @@ function StepSummary() {
           <div>
             <p className="subHeaderSummary">Category Of Work:</p>
             <p className="mainInfoSummary">
-              {userData.TicketCategoryOfWork.CategoryOfWorkName}
+              {userData.categoryOfWork.categoryOfWorkName}
             </p>
           </div>
           <div className="WOsummaryRight">
@@ -196,7 +217,7 @@ function StepSummary() {
             <p className="subHeaderSummary">Additional Team:</p>
             <p className="mainInfoSummary">
               {userData.TicketAdditionalTeams.map((item) => {
-                return <div>{item.TeamName}</div>;
+                return <div>{item.teamName}</div>;
               })}
             </p>
           </div>
@@ -234,10 +255,10 @@ function StepSummary() {
           <div>
             <p className="subHeaderSummary">Projected Parts:</p>
             <div className="mainInfoSummary">
-              {userData.TicketProjectedParts.map((item) => {
+              {userData.TicketProjectedParts?.map((item) => {
                 return (
                  <div>
-                  {item.part}
+                  {item.partName}
                  </div> 
                 )
               })}
@@ -256,7 +277,14 @@ function StepSummary() {
             </div>
 
             <p className="subHeaderSummary">Files</p>
-            <p className="mainInfoSummary">pump1.png</p>
+            {
+              userData.files?.map((i) => {
+                return (
+                  <p className="mainInfoSummary">{i.name}</p>  
+                )
+              })
+            }
+            
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import CloseWorkOrder from "../Forms/CloseWorkOrder/closeWorkOrder";
 
 function WorkOrderDetailsPage() {
   const { itemId } = useParams();
+  const { setStep, requestedPartz } = useContext(MultiStepContext);
   const [itemDetails, setItemDetails] = useState(null);
   const [partData, setPartData] = useState([]);
 
@@ -77,6 +78,8 @@ function WorkOrderDetailsPage() {
     setShowDiagnosisForm(!showDiagnosisForm);
   };
 
+  console.log(requestedPartz)
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -85,6 +88,26 @@ function WorkOrderDetailsPage() {
         );
 
         setPartData(response.data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const [locations, setLocations] = useState([])
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          "https://saharadeskrestapi.azurewebsites.net/api/Locations"
+        );
+
+        setLocations(response.data);
       } catch (error) {
         setError(error);
       } finally {
@@ -128,6 +151,8 @@ function WorkOrderDetailsPage() {
     }
   };
 
+  let id = 10
+
   useEffect(() => {
     const apiUrl = `https://saharadeskrestapi.azurewebsites.net/api/Tickets/${itemId}`;
 
@@ -153,13 +178,34 @@ function WorkOrderDetailsPage() {
     setExtendPartTable(!extendPartTable);
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(
-          "https://intra-deco.onrender.com/Parts"
-        );
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const response = await axios.get(
+  //         "https://intra-deco.onrender.com/Parts"
+  //       );
 
+  //       setPartData(response.data);
+  //     } catch (error) {
+  //       setError(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+
+  //   fetchData();
+  // }, []);
+
+  // const getPartId = itemDetails.id
+  // console.log(getPartId)
+
+  
+
+  useEffect(() => {
+
+    async function fetchPartData() {
+      try {
+        const response = await axios.get(`https://saharadeskrestapi.azurewebsites.net/api/Parts/GetPartsByAsset/${id}`);
         setPartData(response.data);
       } catch (error) {
         setError(error);
@@ -168,8 +214,9 @@ function WorkOrderDetailsPage() {
       }
     }
 
-    fetchData();
-  }, []);
+
+    fetchPartData(); // Assuming itemId holds the assetId
+  }, [id]);
 
   const handleShowParts = () => {
     setExtendPartTable(!extendPartTable);
@@ -189,11 +236,7 @@ function WorkOrderDetailsPage() {
 
   const [partNames, setPartNames] = useState([]);
   const [editingPart, setEditingPart] = useState(false);
-  const [requestedPartForm, setRequestedPartForm] = useState({
-    partId: "",
-    quantity: "",
-    location: "",
-  });
+  
 
   useEffect(() => {
     async function fetchPartNames() {
@@ -208,60 +251,7 @@ function WorkOrderDetailsPage() {
     fetchPartNames();
   }, []);
 
-  const handleRequestedPartSubmit = (e) => {
-    e.preventDefault();
-  
-    if (editingPart) {
-      // Editing an existing part
-      const updatedParts = userData.TicketRequestedParts.map((item) =>
-        item.id === requestedPartForm.partId
-          ? {
-              id: item.id,
-              partName: requestedPartForm.part,
-              quantity: requestedPartForm.quantity,
-              amount: 0, // Update this as needed
-            }
-          : item
-      );
-  
-      setUserData({
-        ...userData,
-        TicketRequestedParts: updatedParts,
-      });
-  
-      // Clear the form and reset the editing flag
-      setRequestedPartForm({
-        partId: "",
-        part: "",
-        quantity: "",
-        location: "",
-      });
-      setEditingPart(false);
-    } else {
-      // Adding a new part (similar to the previous code)
-      const newPart = {
-        id: new Date().getTime(),
-        partName: requestedPartForm.part,
-        quantity: parseInt(requestedPartForm.quantity, 10),
-        location: requestedPartForm.location,
-        amount: 0, // Update this as needed
-      };
-  
-      // Add the new part to the list of requested parts
-      setUserData({
-        ...userData,
-        TicketRequestedParts: [...userData.TicketRequestedParts, newPart],
-      });
-  
-      // Clear the form (as before)
-      setRequestedPartForm({
-        partId: "",
-        part: "",
-        quantity: "",
-        location: "",
-      });
-    }
-  };
+
   
 
 
@@ -282,7 +272,7 @@ function WorkOrderDetailsPage() {
     const partToEdit = userData.TicketRequestedParts.find((item) => item.id === partId);
   
     if (partToEdit) {
-      setRequestedPartForm({
+      setRequestedParts({
         partId: partToEdit.id,
         part: partToEdit.partName, // Assuming you have a 'partName' field
         quantity: partToEdit.quantity,
@@ -301,6 +291,75 @@ function WorkOrderDetailsPage() {
   const handleCloseWorkOrder = (itemId) => {
     setCloseFormItemId(itemId);
     setShowCloseForm(true);
+  };
+
+
+  const [requestedParts, setRequestedParts] = useState({
+    parts: { selectedPartId: "", selectedPartName: "" },
+    location: { selectedLocationId: "", selectedLocationName: "" },
+    quantity: 0,
+    amount: 0,
+  });
+
+  const currentUser = localStorage.getItem("userInfo")
+
+  
+
+  const handlePartFormSubmit = async (e) => {
+    e.preventDefault();
+
+    const {
+      parts: { selectedPartId, selectedPartName },
+      location: { selectedLocationId, selectedLocationName },
+      quantity,
+      amount,
+    } = requestedParts;
+
+    if (!selectedPartId) {
+      console.error("No part selected");
+      return;
+    }
+
+    try {
+      // Define the request body in the required format
+      const requestBody = {
+        ticketId: 3,  // Replace with the actual ticketId
+        partId: selectedPartId,  // Use the selected part's ID
+        partLocationId: parseInt(selectedLocationId, 10),  // Use the selected location's ID
+        partSerialNumber: "23456tyrew3245",  // Replace with the appropriate serial number
+        quantityRequested: parseInt(quantity, 10),
+        partStatus: "string",  // Replace with the appropriate status
+        partCondition: "string",  // Replace with the appropriate condition
+        partPhoto: "string",  // Replace with the path to the part's photo
+        isApproved: true,  // Replace with true or false based on your requirements
+        createdBy: 6,  // Replace with the actual user's ID
+      };
+
+      const response = await axios.post(
+        "https://saharadeskrestapi.azurewebsites.net/api/Tickets/AddRequestedPartsForTicket",
+        requestBody
+      );
+
+      if (response.status === 200) {
+        // Request was successful
+        // You can handle the response as needed
+        // For example, clear the form and update the state
+        setRequestedParts({
+          parts: { selectedPartId: "", selectedPartName: "" },
+          location: { selectedLocationId: "", selectedLocationName: "" },
+          quantity: 0,
+          amount: 0,
+        });
+
+        // You may also want to update your state with the response data
+        const responseData = response.data;
+        console.log("Response Data:", responseData);
+      } else {
+        console.error("Failed to add requested part");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
 
@@ -1201,18 +1260,18 @@ function WorkOrderDetailsPage() {
           >
             X
           </div>
-          <form onSubmit={handleRequestedPartSubmit} className="partsFormWO">
+          <form onSubmit={handlePartFormSubmit} className="partsFormWO">
             <div className="partsFormInner">
               <h3 className="partsHeader">Add Requested Part</h3>
               <p className="partFormHeader">Selected Part</p>
               <select
-                value={requestedPartForm.part}
+                value={requestedParts.part}
                 onChange={(e) =>
-                  setRequestedPartForm({ ...requestedPartForm, part: e.target.value })
+                  setRequestedParts({ ...requestedParts, part: e.target.value })
                 }
               >
-                {/* {
-                  partNames.map((item) => {
+                {
+                  partData.map((item) => {
                     return (
                     <option
                     key={item.id}
@@ -1222,32 +1281,40 @@ function WorkOrderDetailsPage() {
                     </option>
                     )
                   })
-                } */}
-                <option value="">Select</option>
+                }
+                {/* <option value="">Select</option>
                 <option value="Part 1">Part 1</option>
                 <option value="Part 2">Part 2</option>
-                <option value="Part 3">Part 3</option>
+                <option value="Part 3">Part 3</option> */}
               </select>
               <p className="partFormHeader">Selected Quantity</p>
               <input
                 type="number"
                 placeholder="Quantity"
-                value={requestedPartForm.quantity}
+                value={requestedParts.quantity}
                 onChange={(e) =>
-                  setRequestedPartForm({ ...requestedPartForm, quantity: e.target.value })
+                  setRequestedParts({ ...requestedParts, quantity: e.target.value })
                 }
               />
               <p className="partFormHeader">Selected Location</p>
               <select
-                value={requestedPartForm.location}
+                value={requestedParts.location}
                 onChange={(e) =>
-                  setRequestedPartForm({ ...requestedPartForm, location: e.target.value })
+                  setRequestedParts({ ...requestedParts, location: e.target.value })
                 }
               >
-                <option value="">Select</option>
-                <option value="Narok">Narok</option>
-                <option value="Gigiri">Gigiri</option>
-                <option value="Wasabi">Wasabi</option>
+                {
+                  locations?.map((item) => {
+                    return (
+                    <option
+                    key={item.id}
+                    value={item.id}
+                    >
+                      {item.locationName}
+                    </option>
+                    )
+                  })
+                }
               </select>
               <button type="submit">Submit</button>
             </div>

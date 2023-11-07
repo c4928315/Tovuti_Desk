@@ -17,31 +17,42 @@ function StepAsset() {
   const [isLocationDropdownOpen, setLocationDropdownOpen] = useState(false);
   const [isCategoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [isAssetDropdownOpen, setAssetDropdownOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState("Select");
+const [selectedCategory, setSelectedCategory] = useState("Select");
+const [selectedAssetText, setSelectedAssetText] = useState("Select");
   const dropdownRef = useRef(null);
 
-  const handleAssetCheckboxChange = (asset) => {
-    const { TicketAssets } = userData;
 
-    if (TicketAssets) {
-      const assetIndex = TicketAssets.findIndex(
-        (selectedAsset) => selectedAsset.AssetId === asset.AssetId
-      );
+ // Inside the handleAssetCheckboxChange function, set the selected asset text and selectedLocation
+const handleAssetCheckboxChange = (asset) => {
+  const { TicketAssets } = userData;
 
-      if (assetIndex !== -1) {
-        // Asset exists, remove it
-        const updatedTicketAssets = [...TicketAssets];
-        updatedTicketAssets.splice(assetIndex, 1);
-        setUserData({ ...userData, TicketAssets: updatedTicketAssets });
-      } else {
-        // Asset doesn't exist, add it
-        setUserData({
-          ...userData,
-          TicketAssets: [...TicketAssets, asset],
-        });
-      }
+  if (TicketAssets) {
+    const assetIndex = TicketAssets.findIndex(
+      (selectedAsset) => selectedAsset.AssetId === asset.AssetId
+    );
+
+    if (assetIndex !== -1) {
+      const updatedTicketAssets = [...TicketAssets];
+      updatedTicketAssets.splice(assetIndex, 1);
+      setUserData({ ...userData, TicketAssets: updatedTicketAssets });
+    } else {
+      setUserData({
+        ...userData,
+        TicketAssets: [...TicketAssets, asset],
+      });
     }
+    setSelectedAssetText(asset.assetName);
+    const selectedLocation = !userData.TicketLocation
+    ? userData.TicketLocation.LocationName
+    : "Select";
+  setSelectedLocation(selectedLocation);
+
+  setAssetDropdownOpen(false); // Reset selectedLocation
     setAssetDropdownOpen(false);
-  };
+  }
+};
+
 
   useEffect(() => {
     fetch("https://saharadeskrestapi.azurewebsites.net/api/Assets/Categories")
@@ -63,20 +74,45 @@ function StepAsset() {
 
   const handleAssetCategoryChange = (categoryId) => {
     setSelectedAssetCategory(categoryId);
-
+  setSelectedCategory(assetCategories.find(category => category.id === categoryId)?.assetCategoryName || "Select");
+  const selectedLocation = !userData.TicketLocation
+    ? userData.TicketLocation.LocationName
+    : "Select";
+  setSelectedLocation(selectedLocation);
+  
     if (categoryId) {
       fetch(
         `https://saharadeskrestapi.azurewebsites.net/api/Assets/GetAssetsByCategory/${categoryId}`
       )
         .then((response) => response.json())
-        .then((data) => console.log("asset", setAssets(data)))
+        .then((data) => {
+          setAssets(data);
+          // Create the TicketAssetCategory object and update the userData
+          const selectedCategory = assetCategories.find((category) => category.id === categoryId);
+          const ticketAssetCategory = {
+            id: selectedCategory.id,
+            name: selectedCategory.assetCategoryName,
+          };
+          setUserData({
+            ...userData,
+            TicketAssets: [],
+            TicketAssetCategory: ticketAssetCategory, // Store the selected category in userData
+          });
+        })
         .catch((error) => console.error("Error fetching assets: " + error));
     } else {
       setAssets([]);
+      // If no category is selected, you may want to clear the TicketAssetCategory in userData
+      setUserData({
+        ...userData,
+        TicketAssets: [],
+        TicketAssetCategory: null,
+      });
     }
-
+  
     setCategoryDropdownOpen(false);
   };
+  
 
   console.log(userData);
 
@@ -110,6 +146,8 @@ function StepAsset() {
       .includes(assetCategorySearchQuery.toLowerCase())
   );
 
+  console.log("Selected Location: ", selectedLocation);
+
   return (
     <div className="allStepAsset"  ref={dropdownRef}>
       <h3 className="stepTopHeader">Asset(s)</h3>
@@ -139,20 +177,22 @@ function StepAsset() {
                     }
                     }
                   >
-                    <p className="customSelectOption">select</p>
+                    <p className="customSelectOption">{userData.TicketLocation?.LocationName || "select"}</p>
                     <div
                       className={`custom-select-dropdown ${
                         isLocationDropdownOpen ? "showMenu" : "hideMenu"
                       }`}
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <div className="search-container">
+                      <div className="danContainer">
+                      <div className="search-container" >
                         <input
                           type="text"
                           className="form-control search-input custom-search-input"
                           placeholder="Search Locations..."
                           value={searchQuery}
                           onChange={handleSearchChange}
+                          
                         />
                       </div>
                       <ul
@@ -185,6 +225,7 @@ function StepAsset() {
                           </li>
                         ))}
                       </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -204,14 +245,15 @@ function StepAsset() {
                         }
                         }
                       >
-                        <p className="customSelectOption">select</p>
+                        <p className="customSelectOption">{selectedCategory}</p>
                         <div
                           className={`custom-select-dropdown ${
                             isCategoryDropdownOpen ? "showMenu" : "hideMenu"
                           }`}
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <div className="search-container">
+                          <div className="danContainer">
+<div className="search-container">
                             <input
                               type="text"
                               className="form-control search-input"
@@ -221,6 +263,7 @@ function StepAsset() {
                                 setAssetCategorySearchQuery(e.target.value)
                               }
                             />
+                            </div>
                             <ul className="asset-category-dropdown">
                               {filteredAssetCategories.map((category) => (
                                 <li
@@ -236,6 +279,8 @@ function StepAsset() {
                               ))}
                             </ul>
                           </div>
+                          
+                          
                         </div>
                       </div>
                     </div>
@@ -243,10 +288,10 @@ function StepAsset() {
                 </div>
                 <span className="assetsSpan">
                   <h4>Asset(s)</h4>
-                  <h4 className="notHeader WoFade">Select</h4>
+                  <h4 className="notHeader WoFade">{selectedAssetText}</h4>
                   {assets.length > 0 ? (
                     <div className="assetsINAsstsWrapper">
-                      <div className="newAssetDropdownWrapper">
+                      <div className="danContainer">
                       <div class="search-container">
                         <input
                           type="text"
@@ -302,3 +347,4 @@ function StepAsset() {
 }
 
 export default StepAsset;
+

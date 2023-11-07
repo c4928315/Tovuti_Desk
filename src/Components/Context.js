@@ -23,6 +23,7 @@ const Context = ({children}) => {
       
     },
     "TicketProjectedParts": [],
+    "TicketAssetCategory": [],
     "TicketRequestedParts": [],
     "TicketUsedParts": [],
     "TicketChecklistForms":[],
@@ -34,6 +35,13 @@ const Context = ({children}) => {
     "ItemType": {},
     "Cost": "",
     "Budget": "",
+})
+
+const [requestedPartz, setRequestedPartz] = useState({
+  "parts": {},
+  "location": {},
+  "quantity": 0,
+  "amount": 0
 })
 
 
@@ -50,7 +58,7 @@ const Context = ({children}) => {
   
   return (
     <div>
-      <MultiStepContext.Provider value={{currentStep, setStep, userData, setUserData, finalData, setFinalData, submitData,requestData, setRequestData, userClaims}}>
+      <MultiStepContext.Provider value={{currentStep, setStep, userData, setUserData, finalData, setFinalData, submitData,requestData, setRequestData, userClaims, requestedPartz, setRequestedPartz}}>
        {children}
       </MultiStepContext.Provider>
     </div>

@@ -326,7 +326,7 @@ function RequestTable() {
   };
 
   const handleRowClick = (item) => {
-    if (item.requestStatus.statusName === "Completed") {
+    if (item.requestStatus.statusName === "Approved") {
       navigate(`/details/${item.id}`);
     } else {
       navigate(`/detailsUnAp/${item.id}`);
@@ -669,13 +669,13 @@ function RequestTable() {
         <thead>
           <tr>
             <th>Request Ref</th>
-            {/* <th>Status</th> */}
-            <th>Location</th>
-            {/* <th>Fault</th> */}
-            <th>Fault Description</th>
+            <th>Status</th>
             <th>Asset</th>
+            <th>Location</th>
+            <th>Fault</th>
+            <th>Fault Description</th>
             <th>Submitted By</th>
-            {/* <th>Work Order</th> */}
+            <th>Work Order</th>
             <th>Date Submitted</th>
           </tr>
         </thead>
@@ -683,17 +683,17 @@ function RequestTable() {
           {paginatedData.map((item) => (
             <tr key={item.id} onClick={() => handleRowClick(item)}>
               <td className="tBodyTd">{item.requestRef}</td>
-              {/* <td className="tBodyTd">{item.Status.Name}</td> */}
-              <td className="tBodyTd">{item.locaction.locationName}</td>
-              {/* <td className="tBodyTd">
-                {item.Fault.map((fault) => fault.Name).join(", ")}
-              </td> */}
-              <td className="tBodyTd">{item.requestDetails}</td>
+              <td className="tBodyTd">{item.requestStatus?.statusName}</td>
               <td className="tBodyTd">
                 {item.requestAssets.map((a) => a.asset.assetName)}
               </td>
-              <td className="tBodyTd">{item.createdByNavigation.userFirstName} {item.createdByNavigation.userLastName}</td>
-              {/* <td className="tBodyTd">{item.WorkOrder.Title}</td> */}
+              <td className="tBodyTd">{item.locaction.locationName}</td>
+              <td className="tBodyTd">
+                {item.requestFaults?.map((fault) => fault.requestFaults).join(", ")}
+              </td>
+              <td className="tBodyTd">{item.requestDetails}</td>
+              <td className="tBodyTd">{item.createdByNavigation?.userFirstName} {item.createdByNavigation.userLastName}</td>
+              <td className="tBodyTd">{item.WorkOrder?.Title}</td>
               <td className="tBodyTd">{formatDateToDdMmYy(item.createdDate)}</td>
 
             </tr>
